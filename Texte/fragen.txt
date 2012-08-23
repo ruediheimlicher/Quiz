@@ -1,0 +1,10 @@
+001	001	Wer hat das komponiert?
+001	002   
+001	003
+001	004
+002	001	Welches Stück hat dieser Komponist geschrieben?
+002	002	Wer hat dieses Stück komponiert?
+002	003	Welches dieser Stücke ist früher komponiert worden?
+002	004	Welcher dieser Komponisten lebte näher zu unserer Zeit?
+002	005	In welcher Epoche lebte dieser Komponist?
+002	006	Welches Stück wurde in dieser Epoche komponiert?
