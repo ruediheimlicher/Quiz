@@ -6,4 +6,6 @@
 *.exe
 *.o
 *.so
-*. xcodeproj
+*.xcodeproj
+
+*.hex
