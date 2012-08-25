@@ -91,6 +91,7 @@ inline extern int min(a, b) { return a < b ? a : b; }
    
     IBOutlet id KontrollFeldA;
    IBOutlet id KontrollFeldB;
+   
 }
 
 @property (assign) IBOutlet NSWindow *window;

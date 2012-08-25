@@ -28,6 +28,7 @@
 		BD85FF2C15DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2815DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg */; };
 		BD85FF2E15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2D15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg */; };
 		BD932A2C15D5059B0057449D /* fragen.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD932A2B15D5059B0057449D /* fragen.txt */; };
+		BDAD56C215E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAD56C115E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg */; };
 		BDAF25B015DD45B600FC1305 /* 004.004.004.001.Romantik.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAF25AF15DD45B600FC1305 /* 004.004.004.001.Romantik.jpg */; };
 		BDAF25B215DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAF25B115DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg */; };
 		BDAF25C815DF81EC00FC1305 /* rTastenMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAF25C715DF81EC00FC1305 /* rTastenMatrix.m */; };
@@ -83,6 +84,8 @@
 		BDE9B8B715D7F4AC006CED5C /* 003.004.004.001.Schubert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDE9B8B615D7F4AC006CED5C /* 003.004.004.001.Schubert.jpg */; };
 		BDE9B8B915D7FAD2006CED5C /* linkssicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BDE9B8B815D7FAD2006CED5C /* linkssicon.png */; };
 		BDE9B8CD15D979FD006CED5C /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDE9B8CC15D979FD006CED5C /* Settings.plist */; };
+		BDEB8A3915E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BDEB8A3815E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 */; };
+		BDEB8A3B15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDEB8A3A15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +120,7 @@
 		BD85FF2815DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.008.002.001.M.A.Charpentier.jpg; sourceTree = "<group>"; };
 		BD85FF2D15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "003.006.001.001.Schütz.jpg"; sourceTree = "<group>"; };
 		BD932A2B15D5059B0057449D /* fragen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fragen.txt; sourceTree = "<group>"; };
+		BDAD56C115E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.011.001.001.G.Machaut.jpg; sourceTree = "<group>"; };
 		BDAF25AF15DD45B600FC1305 /* 004.004.004.001.Romantik.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 004.004.004.001.Romantik.jpg; sourceTree = "<group>"; };
 		BDAF25B115DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "002.006.001.001.H.Schütz.jpg"; sourceTree = "<group>"; };
 		BDAF25C615DF81EC00FC1305 /* rTastenMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rTastenMatrix.h; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 		BDE9B8B615D7F4AC006CED5C /* 003.004.004.001.Schubert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.004.004.001.Schubert.jpg; sourceTree = "<group>"; };
 		BDE9B8B815D7FAD2006CED5C /* linkssicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = linkssicon.png; sourceTree = "<group>"; };
 		BDE9B8CC15D979FD006CED5C /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		BDEB8A3815E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.011.001.001.Nostre_Dame.mp3; sourceTree = "<group>"; };
+		BDEB8A3A15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.011.001.001.Machaut.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +247,7 @@
 		BDB54FD715CEDEAD000EAC22 /* Musik */ = {
 			isa = PBXGroup;
 			children = (
+				BDEB8A3815E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 */,
 				BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */,
 				BDB54FD915CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a */,
 				BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */,
@@ -253,6 +260,7 @@
 		BDB54FE115CEDEBA000EAC22 /* Noten */ = {
 			isa = PBXGroup;
 			children = (
+				BDEB8A3A15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg */,
 				BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */,
 				BDB54FE315CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg */,
 				BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */,
@@ -268,6 +276,7 @@
 		BDB5502115D02639000EAC22 /* Foto */ = {
 			isa = PBXGroup;
 			children = (
+				BDAD56C115E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg */,
 				BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */,
 				BDB5502315D02639000EAC22 /* 002.002.003.001.W.A.Mozart.jpg */,
 				BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */,
@@ -516,6 +525,9 @@
 				BDB64DAF15E106C50006F57F /* deleteicon.png in Resources */,
 				BDB64DB115E106D30006F57F /* erroricon.png in Resources */,
 				BDB64DB315E109210006F57F /* checkicon.png in Resources */,
+				BDEB8A3915E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 in Resources */,
+				BDEB8A3B15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg in Resources */,
+				BDAD56C215E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

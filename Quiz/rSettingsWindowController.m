@@ -550,7 +550,7 @@
    forTableColumn:(NSTableColumn *)aTableColumn 
               row:(long)rowIndex
 {
-   return;
+   //return;
    //NSLog(@"setObjectValueForTableColumn ident: %@ row: %ld objectValue: %d",[aTableColumn identifier],rowIndex,[anObject intValue]);
    
    NSMutableDictionary* einDic;
