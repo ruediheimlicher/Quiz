@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD0F190815E915600066CC73 /* settings.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD0F190715E915600066CC73 /* settings.txt */; };
 		BD229D1715D6584800F6C838 /* Kirche_288.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD229D1615D6584800F6C838 /* Kirche_288.jpg */; };
 		BD229D1B15D6A5DC00F6C838 /* rechtsicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD229D1A15D6A5DC00F6C838 /* rechtsicon.png */; };
 		BD229D1D15D6AB4500F6C838 /* homeicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD229D1C15D6AB4500F6C838 /* homeicon.png */; };
@@ -99,6 +100,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD0F190715E915600066CC73 /* settings.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = settings.txt; sourceTree = "<group>"; };
 		BD229D1615D6584800F6C838 /* Kirche_288.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kirche_288.jpg; sourceTree = "<group>"; };
 		BD229D1A15D6A5DC00F6C838 /* rechtsicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rechtsicon.png; path = "../../../../../Downloads/ Safari/2012/green_globe_right_arrow_559-1/rechtsicon.png"; sourceTree = "<group>"; };
 		BD229D1C15D6AB4500F6C838 /* homeicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeicon.png; sourceTree = "<group>"; };
@@ -207,6 +209,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD0F190615E915600066CC73 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BD0F190715E915600066CC73 /* settings.txt */,
+			);
+			path = Settings;
+			sourceTree = SOURCE_ROOT;
+		};
 		BD932A2A15D5059B0057449D /* Texte */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +364,7 @@
 				BDB54FCD15CEDEA1000EAC22 /* Bilder */,
 				BDE9B89915D6BB9A006CED5C /* Epochen */,
 				BD932A2A15D5059B0057449D /* Texte */,
+				BD0F190615E915600066CC73 /* Settings */,
 				BDC3B0EC15CECFE6000B8B8E /* Supporting Files */,
 			);
 			path = Quiz;
@@ -528,6 +539,7 @@
 				BDEB8A3915E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 in Resources */,
 				BDEB8A3B15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg in Resources */,
 				BDAD56C215E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg in Resources */,
+				BD0F190815E915600066CC73 /* settings.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

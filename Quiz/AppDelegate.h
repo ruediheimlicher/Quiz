@@ -81,6 +81,7 @@ inline extern int min(a, b) { return a < b ? a : b; }
    NSMutableArray* MasterErgebnisArray;
    NSMutableArray* ExpertErgebnisArray;
    NSMutableDictionary* PList;
+   NSMutableArray* DefaultArray;
    
    rSettingsWindowController* Settings;
    rErgebnisWindowController* Ergebnis;
@@ -125,4 +126,7 @@ inline extern int min(a, b) { return a < b ? a : b; }
 
 - (int)maxVonArray:(NSArray*)intarray;
 - (int)minVonArray:(NSArray*)intarray;
+
+- (IBAction)resetDefaults:(id)sender;
+
 @end

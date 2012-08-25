@@ -155,6 +155,7 @@ if (self)
    StandardErgebnisArray = [[NSMutableArray alloc]initWithCapacity:0];
    MasterErgebnisArray = [[NSMutableArray alloc]initWithCapacity:0];
    ExpertErgebnisArray = [[NSMutableArray alloc]initWithCapacity:0];
+   DefaultArray = [[NSMutableArray alloc]initWithCapacity:0];
    
    [Klassewahl setKolonnen:1];
    [Klassewahl setZeilen:3];
@@ -247,42 +248,67 @@ if (self)
       }
       else 
       {
-         tempName = [[tempPfadArray subarrayWithRange:NSMakeRange(0, [tempPfadArray count]-2)]componentsJoinedByString:@"."];;      
-      //NSLog(@"tempName B: %@",tempName);
+         //tempName = [[tempPfadArray subarrayWithRange:NSMakeRange(0, [tempPfadArray count]-2)]componentsJoinedByString:@"."];;
+         //NSLog(@"tempName B: %@",tempName);
+         NSLog(@"tempPfad: %@",tempPfad);
+
       }
       
       // Fragen lesen
       if ([tempPfad hasSuffix:@"txt"])
       {
-         //NSLog(@"Text da: tempPfad: %@",tempPfad);
-         NSString* tempFragenPfad=[[NSBundle mainBundle] pathForResource:tempPfad ofType:NULL];
-         //NSLog(@"Text da: tempFragenPfad: %@",tempFragenPfad);
          
-         NSString* tempFragenString=[NSString stringWithContentsOfFile:tempFragenPfad encoding: NSUTF8StringEncoding error:NULL];
-         ;
-         
-         //NSLog(@"  tempFragenString : \n%@",tempFragenString);
-         NSArray* tempFragenArray = [tempFragenString componentsSeparatedByString:@"\n"];
-         //NSLog(@"  tempFragenArray : \n%@",tempFragenArray);
-         int k=0;
-         for (k=0;k<[tempFragenArray count];k++)
+         if ([tempPfad isEqualTo:@"fragen.txt"])
          {
-            NSArray* tempZeilenArray = [[tempFragenArray objectAtIndex:k] componentsSeparatedByString:@"\t"];
-            //NSLog(@"  tempZeilenArray : \n%@ count: %lu",[tempZeilenArray description], [tempZeilenArray count]);
-            if ([tempZeilenArray count] == 3) // Fragezeile komplett
-            {
-               NSNumber* klassenumber = [NSNumber numberWithInt:[[tempZeilenArray objectAtIndex:0]intValue]];
-               NSNumber* nummernumber = [NSNumber numberWithInt:[[tempZeilenArray objectAtIndex:1]intValue]];
-               
-               NSDictionary* tempFragenDic = [NSDictionary dictionaryWithObjectsAndKeys:klassenumber,@"klasse",nummernumber,@"nummer",[tempZeilenArray objectAtIndex:2],@"frage", nil];
-               [FragenArray addObject:tempFragenDic];
-               //[Frage setStringValue:[tempZeilenArray objectAtIndex:2]];
-            }
+            NSLog(@"Text da: tempPfad: %@",tempPfad);
+            NSString* tempFragenPfad=[[NSBundle mainBundle] pathForResource:tempPfad ofType:NULL];
+            //NSLog(@"Text da: tempFragenPfad: %@",tempFragenPfad);
             
-         }
-      }
+            NSString* tempFragenString=[NSString stringWithContentsOfFile:tempFragenPfad encoding: NSUTF8StringEncoding error:NULL];
+            ;
+            
+            //NSLog(@"  tempFragenString : \n%@",tempFragenString);
+            NSArray* tempFragenArray = [tempFragenString componentsSeparatedByString:@"\n"];
+            //NSLog(@"  tempFragenArray : \n%@",tempFragenArray);
+            int k=0;
+            for (k=0;k<[tempFragenArray count];k++)
+            {
+               NSArray* tempZeilenArray = [[tempFragenArray objectAtIndex:k] componentsSeparatedByString:@"\t"];
+               //NSLog(@"  tempZeilenArray : \n%@ count: %lu",[tempZeilenArray description], [tempZeilenArray count]);
+               if ([tempZeilenArray count] == 3) // Fragezeile komplett
+               {
+                  NSNumber* klassenumber = [NSNumber numberWithInt:[[tempZeilenArray objectAtIndex:0]intValue]];
+                  NSNumber* nummernumber = [NSNumber numberWithInt:[[tempZeilenArray objectAtIndex:1]intValue]];
+                  
+                  NSDictionary* tempFragenDic = [NSDictionary dictionaryWithObjectsAndKeys:klassenumber,@"klasse",nummernumber,@"nummer",[tempZeilenArray objectAtIndex:2],@"frage", nil];
+                  [FragenArray addObject:tempFragenDic];
+                  //[Frage setStringValue:[tempZeilenArray objectAtIndex:2]];
+               }
+               
+            }
+         } // fragen
+         
+         
+           
       
       
+      
+   }// if .txt
+
+      if ([tempPfad isEqualTo:@"quizsettings"])
+      {
+         NSLog(@"quizsettings da: tempPfad: %@",tempPfad);
+         
+         NSData *data = [[NSMutableData alloc]initWithContentsOfFile:[ResourcenPfad stringByAppendingPathComponent:tempPfad]];
+         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+         
+         NSMutableDictionary* settingsdataDic=[[NSMutableDictionary alloc]initWithCapacity:0];
+         settingsdataDic = [unarchiver decodeObjectForKey: @"plist"];
+         [unarchiver finishDecoding];
+         NSLog(@"settingsdataDic: %@",[settingsdataDic description]);
+         
+      } // settings
+     
       switch ([[tempPfadArray objectAtIndex:0]intValue]) // Art
       {
          case 001: // sound
@@ -399,205 +425,17 @@ if (self)
    //   [AuswahlRadio setStatus:1 inZeile:0 inKolonne:2];
    //  [AuswahlRadio setNeedsDisplay:YES];
    [KlasseTab selectTabViewItemAtIndex:0];
-   NSLog(@"vor readPList");
-//   if ([self readPList])
-     {
-//      NSLog(@"PList war da");
-      //PList = (NSMutableDictionary*)[[NSUserDefaults standardUserDefaults]dictionaryForKey:@"plist"];
    
-   }
-//   else
-   {
-      // IndexArray einrichten. Array fuer jede Klasse mit Array fuer jede Nummer
-      NSMutableArray* tempKlassenArray = [[NSMutableArray alloc]initWithCapacity:0];
-      
-      int klassenindex=0;
-      int nummerindex=0;
-      for (klassenindex=0;klassenindex<[KlasseTab numberOfTabViewItems]; klassenindex++) 
-      {
-         //[tempNummerDic setObject:FragenArray forKey:@"fragenarray"];
+   NSLog(@"vor readData");
+   [self readData];
+   NSLog(@"nach readData");
 
-         NSMutableArray* tempNummerArray = [[NSMutableArray alloc]initWithCapacity:0];
-         for (nummerindex=0; nummerindex<[NummerTab numberOfTabViewItems]; nummerindex++)
-         {
-            //NSLog(@"klassenindex: %d nummerindex: %d",klassenindex,nummerindex);
-            
-            
-            switch (klassenindex)
-            {
-               case 2:
-               {
-                  
-                  NSMutableIndexSet* epochenindex = [NSMutableIndexSet indexSet];
-                  NSMutableIndexSet* notenindex = [NSMutableIndexSet indexSet];
-                  NSMutableIndexSet* fotoindex = [NSMutableIndexSet indexSet];
-                  NSMutableIndexSet* musikindex = [NSMutableIndexSet indexSet];
-
-                  NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
-                  [tempNummerDic setObject:[FragenArray objectAtIndex:nummerindex] forKey:@"frage1"];
-                  //NSLog(@"[FragenArray objectAtIndex:nummerindex objectForKey:frage: %@",[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]);
-                  [tempNummerDic setObject:[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]forKey:@"frage"];
-
-                  switch (nummerindex)
-                  {
-                     case 0:
-                     {
-                        
-                        // Autoren waehlen
-                        //[fotoindex addIndex:PAGANINI];
-                        //[fotoindex addIndex:BACH];
-                        [fotoindex addIndex:SCHUETZ];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        //[notenindex addIndex:SCHUBERT];
-                        //[notenindex addIndex:PAGANINI];
-                        [notenindex addIndex:SCHUETZ];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        //[musikindex addIndex:SCHUBERT];
-                        //[musikindex addIndex:PAGANINI];
-                        [musikindex addIndex:SCHUETZ];
-                        
-                        // Epoche 
-                        //[epochenindex addIndex:1];
-                        [epochenindex addIndex:1];
-                        
-                     }break;
-                        
-                     case 1:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:SCHUBERT];
-                        [fotoindex addIndex:BACH];
-                        
-                        // Noten
-                        //[notenindex addIndex:BACH];
-                        [notenindex addIndex:SCHUBERT];
-                        
-                        // Musik
-                        //[musikindex addIndex:BACH];
-                        [musikindex addIndex:SCHUBERT];
-                        
-                        // Epoche 
-                        [epochenindex addIndex:1];
-                        //[epochenindex addIndex:2];
-                        
-                     }break;
-                        
-                     case 2:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:MOZART];
-                        [fotoindex addIndex:BACH];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        [notenindex addIndex:MOZART];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        [musikindex addIndex:MOZART];
-                        
-                        // Epoche 
-                        //[epochenindex addIndex:1];
-                        [epochenindex addIndex:2];
-                        
-                     }break;
-                        
-                     case 3:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:BACH];
-                        [fotoindex addIndex:PAGANINI];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        [notenindex addIndex:PAGANINI];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        [musikindex addIndex:PAGANINI];
-                        
-                        // Epoche 
-                        //[epochenindex addIndex:1];
-                        [epochenindex addIndex:3];
-                        
-                     
-                     
-                     }break;
-                        
-                  
-                     case 4:
-                     {
-                        // Autoren waehlen
-                        //[fotoindex addIndex:BACH];
-                        [fotoindex addIndex:PAGANINI];
-                        
-                        // Noten
-                        //[notenindex addIndex:BACH];
-                        [notenindex addIndex:PAGANINI];
-                        
-                        // Musik
-                       // [musikindex addIndex:BACH];
-                        [musikindex addIndex:PAGANINI];
-                        
-                        // Epoche 
-                        [epochenindex addIndex:1];
-                        [epochenindex addIndex:4];
-                        
-                        
-                        
-                     }break;
-                      
-                     case 5:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:BACH];
-                        [fotoindex addIndex:PAGANINI];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        [notenindex addIndex:PAGANINI];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        [musikindex addIndex:PAGANINI];
-                        
-                        // Epoche 
-                        //[epochenindex addIndex:3];
-                        [epochenindex addIndex:4];
-                        
-                        
-                        
-                     }break;
-                        
-                        
-
-                        
-
-                  }// switch nummerindex
-                  [tempNummerDic setObject:[NSNumber numberWithInt:nummerindex] forKey:@"nummer"];
-                  [tempNummerDic setObject:[NSNumber numberWithInt:klassenindex] forKey:@"klasse"];
-                  [tempNummerDic setObject:fotoindex forKey:@"fotoindex"];
-                  [tempNummerDic setObject:notenindex forKey:@"notenindex"];
-                  [tempNummerDic setObject:musikindex forKey:@"musikindex"];
-                  [tempNummerDic setObject:epochenindex forKey:@"epochenindex"];
-                  //NSLog(@"*** tempNummerDic: %@",[tempNummerDic description]);
-                  [tempNummerArray addObject:tempNummerDic];
-                  
-                  //NSLog(@"tempNummerArray: %@",[tempNummerArray description]);
-                    
-               }break; // case 2
-                  
-            }// switch klassenindex
-         }
-         [tempKlassenArray addObject: tempNummerArray];
-      }
-      //NSLog(@"*** tempKlassenArray: %@",[tempKlassenArray description]);
-      [PList setObject:tempKlassenArray forKey:@"klassenarray"];
-   }// keine PList
+   
+   NSLog(@"vor readPList");
+ //  [self readPList];
+   NSLog(@"nach readPList");
+   
+    
    //NSLog(@"Settings: %@",[PList description]);
    
    
@@ -2993,7 +2831,7 @@ if (self)
 }
 
 
-- (NSIndexSet*)indexSetVonArray:(NSArray*)indexarray
+- (NSMutableIndexSet*)indexSetVonArray:(NSArray*)indexarray
 {
    NSMutableIndexSet* tempset = [NSMutableIndexSet indexSet];
    for (int i=0;i<[indexarray count];i++)
@@ -3003,12 +2841,51 @@ if (self)
    return tempset;
 }
 
-- (int)readPList
+- (IBAction)resetDefaults:(id)sender
 {
-   NSLog(@"readPList start");
-   NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+   NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+   NSDictionary * dict = [defs dictionaryRepresentation];
+   for (id key in dict)
+   {
+      NSLog(@"key: %@",key);
+      if ([key isEqual:@"defaultarray"])
+      {
+         NSLog(@"kill key: %@",key);
+         [defs removeObjectForKey:key];}
+      }
+   [defs synchronize];
+}
+
+- (int)readData
+{
+   NSLog(@"readData start");
+   
+   NSMutableArray* ResourceKlassenArray = [[NSMutableArray alloc]initWithCapacity:0];
+   NSString* ResourcenPfad=[[[NSBundle mainBundle]bundlePath]stringByAppendingPathComponent:@"Contents/Resources"];
+   NSFileManager *Filemanager=[NSFileManager defaultManager];
+
+   NSString* dataPfad = [ResourcenPfad stringByAppendingPathComponent:@"quizsettings"];
+   if ([Filemanager fileExistsAtPath:dataPfad isDirectory:NO])
+   {
+      NSLog(@"quizsettings da: dataPfad: %@",dataPfad);
+      
+      NSData *data = [[NSMutableData alloc]initWithContentsOfFile:dataPfad];
+      NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+      
+      NSMutableDictionary* settingsdataDic=[[NSMutableDictionary alloc]initWithCapacity:0];
+      settingsdataDic = [unarchiver decodeObjectForKey: @"plist"];
+      [unarchiver finishDecoding];
+      NSLog(@"settingsdataDic da");
+      if ([settingsdataDic objectForKey:@"klassenarray"])
+      {
+      ResourceKlassenArray = [NSMutableArray arrayWithArray:[settingsdataDic objectForKey:@"klassenarray"]];
+      //NSLog(@"Klassenarray da: %@",[ResourceKlassenArray description]);
+      }
+   } // settings
+
+   
    int erfolg = 0;
-   { // start
+   // start
       
       // IndexArray einrichten. Array fuer jede Klasse mit Array fuer jede Nummer
       NSMutableArray* tempKlassenArray = [[NSMutableArray alloc]initWithCapacity:0];
@@ -3018,22 +2895,28 @@ if (self)
       int nummerindex=0;
       for (klassenindex=0;klassenindex<[KlasseTab numberOfTabViewItems]; klassenindex++)
       {
-         //[tempNummerDic setObject:FragenArray forKey:@"fragenarray"];
-         NSArray* tempNummerDefaultArray = [NSArray array];
-         if ([ud arrayForKey:@"klassenarray"]&& [[ud arrayForKey:@"klassenarray"]objectAtIndex:klassenindex])
-         {
-            tempNummerDefaultArray = [NSArray arrayWithArray:[[ud arrayForKey:@"klassenarray"]objectAtIndex:klassenindex]];
-            //erfolg = 1;
-            NSLog(@"readPList ud vorhanden");
-         }
+         //NSLog(@"klasse: %d data: %@",klassenindex, [[ResourceKlassenArray objectAtIndex:klassenindex]description] );
+          // tabs der nummer abfragen
          
-         // tabs der nummer abfragen
          NSMutableArray* tempNummerArray = [[NSMutableArray alloc]initWithCapacity:0];
          
+         NSMutableDictionary* tempResourceNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+         NSMutableArray* tempResourceNummerArray = [[NSMutableArray alloc]initWithCapacity:0];
          for (nummerindex=0; nummerindex<[NummerTab numberOfTabViewItems]; nummerindex++)
          {
-            //NSLog(@"klassenindex: %d nummerindex: %d",klassenindex,nummerindex);
+            //NSLog(@"nummerindex: %d",nummerindex);
+            if ([[ResourceKlassenArray objectAtIndex:klassenindex]count] && [[ResourceKlassenArray objectAtIndex:klassenindex]count])
+            {
+               NSMutableArray* tempzeilenarray = [NSMutableArray arrayWithArray:[ResourceKlassenArray objectAtIndex:klassenindex]];
+               
+                 tempResourceNummerDic = (NSMutableDictionary*)[tempzeilenarray objectAtIndex:nummerindex];
+                 NSLog(@"nummer: %d tempResourceNummerArray: %@",nummerindex, [tempResourceNummerArray description] );
+               
+             }
             
+            //NSLog(@"klassenindex: %d nummerindex: %d",klassenindex,nummerindex);
+            //Dic fuer 'nummer'
+            NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
             
             switch (klassenindex)
             {
@@ -3044,12 +2927,424 @@ if (self)
                   NSMutableIndexSet* fotoindex = [NSMutableIndexSet indexSet];
                   NSMutableIndexSet* musikindex = [NSMutableIndexSet indexSet];
                   
-                  if ([tempNummerDefaultArray count] && [tempNummerDefaultArray objectAtIndex:nummerindex]) // Dic fuer nummerindex vorhanden
+                if ([tempResourceNummerDic objectForKey:@"epochenindex"])
+                {
+                   [epochenindex addIndexes:[tempResourceNummerDic objectForKey:@"epochenindex"]];
+                }
+                  if ([tempResourceNummerDic objectForKey:@"notenindex"])
                   {
+                     [notenindex addIndexes:[tempResourceNummerDic objectForKey:@"notenindex"]];
+                  }
+                  if ([tempResourceNummerDic objectForKey:@"fotoindex"])
+                  {
+                     [fotoindex addIndexes:[tempResourceNummerDic objectForKey:@"fotoindex"]];
+                  }
+                  
+                  if ([tempResourceNummerDic objectForKey:@"musikindex"])
+                  {
+                     [musikindex addIndexes:[tempResourceNummerDic objectForKey:@"musikindex"]];
+                  }
+                  
+                 
+                      
+                     switch (nummerindex)
+                     {
+                        case 0:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              //[fotoindex addIndex:PAGANINI];
+                              //[fotoindex addIndex:BACH];
+                              [fotoindex addIndex:SCHUETZ];
+
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              //[notenindex addIndex:SCHUBERT];
+                              //[notenindex addIndex:PAGANINI];
+                              [notenindex addIndex:SCHUETZ];
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              //[musikindex addIndex:SCHUBERT];
+                              //[musikindex addIndex:PAGANINI];
+                              [musikindex addIndex:SCHUETZ];
+
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:1];
+                              [epochenindex addIndex:1];
+
+                           }
+                           else
+                           {
+                              NSLog(@"epochenindex schon da: %@",[epochenindex description]);
+                           }
+                        }break;
+                           
+                        case 1:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:SCHUBERT];
+                              [fotoindex addIndex:BACH];
+                              
+                              // Defaults einsetzen
+                           }
+                           
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:SCHUBERT];
+                                                            
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              //[musikindex addIndex:BACH];
+                              [musikindex addIndex:SCHUBERT];
+                                                            
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:1];
+                              //[epochenindex addIndex:2];
+                              
+                           }
+                           
+                        }break;
+                           
+                        case 2:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:MOZART];
+                              [fotoindex addIndex:BACH];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:MOZART];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:MOZART];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:1];
+                              [epochenindex addIndex:2];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              
+                           }
+                           
+                        }break;
+                           
+                        case 3:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:1];
+                              [epochenindex addIndex:3];
+                               
+                           }
+                           
+                           
+                           
+                        }break;
+                           
+                           
+                        case 4:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              //[fotoindex addIndex:BACH];
+                              [fotoindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              // [musikindex addIndex:BACH];
+                              [musikindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:1];
+                              [epochenindex addIndex:4];
+                              
+                           }
+                           
+                           
+                           
+                        }break;
+                           
+                        case 5:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                               
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:3];
+                              [epochenindex addIndex:4];
+                              
+                           }
+                           
+                           
+                        }break;
+                           
+                     }// switch nummerindex
+                  
+                  //NSLog(@"nummerindex: %ld fotoindex fix: %@",nummerindex,[fotoindex description]);
+                  
+                  //Dic fuer 'nummer'
+                  //                 NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                  
+                  //        [tempNummerDic setObject:[FragenArray objectAtIndex:nummerindex] forKey:@"frage1"];
+                  //NSLog(@"[FragenArray objectAtIndex:nummerindex objectForKey:frage: %@",[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]);
+                  [tempNummerDic setObject:[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]forKey:@"frage"];
+                  
+                  [tempNummerDic setObject:[NSNumber numberWithInt:nummerindex] forKey:@"nummer"];
+                  [tempNummerDic setObject:[NSNumber numberWithInt:klassenindex] forKey:@"klasse"];
+                  [tempNummerDic setObject:fotoindex forKey:@"fotoindex"];
+                  [tempNummerDic setObject:notenindex forKey:@"notenindex"];
+                  [tempNummerDic setObject:musikindex forKey:@"musikindex"];
+                  [tempNummerDic setObject:epochenindex forKey:@"epochenindex"];
+                  NSLog(@"\n*** nummerindex: %d tempNummerDic: %@\n*\n*",nummerindex,[tempNummerDic description]);
+                  [tempNummerArray addObject:tempNummerDic];
+                  
+                  
+                  NSLog(@"nummer: %d tempNummerArray: %@",nummerindex,[tempNummerArray description]);
+                  
+               }break; // case 2
+                  
+            }// switch klassenindex
+            
+         } // for nummerindex
+         
+         [tempKlassenArray addObject: tempNummerArray];
+         //NSLog(@"*** klassenindex: %d tempNummerDefaultArray: %@\n*\n*",klassenindex,[tempNummerDefaultArray description]);
+         
+         
+      } // for klassenindex
+      
+      
+      //NSLog(@"*** tempKlassenArray komplett: %@\n*\n*",[tempKlassenArray description]);
+      
+      
+      
+      [PList setObject:tempKlassenArray forKey:@"klassenarray"];
+   
+   NSLog(@"readData end");
+   
+   return 0;
+   
+   
+   
+   
+   
+   
+   
+   // we need to get the plist data...
+   NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"plist"];
+   NSLog(@"plistPath: %@",plistPath);
+   NSFileManager* nc = [NSFileManager defaultManager];
+   //   NSMutableArray *dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+   if ([nc fileExistsAtPath:plistPath])
+   {
+      NSMutableDictionary* plist = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+      if ([plist count])
+      {
+         NSLog(@"PList schon vorhanden: %@",[plist description]);
+//         [PList setDictionary: [NSMutableDictionary dictionaryWithContentsOfFile:plistPath]];
+         return 1;
+      }
+      else
+      {
+         NSLog(@"plist leer");
+         return 0;
+      }
+   }
+   NSLog(@"keine PList");
+   return 0;
+}
+
+- (int)readPList
+{
+   NSLog(@"readPList start");
+   NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+   NSLog(@"readPList NSUserDefaults: %@",[[ud objectForKey:@"defaultarray"]description]);
+   
+   int erfolg = 0;
+   { // start
+      
+      // IndexArray einrichten. Array fuer jede Klasse mit Array fuer jede Nummer
+      NSMutableArray* tempKlassenArray = [[NSMutableArray alloc]initWithCapacity:0];
+      
+      if (ud && [ud arrayForKey:@"defaultarray"])
+      {
+         DefaultArray = [NSMutableArray arrayWithArray:[ud arrayForKey:@"defaultarray"]];
+         NSLog(@"readPList DefaultArray da: %@",[DefaultArray description]);
+      }
+      
+      int klassenindex=0;
+      int nummerindex=0;
+      for (klassenindex=0;klassenindex<[KlasseTab numberOfTabViewItems]; klassenindex++)
+      {
+         
+         //[tempNummerDic setObject:FragenArray forKey:@"fragenarray"];
+         NSMutableArray* tempNummerDefaultArray = [NSMutableArray array];
+         if ([[ud arrayForKey:@"defaultarray"]count] && [[ud arrayForKey:@"defaultarray"]objectAtIndex:klassenindex])
+         
+         //if (DefaultArray && [DefaultArray count] && [DefaultArray objectAtIndex:klassenindex]) // array in ud vorh.
+         {
+            tempNummerDefaultArray = [NSArray arrayWithArray:[[ud arrayForKey:@"defaultarray"]objectAtIndex:klassenindex]];
+            //erfolg = 1;
+            NSLog(@"ud vorhanden klassenindex: %d ", klassenindex);
+         }
+         else // Array mit Dic fuer jeden nummerindex fuellen
+         {
+            NSLog(@"Dics einfuellen klassenindex: %d ",klassenindex);
+            tempNummerDefaultArray = [[NSMutableArray alloc]initWithCapacity:0];
+            for (int i=0;i<[NummerTab numberOfTabViewItems];i++)
+            {
+               NSMutableDictionary*tempNummerDefaultDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+               [tempNummerDefaultDic setObject:[NSNumber numberWithInt:i] forKey:@"nummer"];
+               [tempNummerDefaultDic setObject:[NSNumber numberWithInt:klassenindex] forKey:@"klasse"];
+               //NSLog(@"tempNummerDefaultArray i %d Dic: %@",nummerindex,[tempNummerDefaultDic description]);
+               [tempNummerDefaultArray addObject:tempNummerDefaultDic];
+
+            }
+         }
+         // tabs der nummer abfragen
+         NSMutableArray* tempNummerArray = [[NSMutableArray alloc]initWithCapacity:0];
+         
+         for (nummerindex=0; nummerindex<[NummerTab numberOfTabViewItems]; nummerindex++)
+         {
+            //NSLog(@"klassenindex: %d nummerindex: %d",klassenindex,nummerindex);
+            //Dic fuer 'nummer'
+            NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+            
+            switch (klassenindex)
+            {
+               case 2:
+               {
+                  NSMutableIndexSet* epochenindex = [NSMutableIndexSet indexSet];
+                  NSMutableIndexSet* notenindex = [NSMutableIndexSet indexSet];
+                  NSMutableIndexSet* fotoindex = [NSMutableIndexSet indexSet];
+                  NSMutableIndexSet* musikindex = [NSMutableIndexSet indexSet];
+                  NSLog(@"nummerindex: %d tempNummerDefaultArray: %@",nummerindex,[tempNummerDefaultArray description]);
+                  
+                  if ([tempNummerDefaultArray count]>nummerindex && [tempNummerDefaultArray objectAtIndex:nummerindex]) // DefaultDic fuer nummerindex vorhanden
+                  {
+                     NSLog(@"B");
                      if ([[tempNummerDefaultArray objectAtIndex:nummerindex]objectForKey:@"epochenindex"])
                      {
                         epochenindex = [self indexSetVonArray:[[tempNummerDefaultArray objectAtIndex:nummerindex]objectForKey:@"epochenindex"]];
                      }
+                     
                      if ([[tempNummerDefaultArray objectAtIndex:nummerindex]objectForKey:@"notenindex"])
                      {
                         notenindex = [self indexSetVonArray:[[tempNummerDefaultArray objectAtIndex:nummerindex]objectForKey:@"notenindex"]];
@@ -3067,305 +3362,317 @@ if (self)
                      }
 
                   }
-                  else
+                  
+          //        else
                   {
+                     
+                     /*
                      NSLog(@"readPList kein tempNummerDefaultArray an nummerindex: %d",nummerindex);
+                     
+                     
+                     if ([tempNummerDefaultArray count] && [tempNummerDefaultArray objectAtIndex:nummerindex])
+                     {
+                        NSLog(@"tempNummerDefaultArray hat object nummerindex: %d",nummerindex);
+                     }
+                     else
+                     {
+                        //NSMutableDictionary*tempNummerDefaultDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                        //[tempNummerDefaultDic setObject:[NSNumber numberWithInt:nummerindex] forKey:@"nummer"];
+                        NSLog(@"tempNummerDefaultArray hat kein object nummerindex: %d ",nummerindex);
+
+                        //NSLog(@"tempNummerDefaultArray hat kein object nummerindex: %d Dic: %@",nummerindex,[tempNummerDefaultDic description]);
+                        //[tempNummerDefaultArray addObject:tempNummerDefaultDic];
+                     }
+                   */
+                     NSLog(@"C");
+                     
                      switch (nummerindex)
                      {
-                     case 0:
+                        case 0:
                         {
                            // Autoren waehlen
                            if ([fotoindex count]==0)
                            {
-                           //[fotoindex addIndex:PAGANINI];
-                           //[fotoindex addIndex:BACH];
-                           [fotoindex addIndex:SCHUETZ];
+                              //[fotoindex addIndex:PAGANINI];
+                              //[fotoindex addIndex:BACH];
+                              [fotoindex addIndex:SCHUETZ];
+                              NSArray* da = [self arrayVonIndexSet:fotoindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:da forKey:@"fotoindex"];
                               
                            }
                            
                            // Noten
                            if ([notenindex count]==0)
                            {
-                           [notenindex addIndex:BACH];
-                           //[notenindex addIndex:SCHUBERT];
-                           //[notenindex addIndex:PAGANINI];
-                           [notenindex addIndex:SCHUETZ];
+                              [notenindex addIndex:BACH];
+                              //[notenindex addIndex:SCHUBERT];
+                              //[notenindex addIndex:PAGANINI];
+                              [notenindex addIndex:SCHUETZ];
+                              NSArray* da = [self arrayVonIndexSet:notenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:da forKey:@"notenindex"];
+                              
                            }
                            
                            // Musik
                            if ([musikindex count]==0)
                            {
-                           [musikindex addIndex:BACH];
-                           //[musikindex addIndex:SCHUBERT];
-                           //[musikindex addIndex:PAGANINI];
-                           [musikindex addIndex:SCHUETZ];
+                              [musikindex addIndex:BACH];
+                              //[musikindex addIndex:SCHUBERT];
+                              //[musikindex addIndex:PAGANINI];
+                              [musikindex addIndex:SCHUETZ];
+                              NSArray* da = [self arrayVonIndexSet:musikindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:da forKey:@"musikindex"];
+                              
                            }
                            
                            // Epoche
                            if ([epochenindex count]==0)
                            {
-                           //[epochenindex addIndex:1];
-                           [epochenindex addIndex:1];
+                              //[epochenindex addIndex:1];
+                              [epochenindex addIndex:1];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:ea forKey:@"epochenindex"];
                            }
                         }break;
-                        
-                     case 1:
+                           
+                        case 1:
                         {
                            // Autoren waehlen
-                           [fotoindex addIndex:SCHUBERT];
-                           [fotoindex addIndex:BACH];
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:SCHUBERT];
+                              [fotoindex addIndex:BACH];
+                              
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:fotoindex] forKey:@"fotoindex"];
+                           }
+                           
                            
                            // Noten
-                           //[notenindex addIndex:BACH];
-                           [notenindex addIndex:SCHUBERT];
+                           if ([notenindex count]==0)
+                           {
+                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:SCHUBERT];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:notenindex] forKey:@"notenindex"];
+                              
+                           }
                            
                            // Musik
-                           //[musikindex addIndex:BACH];
-                           [musikindex addIndex:SCHUBERT];
+                           if ([musikindex count]==0)
+                           {
+                              //[musikindex addIndex:BACH];
+                              [musikindex addIndex:SCHUBERT];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:musikindex] forKey:@"musikindex"];
+                              
+                           }
                            
                            // Epoche
-                           [epochenindex addIndex:1];
-                           //[epochenindex addIndex:2];
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:1];
+                              //[epochenindex addIndex:2];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:ea forKey:@"epochenindex"];
+                              
+                           }
                            
                         }break;
-                        
-                     case 2:
+                           
+                        case 2:
                         {
                            // Autoren waehlen
-                           [fotoindex addIndex:MOZART];
-                           [fotoindex addIndex:BACH];
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:MOZART];
+                              [fotoindex addIndex:BACH];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:fotoindex] forKey:@"fotoindex"];
+                              
+                           }
+                           
                            
                            // Noten
-                           [notenindex addIndex:BACH];
-                           [notenindex addIndex:MOZART];
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:MOZART];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:notenindex] forKey:@"notenindex"];
+                              
+                           }
                            
                            // Musik
-                           [musikindex addIndex:BACH];
-                           [musikindex addIndex:MOZART];
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:MOZART];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:musikindex] forKey:@"musikindex"];
+                              
+                           }
                            
                            // Epoche
-                           //[epochenindex addIndex:1];
-                           [epochenindex addIndex:2];
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:1];
+                              [epochenindex addIndex:2];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:ea forKey:@"epochenindex"];
+                              
+                           }
                            
                         }break;
-                        
-                     case 3:
+                           
+                        case 3:
                         {
                            // Autoren waehlen
-                           [fotoindex addIndex:BACH];
-                           [fotoindex addIndex:PAGANINI];
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:fotoindex] forKey:@"fotoindex"];
+                              
+                           }
                            
                            // Noten
-                           [notenindex addIndex:BACH];
-                           [notenindex addIndex:PAGANINI];
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:notenindex] forKey:@"notenindex"];
+                              
+                           }
                            
                            // Musik
-                           [musikindex addIndex:BACH];
-                           [musikindex addIndex:PAGANINI];
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:musikindex] forKey:@"musikindex"];
+                              
+                           }
                            
                            // Epoche
-                           //[epochenindex addIndex:1];
-                           [epochenindex addIndex:3];
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:1];
+                              [epochenindex addIndex:3];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:ea forKey:@"epochenindex"];
+                              
+                           }
                            
                            
                            
                         }break;
-                        
-                        
-                     case 4:
+                           
+                           
+                        case 4:
                         {
                            // Autoren waehlen
-                           //[fotoindex addIndex:BACH];
-                           [fotoindex addIndex:PAGANINI];
+                           if ([fotoindex count]==0)
+                           {
+                              //[fotoindex addIndex:BACH];
+                              [fotoindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:fotoindex] forKey:@"fotoindex"];
+                              
+                           }
                            
                            // Noten
-                           //[notenindex addIndex:BACH];
-                           [notenindex addIndex:PAGANINI];
+                           if ([notenindex count]==0)
+                           {
+                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:notenindex] forKey:@"notenindex"];
+                              
+                           }
                            
                            // Musik
-                           // [musikindex addIndex:BACH];
-                           [musikindex addIndex:PAGANINI];
+                           if ([musikindex count]==0)
+                           {
+                              // [musikindex addIndex:BACH];
+                              [musikindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:musikindex] forKey:@"musikindex"];
+                              
+                           }
                            
                            // Epoche
-                           [epochenindex addIndex:1];
-                           [epochenindex addIndex:4];
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:1];
+                              [epochenindex addIndex:4];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:ea forKey:@"epochenindex"];
+                              
+                           }
                            
                            
                            
                         }break;
-                        
-                     case 5:
+                           
+                        case 5:
                         {
                            // Autoren waehlen
-                           [fotoindex addIndex:BACH];
-                           [fotoindex addIndex:PAGANINI];
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:fotoindex] forKey:@"fotoindex"];
+                              
+                           }
                            
                            // Noten
-                           [notenindex addIndex:BACH];
-                           [notenindex addIndex:PAGANINI];
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:notenindex] forKey:@"notenindex"];
+                              
+                           }
                            
                            // Musik
-                           [musikindex addIndex:BACH];
-                           [musikindex addIndex:PAGANINI];
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:PAGANINI];
+                              // Defaults einsetzen
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:[self arrayVonIndexSet:musikindex] forKey:@"musikindex"];
+                              
+                           }
                            
                            // Epoche
-                           //[epochenindex addIndex:3];
-                           [epochenindex addIndex:4];
-                           
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:3];
+                              [epochenindex addIndex:4];
+                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [[tempNummerDefaultArray objectAtIndex:nummerindex]setObject:ea forKey:@"epochenindex"];
+                              
+                           }
                            
                            
                         }break;
-                        
+                           
                      }
                   }
-                  NSLog(@"nummerindex: %ld fotoindex fix: %@",nummerindex,[fotoindex description]);
+                  //NSLog(@"nummerindex: %ld fotoindex fix: %@",nummerindex,[fotoindex description]);
                                     
                   //Dic fuer 'nummer'
-                  NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+ //                 NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
                   
           //        [tempNummerDic setObject:[FragenArray objectAtIndex:nummerindex] forKey:@"frage1"];
                   //NSLog(@"[FragenArray objectAtIndex:nummerindex objectForKey:frage: %@",[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]);
                   [tempNummerDic setObject:[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]forKey:@"frage"];
-                  
-                  // *
-                  /*
-                  switch (nummerindex)
-                  {
-                     case 0:
-                     {
-                        // Autoren waehlen
-                        //[fotoindex addIndex:PAGANINI];
-                        //[fotoindex addIndex:BACH];
-                        [fotoindex addIndex:SCHUETZ];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        //[notenindex addIndex:SCHUBERT];
-                        //[notenindex addIndex:PAGANINI];
-                        [notenindex addIndex:SCHUETZ];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        //[musikindex addIndex:SCHUBERT];
-                        //[musikindex addIndex:PAGANINI];
-                        [musikindex addIndex:SCHUETZ];
-                        
-                        // Epoche
-                        //[epochenindex addIndex:1];
-                        [epochenindex addIndex:1];
-                        
-                     }break;
-                        
-                     case 1:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:SCHUBERT];
-                        [fotoindex addIndex:BACH];
-                        
-                        // Noten
-                        //[notenindex addIndex:BACH];
-                        [notenindex addIndex:SCHUBERT];
-                        
-                        // Musik
-                        //[musikindex addIndex:BACH];
-                        [musikindex addIndex:SCHUBERT];
-                        
-                        // Epoche
-                        [epochenindex addIndex:1];
-                        //[epochenindex addIndex:2];
-                        
-                     }break;
-                        
-                     case 2:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:MOZART];
-                        [fotoindex addIndex:BACH];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        [notenindex addIndex:MOZART];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        [musikindex addIndex:MOZART];
-                        
-                        // Epoche
-                        //[epochenindex addIndex:1];
-                        [epochenindex addIndex:2];
-                        
-                     }break;
-                        
-                     case 3:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:BACH];
-                        [fotoindex addIndex:PAGANINI];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        [notenindex addIndex:PAGANINI];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        [musikindex addIndex:PAGANINI];
-                        
-                        // Epoche
-                        //[epochenindex addIndex:1];
-                        [epochenindex addIndex:3];
-                        
-                        
-                        
-                     }break;
-                        
-                        
-                     case 4:
-                     {
-                        // Autoren waehlen
-                        //[fotoindex addIndex:BACH];
-                        [fotoindex addIndex:PAGANINI];
-                        
-                        // Noten
-                        //[notenindex addIndex:BACH];
-                        [notenindex addIndex:PAGANINI];
-                        
-                        // Musik
-                        // [musikindex addIndex:BACH];
-                        [musikindex addIndex:PAGANINI];
-                        
-                        // Epoche
-                        [epochenindex addIndex:1];
-                        [epochenindex addIndex:4];
-                        
-                        
-                        
-                     }break;
-                        
-                     case 5:
-                     {
-                        // Autoren waehlen
-                        [fotoindex addIndex:BACH];
-                        [fotoindex addIndex:PAGANINI];
-                        
-                        // Noten
-                        [notenindex addIndex:BACH];
-                        [notenindex addIndex:PAGANINI];
-                        
-                        // Musik
-                        [musikindex addIndex:BACH];
-                        [musikindex addIndex:PAGANINI];
-                        
-                        // Epoche
-                        //[epochenindex addIndex:3];
-                        [epochenindex addIndex:4];
-                        
-                        
-                        
-                     }break;
-                        
-                  }// switch nummerindex
-                   */
-                  // *
                   
                   [tempNummerDic setObject:[NSNumber numberWithInt:nummerindex] forKey:@"nummer"];
                   [tempNummerDic setObject:[NSNumber numberWithInt:klassenindex] forKey:@"klasse"];
@@ -3373,22 +3680,58 @@ if (self)
                   [tempNummerDic setObject:notenindex forKey:@"notenindex"];
                   [tempNummerDic setObject:musikindex forKey:@"musikindex"];
                   [tempNummerDic setObject:epochenindex forKey:@"epochenindex"];
-                  NSLog(@"*** nummerindex: %d tempNummerDic: %@",nummerindex,[tempNummerDic description]);
+                  NSLog(@"\n*** nummerindex: %d tempNummerDic: %@\n*\n*",nummerindex,[tempNummerDic description]);
                   [tempNummerArray addObject:tempNummerDic];
                   
-                  //NSLog(@"tempNummerArray: %@",[tempNummerArray description]);
                   
+                  NSLog(@"nummer: %d tempNummerArray: %@",nummerindex,[tempNummerArray description]);
+
                }break; // case 2
                   
             }// switch klassenindex
-         }
+            
+         } // for nummerindex
+         
          [tempKlassenArray addObject: tempNummerArray];
-      }
-      NSLog(@"*** tempKlassenArray: %@",[tempKlassenArray description]);
+      //NSLog(@"*** klassenindex: %d tempNummerDefaultArray: %@\n*\n*",klassenindex,[tempNummerDefaultArray description]);
+         
+      NSLog(@"*** klassenindex: %d tempNummerDefaultArray: %@\n*\n*",klassenindex,[tempNummerDefaultArray description]);
+      [DefaultArray addObject:tempNummerDefaultArray];
+      
+      } // for klassenindex
+      
+      
+      //NSLog(@"*** tempKlassenArray komplett: %@\n*\n*",[tempKlassenArray description]);
+      
+      
+      
       [PList setObject:tempKlassenArray forKey:@"klassenarray"];
    }// end
     NSLog(@"readPList end");
+   
+   NSString* ResourcenPfad=[[[NSBundle mainBundle]bundlePath]stringByAppendingPathComponent:@"Contents/Resources"];
+   
+   NSFileManager *Filemanager=[NSFileManager defaultManager];
+   NSArray* tempFileArray=[Filemanager contentsOfDirectoryAtPath:ResourcenPfad error:NULL];
+   ;
+   //NSLog(@"\n  tempFileArray roh: \n%@",[tempFileArray description]);
+
+   
+   //http://stackoverflow.com/questions/3157356/converting-nsdictionary-object-to-nsdata-object-and-vice-versa
+   NSMutableData *data = [[NSMutableData alloc]init];
+   NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+   [archiver encodeObject:PList forKey: @"plist"];
+   [archiver finishEncoding];
+   
+   
+   
    return erfolg;
+   
+   
+   
+   
+   
+   
    // we need to get the plist data...
    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"plist"];
    NSLog(@"plistPath: %@",plistPath);
@@ -3463,7 +3806,47 @@ if (self)
    
   // IndexArray = [(NSMutableArray*)[[DatenDic objectForKey:@"plist"]objectForKey:@"klassenarray"]objectAtIndex:self.klasseWert];
    //[self writePList:PList];
-   [[NSUserDefaults standardUserDefaults]setObject:PList forKey:@"plist"];
+  // [[NSUserDefaults standardUserDefaults]setObject:PList forKey:@"plist"];
+//[[NSUserDefaults standardUserDefaults]setObject:DefaultArray forKey:@"defaultarray"];
+//[[NSUserDefaults standardUserDefaults] synchronize];
+   
+   NSString* ResourcenPfad=[[[NSBundle mainBundle]bundlePath]stringByAppendingPathComponent:@"Contents/Resources"];
+   
+   NSString* SettingsPfad = [ResourcenPfad stringByAppendingPathComponent:@"quizsettings"];
+   
+   NSFileManager *Filemanager=[NSFileManager defaultManager];
+    
+   NSArray* tempFileArray=[Filemanager contentsOfDirectoryAtPath:ResourcenPfad error:NULL];
+   ;
+   NSLog(@"\n  SettingsPfad: \n%@",SettingsPfad);
+
+   
+   NSMutableData *data = [[NSMutableData alloc]init];
+   NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+   [archiver encodeObject:PList forKey: @"plist"];
+   [archiver finishEncoding];
+   
+   
+   if ([Filemanager fileExistsAtPath:SettingsPfad isDirectory:NO])
+   {
+      NSLog(@"file da");
+      NSError* err;
+      [data writeToFile:SettingsPfad options:NSDataWritingAtomic error: &err ];
+      if (err)
+      {
+         NSAlert *theAlert = [NSAlert alertWithError:err];
+         [theAlert runModal]; // Ignore return value.
+         NSLog(@"data writeToFile err: %@",[err  description]);
+         NSLog(@"err userInfo: %@",[[err userInfo] description]);
+      }
+
+   }
+   else
+   {
+      int erfolg = [Filemanager createFileAtPath:SettingsPfad contents:data attributes:NULL];
+      NSLog(@"neues file erfolg: %d",erfolg);
+   }
+   
 }
 
 - (int)maxVonArray:(NSArray*)intarray
