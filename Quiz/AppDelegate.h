@@ -13,7 +13,7 @@
 #import "rErgebnisWindowController.h"
 
 #define BACH         1
-#define MOZART       2
+#define MOZART       21
 #define PAGANINI     3
 #define SCHUBERT     4
 #define PURCELL      5

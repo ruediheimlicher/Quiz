@@ -45,12 +45,12 @@
 		BDB54FCB15CEDB05000EAC22 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB54FCA15CEDB05000EAC22 /* QTKit.framework */; };
 		BDB54FDB15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */; };
 		BDB54FDC15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */; };
-		BDB54FDD15CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD915CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a */; };
-		BDB54FDE15CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD915CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a */; };
+		BDB54FDD15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */; };
+		BDB54FDE15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */; };
 		BDB54FE515CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */; };
 		BDB54FE615CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */; };
-		BDB54FE715CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg */; };
-		BDB54FE815CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg */; };
+		BDB54FE715CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */; };
+		BDB54FE815CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */; };
 		BDB54FE915CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */; };
 		BDB54FEA15CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */; };
 		BDB54FED15CEE917000EAC22 /* Eingang.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FEB15CEE917000EAC22 /* Eingang.jpg */; };
@@ -60,7 +60,7 @@
 		BDB54FF515CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */; };
 		BDB54FF615CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */; };
 		BDB5502815D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */; };
-		BDB5502915D02639000EAC22 /* 002.002.003.001.W.A.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502315D02639000EAC22 /* 002.002.003.001.W.A.Mozart.jpg */; };
+		BDB5502915D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502315D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg */; };
 		BDB5502A15D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */; };
 		BDB64D9A15E002F60006F57F /* rSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB64D9815E002F60006F57F /* rSettingsWindowController.m */; };
 		BDB64D9B15E002F60006F57F /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDB64D9915E002F60006F57F /* Settings.xib */; };
@@ -147,15 +147,15 @@
 		BDAF25C715DF81EC00FC1305 /* rTastenMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rTastenMatrix.m; sourceTree = "<group>"; };
 		BDB54FCA15CEDB05000EAC22 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.001.002.001.Courante.m4a; sourceTree = "<group>"; };
-		BDB54FD915CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.002.003.001.Allegro.m4a; sourceTree = "<group>"; };
+		BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.021.003.001.Allegro.m4a; sourceTree = "<group>"; };
 		BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.001.002.001.Bach.jpg; sourceTree = "<group>"; };
-		BDB54FE315CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.002.003.001.Mozart.jpg; sourceTree = "<group>"; };
+		BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.021.003.001.Mozart.jpg; sourceTree = "<group>"; };
 		BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.003.004.001.Paganini.jpg; sourceTree = "<group>"; };
 		BDB54FEB15CEE917000EAC22 /* Eingang.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Eingang.jpg; sourceTree = "<group>"; };
 		BDB54FEC15CEE917000EAC22 /* Kirche.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kirche.jpg; sourceTree = "<group>"; };
 		BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.003.004.001.Capricio.mp3; sourceTree = "<group>"; };
 		BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.001.002.001.Joh.Seb.Bach.jpg; sourceTree = "<group>"; };
-		BDB5502315D02639000EAC22 /* 002.002.003.001.W.A.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.002.003.001.W.A.Mozart.jpg; sourceTree = "<group>"; };
+		BDB5502315D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.021.003.001.W.A.Mozart.jpg; sourceTree = "<group>"; };
 		BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.003.004.001.N.Paganini.jpg; sourceTree = "<group>"; };
 		BDB64D9715E002F60006F57F /* rSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rSettingsWindowController.h; sourceTree = "<group>"; };
 		BDB64D9815E002F60006F57F /* rSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rSettingsWindowController.m; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 				BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */,
 				BD95115215E957AA0066C3D3 /* 001.022.002.001.Missa.mp3 */,
 				BD95115A15E961820066C3D3 /* 001.033.003.001.Sanctus.mp3 */,
-				BDB54FD915CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a */,
+				BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */,
 				BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */,
 				BDE9B8B215D7F3D2006CED5C /* 001.004.004.001.Sonata.mp3 */,
 			);
@@ -299,7 +299,7 @@
 				BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */,
 				BD0F191615E942380066CC73 /* 003.022.002.001.Zelenka.jpg */,
 				BD95115F15E9619C0066C3D3 /* 003.033.003.001.Haydn.jpg */,
-				BDB54FE315CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg */,
+				BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */,
 				BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */,
 				BDE9B8B615D7F4AC006CED5C /* 003.004.004.001.Schubert.jpg */,
 				BD85FF2015DAA3EC002C2FB1 /* 003.007.005.001.Britten.jpg */,
@@ -318,7 +318,7 @@
 				BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */,
 				BD0F191215E9405E0066CC73 /* 002.022.002.001.Zelenka.jpg */,
 				BD95115D15E9618C0066C3D3 /* 002.033.003.001.M.Haydn.jpg */,
-				BDB5502315D02639000EAC22 /* 002.002.003.001.W.A.Mozart.jpg */,
+				BDB5502315D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg */,
 				BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */,
 				BDE9B8B415D7F3DE006CED5C /* 002.004.004.001.F.Schubert.jpg */,
 				BD85FF2715DAA400002C2FB1 /* 002.007.005.001.B.Britten.jpg */,
@@ -514,15 +514,15 @@
 				BDC3B0F615CECFE6000B8B8E /* Credits.rtf in Resources */,
 				BDC3B0FC15CECFE7000B8B8E /* MainMenu.xib in Resources */,
 				BDB54FDB15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */,
-				BDB54FDD15CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a in Resources */,
+				BDB54FDD15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */,
 				BDB54FE515CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */,
-				BDB54FE715CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg in Resources */,
+				BDB54FE715CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */,
 				BDB54FE915CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */,
 				BDB54FED15CEE917000EAC22 /* Eingang.jpg in Resources */,
 				BDB54FEF15CEE917000EAC22 /* Kirche.jpg in Resources */,
 				BDB54FF515CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 in Resources */,
 				BDB5502815D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg in Resources */,
-				BDB5502915D02639000EAC22 /* 002.002.003.001.W.A.Mozart.jpg in Resources */,
+				BDB5502915D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg in Resources */,
 				BDB5502A15D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg in Resources */,
 				BD932A2C15D5059B0057449D /* fragen.txt in Resources */,
 				BD229D1715D6584800F6C838 /* Kirche_288.jpg in Resources */,
@@ -585,9 +585,9 @@
 			files = (
 				BDC3B11015CECFE7000B8B8E /* InfoPlist.strings in Resources */,
 				BDB54FDC15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */,
-				BDB54FDE15CEDEAD000EAC22 /* 001.002.003.001.Allegro.m4a in Resources */,
+				BDB54FDE15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */,
 				BDB54FE615CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */,
-				BDB54FE815CEDEBA000EAC22 /* 003.002.003.001.Mozart.jpg in Resources */,
+				BDB54FE815CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */,
 				BDB54FEA15CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */,
 				BDB54FEE15CEE917000EAC22 /* Eingang.jpg in Resources */,
 				BDB54FF015CEE917000EAC22 /* Kirche.jpg in Resources */,
