@@ -12,12 +12,12 @@
 #import "rSettingsWindowController.h"
 #import "rErgebnisWindowController.h"
 
-#define BACH         1
-#define MOZART       21
+#define BACH         21
+#define MOZART       31
 #define PAGANINI     3
 #define SCHUBERT     4
 #define PURCELL      5
-#define SCHUETZ      6
+#define SCHUETZ      16
 #define BRITTEN      7
 #define MACHAUT      11
 #define VIKTORIA     12

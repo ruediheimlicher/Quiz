@@ -6,4 +6,6 @@
    #import <Cocoa/Cocoa.h>
 #endif
 
-int schriftgroesse;
+int titelschriftgroesse;
+int legendeschriftgroesse;
+int radioschriftgroesse;

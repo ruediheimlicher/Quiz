@@ -69,10 +69,12 @@ if (self)
    float schriftblau = 224;
    
    Schriftfarbe = [NSColor colorWithCalibratedRed:schriftrot green:schriftgruen blue:schriftblau alpha:0.5];
-
-   schriftgroesse = 20;
    
+   Schriftfarbe = [NSColor whiteColor];
    
+   titelschriftgroesse = 28;
+   legendeschriftgroesse = 24;
+   radioschriftgroesse = 20;
    
    NSImage* myImage = [NSImage imageNamed: @"choricon"];
    if (myImage)
@@ -512,7 +514,10 @@ if (self)
 
 - (int)setAuswahl
 {
-   int erfolg=0;  
+   NSMutableParagraphStyle* centerstyle = [[NSMutableParagraphStyle alloc] init];
+   [centerstyle setAlignment:NSCenterTextAlignment];
+
+   int erfolg=0;
    NSLog(@"\n\n**   setAuswahl  *\n");
    NSTabViewItem* KlasseItem = [KlasseTab selectedTabViewItem];
    int klassewahl = [Klassewahl  selectedRow];
@@ -595,11 +600,17 @@ if (self)
             }
             //NSLog(@"tempFrage: %@",tempFrage);
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)+nummer]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                    initWithString: tempFrage attributes: [NSDictionary
+                                                                                       dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                       [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                       nil]];
+
+            [[[NummerItem view]viewWithTag:(klasse*1000)+nummer]setAttributedStringValue:attributedFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
-            
+            NSTextField* s;
             // Foto auswaehlen
             int fotobildindex=0;
             
@@ -624,7 +635,18 @@ if (self)
                   [ErgebnisDic setObject:[[FotoArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
                   
                   // Bildlegende setzen
-                  [Bildlegende setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
+                  
+                  
+                  NSAttributedString *attributedLegende = [[NSAttributedString alloc]
+                                                           initWithString: [[FotoArray objectAtIndex:i]objectForKey:@"name"] attributes: [NSDictionary
+                                                                                                                                             dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                                                             [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                                                             centerstyle, NSParagraphStyleAttributeName,
+                                                                                                                                             nil]];
+                  
+                  [[[NummerItem view]viewWithTag:(9000+0)]setAttributedStringValue:attributedLegende];
+
+                  //[Bildlegende setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
                   fotobildindex++;
                   
                }
@@ -710,6 +732,13 @@ if (self)
          {
             // Wer hat dieses Stück komponiert?
             // autor von Foto muss gleich sein wie von Musik
+            NSArray* viewarray = [[NummerItem view]subviews];
+            NSLog(@"nummer 2 viewarray: %@",[viewarray description]);
+            int k=0;
+            for (k=0;k<[viewarray count];k++)
+            {
+               NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
             
             [(rRadioMatrix*)[[NummerItem view]viewWithTag:8000] setKolonnen:3];
             [[[NummerItem view]viewWithTag:8000] setTitel:@"weiss nicht" inZeile:0 inKolonne:2];
@@ -730,7 +759,15 @@ if (self)
             }
             //NSLog(@"tempFrage: %@",tempFrage);
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+            
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -795,11 +832,12 @@ if (self)
             
             // Musik auswaehlen
             int soundindex=0;
-            
+            NSLog(@"reportAuswahl nummer 2 musikindex: %@",[musikindex description]);
+
             for (i=0;i<[MusikArray count];i++)
             {
                if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
-                   && [musikindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
+                   && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
                   NSLog(@"1 Musik da soundindex: %d name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
@@ -810,13 +848,13 @@ if (self)
 
                      //[[[NummerItem view]viewWithTag:(1000+soundindex)]setTag:1000+i];
                      
-                     [musikindex removeIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]];
+                     [musikindex removeIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]];
                      soundindex++;
                      
                      // richtiges Ergebnis setzen
-                     ergebnisindex = [[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue];
-                     [ErgebnisDic setObject:[[NotenArray objectAtIndex:i]objectForKey:@"autor"] forKey:@"lsg"];
-                     [ErgebnisDic setObject:[[NotenArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
+                     ergebnisindex = [[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue];
+                     [ErgebnisDic setObject:[[MusikArray objectAtIndex:i]objectForKey:@"autor"] forKey:@"lsg"];
+                     [ErgebnisDic setObject:[[MusikArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
 
                   } 
                   
@@ -836,7 +874,7 @@ if (self)
              int k=0;
              for (k=0;k<[viewarray count];k++)
              {
-             NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+                //NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
              }
              
             
@@ -862,7 +900,15 @@ if (self)
                }
             }
             //NSLog(@"tempFrage: %@",tempFrage);
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+           [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -871,7 +917,7 @@ if (self)
             
             // Musik auswaehlen
             int soundindex=0;
-            NSLog(@"reportAuswahl nummer 2 musikindex: %@",[musikindex description]);
+//            NSLog(@"reportAuswahl nummer 2 musikindex: %@",[musikindex description]);
 
             // IndexSet fuer Epoche der Komponisten-Fotos
             NSMutableIndexSet* tempEpocheindex = [NSMutableIndexSet indexSet];
@@ -881,12 +927,15 @@ if (self)
             
             for (i=0;i<[MusikArray count];i++)
             {
-               NSLog(@"nummer 2 [MusikArray an index: %d %@",i,[[MusikArray objectAtIndex:i] description]);
+               //NSLog(@"nummer 2 [MusikArray an index: %d %@",i,[[MusikArray objectAtIndex:i] description]);
                if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
                    && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
                   NSMutableDictionary* tempEpocheDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                  [tempEpocheDic setObject:[[MusikArray objectAtIndex:i]objectForKey:@"name"] forKey:@"komponist"];
+
+                  
                   // epoche einsetzen
                   //[tempEpocheindex addIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]];
                   NSNumber* epochenumber = [[MusikArray objectAtIndex:i]objectForKey:@"epoche"];
@@ -910,7 +959,7 @@ if (self)
                   
                   
                   
-                  NSLog(@"2 Musik da soundindex: %d : name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
+               //   NSLog(@"2 Musik da soundindex: %d : name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
                   if ([[NummerItem view]viewWithTag:(1000+soundindex)]) // Taste vorhanden
                   {
                      // identifier der Taste zu position des Musikstuecks im Musikarray setzen
@@ -930,11 +979,10 @@ if (self)
                }
             } // for i Musikarray
             
-            NSLog(@"nummer 2 viewarray nach: %@",[viewarray description]);
-            
+            //NSLog(@"nummer 2 viewarray nach: %@",[viewarray description]);
             for (int k=0;k<[viewarray count];k++)
             {
-               NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+              // NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
             }
 
             // richtiges Ergebnis setzen
@@ -943,12 +991,25 @@ if (self)
             
             
             int richtigindex = [self minVonArray:[tempEpocheArray valueForKey:@"epoche"]];
-            int pos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
-            NSString* epochename = [[tempEpocheArray objectAtIndex:pos]objectForKey:@"epochename"];
+            long richtigpos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
+            
+            NSString* epochename;
+            
+            if (richtigpos < NSNotFound)
+            {
+               epochename = [[tempEpocheArray objectAtIndex:richtigpos]objectForKey:@"epochename"];
+            }
+            else
+            {
+               epochename = @"*";
+            }
+            
+            
+            
             //NSLog(@"nummer 2 richtigindex: %d pos: %d tempEpocheArray: %@ ",richtigindex, pos, [tempEpocheArray description]);
-            //NSLog(@"nummer 2 richtigindex: %d pos: %d name zu richtigindex: %@ ",richtigindex, pos, epochename);
+            NSLog(@"nummer 2 richtigindex: %d pos: %ld name zu richtigindex: %@ ",richtigindex, richtigpos, epochename);
              
-            if (pos) // pos des min ist an zweiter position
+            if (richtigpos) // pos des min ist an zweiter position
             {
                [ErgebnisDic setObject:@"rechts" forKey:@"lsgtext"];
                [ErgebnisDic setObject:[[tempEpocheArray valueForKey:@"epoche"]lastObject] forKey:@"lsg"];
@@ -958,6 +1019,7 @@ if (self)
                [ErgebnisDic setObject:@"links" forKey:@"lsgtext"];
                [ErgebnisDic setObject:[[tempEpocheArray valueForKey:@"epoche"]objectAtIndex:0] forKey:@"lsg"];
             }
+            
             
             
             // Noten auswaehlen
@@ -993,6 +1055,7 @@ if (self)
             
          case 3: 
          {
+            NSLog(@"setauswahl nummer 3");
             // Welcher dieser Komponisten lebte näher zu unserer Zeit?
             /*
              NSArray* viewarray = [[NummerItem view]subviews];
@@ -1003,7 +1066,7 @@ if (self)
              }
              */
             [(rRadioMatrix*)[[NummerItem view]viewWithTag:8000] setKolonnen:3];
-            [[[NummerItem view]viewWithTag:8000] setTitel:@"no idea" inZeile:0 inKolonne:2];
+            [[[NummerItem view]viewWithTag:8000] setTitel:@"weiss nicht" inZeile:0 inKolonne:2];
             [[[NummerItem view]viewWithTag:8000] setStatus:1 inZeile:0 inKolonne:2];
             [[[NummerItem view]viewWithTag:8000] setNeedsDisplay:YES];
             [[[NummerItem view]viewWithTag:8000] setAction:@selector(reportRadiotaste:)];
@@ -1022,7 +1085,15 @@ if (self)
             
             // Welcher dieser Komponisten lebte näher zu unserer Zeit?
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -1042,23 +1113,26 @@ if (self)
                if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2 
                    && [fotoindex containsIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue]]) 
                {
-                  //NSLog(@"3 Foto da fotobildindex: %d : name: %@ epoche: %d",fotobildindex,[[FotoArray objectAtIndex:i]objectForKey:@"name"],[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
+                  NSLog(@"3 Foto da fotobildindex: %d : name: %@ epoche: %d",fotobildindex,[[FotoArray objectAtIndex:i]objectForKey:@"name"],[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
                   
                   NSMutableDictionary* tempEpocheDic = [[NSMutableDictionary alloc]initWithCapacity:0];
                   
+                  [tempEpocheDic setObject:[[FotoArray objectAtIndex:i]objectForKey:@"name"] forKey:@"komponist"];
+
                   // epoche einsetzen für das Bild an position i
                   [tempEpocheindex addIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]];
                   NSNumber* epochenumber = [[FotoArray objectAtIndex:i]objectForKey:@"epoche"];
                   [tempEpocheDic setObject:[NSNumber numberWithInt:[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]] forKey:@"epoche"];
                   
+                  NSLog(@"nummer 3 i: %d epochenumber: %d ",i,[epochenumber intValue]);
                   // Lage der Epoche im EpochenArray
                   long epochepos =[[EpochenArray valueForKey:@"epoche"]indexOfObject:epochenumber];
-                  //NSLog(@"i: %d epochepos: %d ",i,epochepos);
+                  NSLog(@"nummer 3 i: %d epochepos: %d ",i,epochepos);
                   
                   //Name der Epoche an epochepos holen
                   [tempEpocheDic setObject:[[EpochenArray objectAtIndex:epochepos]objectForKey:@"name"] forKey:@"epochename"];
                   
-                  //NSLog(@"i: %d tempEpocheDic: %@",i, [tempEpocheDic description]);
+                  NSLog(@"nummer 3 i: %d tempEpocheDic: %@",i, [tempEpocheDic description]);
                   [tempEpocheArray addObject:tempEpocheDic];
                   
                   
@@ -1083,13 +1157,25 @@ if (self)
             // Maximum des Wertes fuer Epoche aus tempEpocheArray holen
             int richtigindex = [self maxVonArray:[tempEpocheArray valueForKey:@"epoche"]];
             
-            //Position in FotoArray zu epoche holen
-            int pos = [[FotoArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
-            NSLog(@"nummer 3 pos: %d",pos);
+            long richtigpos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
             
-            NSString* komponistzuepochename = [[FotoArray objectAtIndex:pos]objectForKey:@"name"];
+            
+            
+            NSLog(@"nummer 3 pos: %ld",richtigpos);
+            
+           //  pos = [[FotoArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
+            NSString* komponistzuepochename;
+            
+            if (richtigpos < NSNotFound)
+            {
+            komponistzuepochename = [[tempEpocheArray objectAtIndex:richtigpos]objectForKey:@"komponist"];
+            }
+            else
+            {
+               komponistzuepochename = @"-";
+            }
            
-            NSLog(@"nummer 3 richtigindex: %d pos: %d name zu richtigindex: %@ ",richtigindex, pos, komponistzuepochename);
+            NSLog(@"nummer 3 richtigindex: %d richtigpos: %d name zu richtigindex: %@ ",richtigindex, richtigpos, komponistzuepochename);
  
             [ErgebnisDic setObject:[NSNumber numberWithInt:richtigindex] forKey:@"lsg"];
             [ErgebnisDic setObject:komponistzuepochename forKey:@"lsgtext"];
@@ -1098,26 +1184,27 @@ if (self)
             int soundindex=0;
             
             NSArray* viewarray = [[NummerItem view]subviews];
-            int k=0;
-            for (k=0;k<[viewarray count];k++)
+            
+            NSLog(@"nummer  3 viewarray vor");
+            for (int k=0;k<[viewarray count];k++)
             {
-               //NSLog(@"Aufgabe 3 k: %d tag: %ld %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]description]);
+               NSLog(@"nummer 3 k: %d tag: %ld %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
             }
             
-//            NSLog(@"nummer 3  musikindex : %@",[musikindex description]);
+            NSLog(@"nummer 3  musikindex : %@",[musikindex description]);
             for (i=0;i<[MusikArray count];i++)
             {
-//               NSLog(@"nummer 3 i: %d musikindex : %@ autor: %d ",i,[musikindex description],[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]);
+               NSLog(@"nummer 3 i: %d musikindex : %@ autor: %d ",i,[musikindex description],[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]);
 
                if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
-                   && [musikindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
+                   && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
 
-//                  NSLog(@"3 soundindex: %d Musik da: name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
+                  NSLog(@"nummer 3 soundindex: %d Musik da: name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
                   if ([[NummerItem view]viewWithTag:(1000+soundindex)]) // Play-Taste vorhanden
                   {
                      int ergebniscode =[[[MusikArray objectAtIndex:i]objectForKey:@"epoche"]intValue];
-//                     NSLog(@"nummer 3 taste: %d ergebniscode Musik: %d",soundindex, ergebniscode);
+                     NSLog(@"nummer 3 taste: %d ergebniscode Musik: %d",soundindex, ergebniscode);
                      [[[NummerItem view]viewWithTag:8000]setErgebniscode:ergebniscode inZeile:0 inKolonne:soundindex];
                      
                      
@@ -1143,6 +1230,14 @@ if (self)
 //                  NSLog(@"i: %d index nicht da",i); 
                }
             }
+            
+            NSLog(@"nummer  3 viewarray nach");
+            for (int k=0;k<[viewarray count];k++)
+            {
+               NSLog(@"nummer 3 k: %d tag: %ld %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
+           
+            
             NSImage* kalenderbild = [NSImage imageNamed:@"kalender_hg.png"];
             /*
              NSRect imageFrame = [[[NummerItem view]viewWithTag:7000]frame];
@@ -1202,7 +1297,16 @@ if (self)
             
             // In welcher Epoche lebte dieser Komponist?
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+
+            
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
             
@@ -1264,7 +1368,17 @@ if (self)
                   [[[NummerItem view]viewWithTag:(5000+fotobildindex)]setImage:[[FotoArray objectAtIndex:i]objectForKey:@"bild"]];
                   
                   // Name der Epoche in View 9000+fotobildindex einsetzen
-                  [[[NummerItem view]viewWithTag:(9000+fotobildindex)]setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
+
+                  NSAttributedString *attributedLegende = [[NSAttributedString alloc]
+                                                         initWithString: [[FotoArray objectAtIndex:i]objectForKey:@"name"] attributes: [NSDictionary
+                                                                                                dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                   centerstyle, NSParagraphStyleAttributeName,
+                                                                                                nil]];
+                  
+                  [[[NummerItem view]viewWithTag:(9000+fotobildindex)]setAttributedStringValue:attributedLegende];
+
+                  //[[[NummerItem view]viewWithTag:(9000+fotobildindex)]setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
                   
                   
                   // Name der Epoche in Radio einsetzen
@@ -1339,7 +1453,15 @@ if (self)
             
             // Welches Stück wurde in dieser Epoche komponiert?
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -1441,7 +1563,21 @@ if (self)
                   //NSImage* bild = [[EpochenArray objectAtIndex:i]objectForKey:@"bild"];
                   [[[NummerItem view]viewWithTag:(6000+epochebildindex)]setImage:
                    [[EpochenArray objectAtIndex:i]objectForKey:@"bild"]];
-                  [[[NummerItem view]viewWithTag:(9000+epochebildindex)]setStringValue:[[EpochenArray objectAtIndex:i]objectForKey:@"name"]];
+                  
+                  NSAttributedString *attributedLegende = [[NSAttributedString alloc]
+                                                           initWithString: [[EpochenArray objectAtIndex:i]objectForKey:@"name"] attributes: [NSDictionary
+                                                                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                                                          centerstyle, NSParagraphStyleAttributeName,
+                                                                                                                                          nil]];
+                  
+                  [[[NummerItem view]viewWithTag:(9000+epochebildindex)]setAttributedStringValue:attributedLegende];
+
+                  
+                  
+                  
+                  //[[[NummerItem view]viewWithTag:(9000+epochebildindex)]setStringValue:[[EpochenArray objectAtIndex:i]objectForKey:@"name"]];
+                  
                   
                   epochebildindex++;
                   
@@ -1518,7 +1654,10 @@ if (self)
 
 - (int)setAuswahlMitVorgabe:(int)vorgabe // Vorherige Wahl des Benutzers in Radio
 {
-   int erfolg=0;  
+   NSMutableParagraphStyle* centerstyle = [[NSMutableParagraphStyle alloc] init];
+   [centerstyle setAlignment:NSCenterTextAlignment];
+   
+   int erfolg=0;
    NSLog(@"\n\n**   setAuswahl  *\n");
    NSTabViewItem* KlasseItem = [KlasseTab selectedTabViewItem];
    int klassewahl = [Klassewahl  selectedRow];
@@ -1561,7 +1700,7 @@ if (self)
       {
          ErgebnisDic = [MasterErgebnisArray objectAtIndex:checknummer];
       }
-      else 
+      else
       {
          ErgebnisDic = [[NSMutableDictionary alloc]initWithCapacity:0];
          
@@ -1573,7 +1712,7 @@ if (self)
       [ErgebnisDic setObject:[NSNumber numberWithInt:klasse]forKey:@"klasse"];
       [ErgebnisDic setObject:[NSNumber numberWithInt:(100*klasse + nummer)]forKey:@"code"];
       
-      switch (nummer)  
+      switch (nummer)
       {
          case 0:
          {
@@ -1593,7 +1732,7 @@ if (self)
             int i=0;
             for (i=0;i<[FragenArray count];i++)
             {
-               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse 
+               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse
                    && [[[FragenArray objectAtIndex:i]objectForKey:@"nummer"]intValue] == nummer+1 )
                {
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
@@ -1601,17 +1740,23 @@ if (self)
             }
             //NSLog(@"tempFrage: %@",tempFrage);
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)+nummer]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)+nummer]setAttributedStringValue:attributedFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
-            
+            NSTextField* s;
             // Foto auswaehlen
             int fotobildindex=0;
             
             for (i=0;i<[FotoArray count];i++)
             {
-               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2 
+               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2
                    && [fotoindex containsIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   //NSLog(@"Foto da: name: %@",[[FotoArray objectAtIndex:i]objectForKey:@"name"]);
@@ -1630,7 +1775,18 @@ if (self)
                   [ErgebnisDic setObject:[[FotoArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
                   
                   // Bildlegende setzen
-                  [Bildlegende setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
+                  
+                  
+                  NSAttributedString *attributedLegende = [[NSAttributedString alloc]
+                                                           initWithString: [[FotoArray objectAtIndex:i]objectForKey:@"name"] attributes: [NSDictionary
+                                                                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                                                          centerstyle, NSParagraphStyleAttributeName,
+                                                                                                                                          nil]];
+                  
+                  [[[NummerItem view]viewWithTag:(9000+0)]setAttributedStringValue:attributedLegende];
+                  
+                  //[Bildlegende setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
                   fotobildindex++;
                   
                }
@@ -1643,13 +1799,13 @@ if (self)
             
             // Auswahl bestimmen
             
-            // Noten auswaehlen            
+            // Noten auswaehlen
             NSMutableArray* tempNotenArray = [[NSMutableArray alloc]initWithCapacity:0];
             int notenbildindex=0;
             
             for (int j=0;j<[NotenArray count];j++)
             {
-               if ([[[NotenArray objectAtIndex:j]objectForKey:@"art"]intValue] == 3 
+               if ([[[NotenArray objectAtIndex:j]objectForKey:@"art"]intValue] == 3
                    && [notenindex containsIndex:[[[NotenArray objectAtIndex:j]objectForKey:@"autor"]intValue]] )
                {
                   if ([[NummerItem view]viewWithTag:(5000+100*nummer+notenbildindex)]) // Bild vorhanden
@@ -1668,18 +1824,21 @@ if (self)
             //NSLog(@"tempNotenArray: %@",[tempNotenArray description]);
             
             // Musik auswaehlen
+            
             int soundindex=0;
-            NSLog(@"setAuswahl  MusikArray: %@",[[MusikArray valueForKey:@"name"]description]);
+            NSLog(@"setAuswahl nummer 0  MusikArray: %@",[[MusikArray valueForKey:@"name"]description]);
+            NSLog(@"setAuswahl nummer 0  musikindex: %@",[musikindex description]);
+            
             for (i=0;i<[MusikArray count];i++)
             {
-               //NSLog(@"MusikArray i: %d autor: %d",i,[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]); 
-               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
+               //NSLog(@"MusikArray i: %d autor: %d",i,[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]);
+               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1
                    && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   int ergebniscode =[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue];
                   [[[NummerItem view]viewWithTag:8000]setErgebniscode:ergebniscode inZeile:0 inKolonne:soundindex];
                   
-                  //NSLog(@"Musik da: name: %@",[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
+                  NSLog(@"nummer 2 Musik da: name: %@",[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
                   if ([[NummerItem view]viewWithTag:(1000+soundindex)]) // Taste vorhanden
                   {
                      // identifier der Play-Taste zu position des Musikstuecks im Musikarray setzen
@@ -1693,8 +1852,12 @@ if (self)
                      [musikindex removeIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]];
                      soundindex++;
                      
-                  } 
+                  }
                   
+               }
+               else
+               {
+                  NSLog(@"nummer 2 Musik nicht da");
                }
             }
             
@@ -1709,6 +1872,13 @@ if (self)
          {
             // Wer hat dieses Stück komponiert?
             // autor von Foto muss gleich sein wie von Musik
+            NSArray* viewarray = [[NummerItem view]subviews];
+            NSLog(@"nummer 2 viewarray: %@",[viewarray description]);
+            int k=0;
+            for (k=0;k<[viewarray count];k++)
+            {
+               NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
             
             [(rRadioMatrix*)[[NummerItem view]viewWithTag:8000] setKolonnen:3];
             [[[NummerItem view]viewWithTag:8000] setTitel:@"weiss nicht" inZeile:0 inKolonne:2];
@@ -1721,15 +1891,23 @@ if (self)
             int i=0;
             for (i=0;i<[FragenArray count];i++)
             {
-               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse 
+               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse
                    && [[[FragenArray objectAtIndex:i]objectForKey:@"nummer"]intValue] == nummer+1 )
                {
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
                }
             }
-            NSLog(@"tempFrage: %@",tempFrage);
+            //NSLog(@"tempFrage: %@",tempFrage);
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+            
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -1740,7 +1918,7 @@ if (self)
             
             for (i=0;i<[FotoArray count];i++)
             {
-               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2 
+               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2
                    && [fotoindex containsIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   // Ergebniscode in Tasten setzen: "autor"
@@ -1774,7 +1952,7 @@ if (self)
             
             for (i=0;i<[NotenArray count];i++)
             {
-               if ([[[NotenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 3 
+               if ([[[NotenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 3
                    && [notenindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   if ([[NummerItem view]viewWithTag:(5000+notenbildindex)]) // Bildobjekt vorhanden
@@ -1794,31 +1972,31 @@ if (self)
             
             // Musik auswaehlen
             int soundindex=0;
-            NSLog(@"nummer 1 Musik musikindex: %@",[musikindex description]);
+            NSLog(@"reportAuswahl nummer 2 musikindex: %@",[musikindex description]);
+            
             for (i=0;i<[MusikArray count];i++)
             {
-               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
-                   && [musikindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
+               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1
+                   && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
-                  NSLog(@"nummer 1 Musik da soundindex: %d name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
+                  NSLog(@"1 Musik da soundindex: %d name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
                   if ([[NummerItem view]viewWithTag:(1000+soundindex)]) // Taste vorhanden
                   {
                      // identifier der Play-Taste zu position des Musikstuecks im Musikarray setzen
-                     [[[NummerItem view]viewWithTag:(1000+soundindex)]setIdentifier:
-                      [[NSNumber numberWithInt:(1000+i)]stringValue]];
+                     [[[NummerItem view]viewWithTag:(1000+soundindex)]setIdentifier:[[NSNumber numberWithInt:(1000+i)]stringValue]];
                      
                      //[[[NummerItem view]viewWithTag:(1000+soundindex)]setTag:1000+i];
                      
-                     [musikindex removeIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]];
+                     [musikindex removeIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]];
                      soundindex++;
                      
                      // richtiges Ergebnis setzen
-                     ergebnisindex = [[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue];
-                     [ErgebnisDic setObject:[[NotenArray objectAtIndex:i]objectForKey:@"autor"] forKey:@"lsg"];
-                     [ErgebnisDic setObject:[[NotenArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
+                     ergebnisindex = [[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue];
+                     [ErgebnisDic setObject:[[MusikArray objectAtIndex:i]objectForKey:@"autor"] forKey:@"lsg"];
+                     [ErgebnisDic setObject:[[MusikArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
                      
-                  } 
+                  }
                   
                }
             }
@@ -1827,18 +2005,18 @@ if (self)
             
          }break; // case 1
             
-         case 2: 
+         case 2:
          {
             // Welches dieser Stücke ist früher komponiert worden?
-            NSLog(@"setAuswahlMitVorgabe nummer 2 vorgabe: %d",vorgabe);
-             NSArray* viewarray = [[NummerItem view]subviews];
-             NSLog(@"setAuswahlMitVorgabe nummer 2 viewarray: %@",[viewarray description]);
-             int k=0;
-             for (k=0;k<[viewarray count];k++)
-             {
-             NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
-             }
-             
+            
+            NSArray* viewarray = [[NummerItem view]subviews];
+            NSLog(@"nummer 2 viewarray: %@",[viewarray description]);
+            int k=0;
+            for (k=0;k<[viewarray count];k++)
+            {
+               //NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
+            
             
             [(rRadioMatrix*)[[NummerItem view]viewWithTag:8000] setKolonnen:3];
             [[[NummerItem view]viewWithTag:8000] setTitel:@"weiss nicht" inZeile:0 inKolonne:2];
@@ -1855,14 +2033,22 @@ if (self)
             int i=0;
             for (i=0;i<[FragenArray count];i++)
             {
-               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse 
+               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse
                    && [[[FragenArray objectAtIndex:i]objectForKey:@"nummer"]intValue] == nummer+1 )
                {
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
                }
             }
             //NSLog(@"tempFrage: %@",tempFrage);
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+            
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -1871,8 +2057,8 @@ if (self)
             
             // Musik auswaehlen
             int soundindex=0;
+            //            NSLog(@"reportAuswahl nummer 2 musikindex: %@",[musikindex description]);
             
-            NSLog(@"nummer 2 musikindex: %@",[musikindex description]);
             // IndexSet fuer Epoche der Komponisten-Fotos
             NSMutableIndexSet* tempEpocheindex = [NSMutableIndexSet indexSet];
             
@@ -1881,11 +2067,15 @@ if (self)
             
             for (i=0;i<[MusikArray count];i++)
             {
-               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
+               //NSLog(@"nummer 2 [MusikArray an index: %d %@",i,[[MusikArray objectAtIndex:i] description]);
+               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1
                    && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
                   NSMutableDictionary* tempEpocheDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                  [tempEpocheDic setObject:[[MusikArray objectAtIndex:i]objectForKey:@"name"] forKey:@"komponist"];
+                  
+                  
                   // epoche einsetzen
                   //[tempEpocheindex addIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]];
                   NSNumber* epochenumber = [[MusikArray objectAtIndex:i]objectForKey:@"epoche"];
@@ -1898,7 +2088,7 @@ if (self)
                   [tempEpocheDic setObject:[[EpochenArray objectAtIndex:epochepos]objectForKey:@"name"] forKey:@"epochename"];
                   [tempEpocheDic setObject:[NSNumber numberWithInt:soundindex] forKey:@"pos"];
                   
-                  NSLog(@"i: %d tempEpocheDic: %@",i, [tempEpocheDic description]);
+                  //NSLog(@"i: %d tempEpocheDic: %@",i, [tempEpocheDic description]);
                   [tempEpocheArray addObject:tempEpocheDic];
                   
                   
@@ -1909,7 +2099,7 @@ if (self)
                   
                   
                   
-                  //NSLog(@"2 Musik da: name: %@",[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
+                  //   NSLog(@"2 Musik da soundindex: %d : name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
                   if ([[NummerItem view]viewWithTag:(1000+soundindex)]) // Taste vorhanden
                   {
                      // identifier der Taste zu position des Musikstuecks im Musikarray setzen
@@ -1923,10 +2113,17 @@ if (self)
                      [musikindex removeIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]];
                      soundindex++;
                      
-                  } 
+                  }
+                  
                   
                }
             } // for i Musikarray
+            
+            //NSLog(@"nummer 2 viewarray nach: %@",[viewarray description]);
+            for (int k=0;k<[viewarray count];k++)
+            {
+               // NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
             
             // richtiges Ergebnis setzen
             //int richtigindex = min([musikindex firstIndex],[musikindex lastIndex]);
@@ -1934,12 +2131,25 @@ if (self)
             
             
             int richtigindex = [self minVonArray:[tempEpocheArray valueForKey:@"epoche"]];
-            int pos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
-            NSString* epochename = [[tempEpocheArray objectAtIndex:pos]objectForKey:@"epochename"];
-            NSLog(@"nummer 2 richtigindex: %d pos: %d tempEpocheArray: %@ ",richtigindex, pos, [tempEpocheArray description]);
-            //NSLog(@"nummer 2 richtigindex: %d pos: %d name zu richtigindex: %@ ",richtigindex, pos, epochename);
+            long richtigpos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
             
-            if (pos) // pos des min ist an zweiter position
+            NSString* epochename;
+            
+            if (richtigpos < NSNotFound)
+            {
+               epochename = [[tempEpocheArray objectAtIndex:richtigpos]objectForKey:@"epochename"];
+            }
+            else
+            {
+               epochename = @"*";
+            }
+            
+            
+            
+            //NSLog(@"nummer 2 richtigindex: %d pos: %d tempEpocheArray: %@ ",richtigindex, pos, [tempEpocheArray description]);
+            NSLog(@"nummer 2 richtigindex: %d pos: %ld name zu richtigindex: %@ ",richtigindex, richtigpos, epochename);
+            
+            if (richtigpos) // pos des min ist an zweiter position
             {
                [ErgebnisDic setObject:@"rechts" forKey:@"lsgtext"];
                [ErgebnisDic setObject:[[tempEpocheArray valueForKey:@"epoche"]lastObject] forKey:@"lsg"];
@@ -1951,13 +2161,14 @@ if (self)
             }
             
             
+            
             // Noten auswaehlen
             NSMutableArray* tempNotenArray = [[NSMutableArray alloc]initWithCapacity:0];
             int notenbildindex=0;
             
             for (i=0;i<[NotenArray count];i++)
             {
-               if ([[[NotenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 3 
+               if ([[[NotenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 3
                    && [notenindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   //                int ergebniscode =[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue];
@@ -1982,8 +2193,9 @@ if (self)
          }break; // case 2
             
             
-         case 3: 
+         case 3:
          {
+            NSLog(@"setauswahl nummer 3");
             // Welcher dieser Komponisten lebte näher zu unserer Zeit?
             /*
              NSArray* viewarray = [[NummerItem view]subviews];
@@ -2003,7 +2215,7 @@ if (self)
             int i=0;
             for (i=0;i<[FragenArray count];i++)
             {
-               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse 
+               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse
                    && [[[FragenArray objectAtIndex:i]objectForKey:@"nummer"]intValue] == nummer+1 )
                {
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
@@ -2013,7 +2225,15 @@ if (self)
             
             // Welcher dieser Komponisten lebte näher zu unserer Zeit?
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+            
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -2030,26 +2250,29 @@ if (self)
             
             for (i=0;i<[FotoArray count];i++)
             {
-               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2 
-                   && [fotoindex containsIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue]]) 
+               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2
+                   && [fotoindex containsIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue]])
                {
-                  //NSLog(@"3 Foto da fotobildindex: %d : name: %@ epoche: %d",fotobildindex,[[FotoArray objectAtIndex:i]objectForKey:@"name"],[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
+                  NSLog(@"3 Foto da fotobildindex: %d : name: %@ epoche: %d",fotobildindex,[[FotoArray objectAtIndex:i]objectForKey:@"name"],[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
                   
                   NSMutableDictionary* tempEpocheDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                  
+                  [tempEpocheDic setObject:[[FotoArray objectAtIndex:i]objectForKey:@"name"] forKey:@"komponist"];
                   
                   // epoche einsetzen für das Bild an position i
                   [tempEpocheindex addIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]];
                   NSNumber* epochenumber = [[FotoArray objectAtIndex:i]objectForKey:@"epoche"];
                   [tempEpocheDic setObject:[NSNumber numberWithInt:[[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]] forKey:@"epoche"];
                   
+                  NSLog(@"nummer 3 i: %d epochenumber: %d ",i,[epochenumber intValue]);
                   // Lage der Epoche im EpochenArray
                   long epochepos =[[EpochenArray valueForKey:@"epoche"]indexOfObject:epochenumber];
-                  //NSLog(@"i: %d epochepos: %d ",i,epochepos);
+                  NSLog(@"nummer 3 i: %d epochepos: %d ",i,epochepos);
                   
                   //Name der Epoche an epochepos holen
                   [tempEpocheDic setObject:[[EpochenArray objectAtIndex:epochepos]objectForKey:@"name"] forKey:@"epochename"];
                   
-                  //NSLog(@"i: %d tempEpocheDic: %@",i, [tempEpocheDic description]);
+                  NSLog(@"nummer 3 i: %d tempEpocheDic: %@",i, [tempEpocheDic description]);
                   [tempEpocheArray addObject:tempEpocheDic];
                   
                   
@@ -2074,13 +2297,25 @@ if (self)
             // Maximum des Wertes fuer Epoche aus tempEpocheArray holen
             int richtigindex = [self maxVonArray:[tempEpocheArray valueForKey:@"epoche"]];
             
-            //Position in FotoArray zu epoche holen
-            int pos = [[FotoArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
-            NSLog(@"nummer 3 pos: %d",pos);
+            long richtigpos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
             
-            NSString* komponistzuepochename = [[FotoArray objectAtIndex:pos]objectForKey:@"name"];
             
-            NSLog(@"nummer 3 richtigindex: %d pos: %d name zu richtigindex: %@ ",richtigindex, pos, komponistzuepochename);
+            
+            NSLog(@"nummer 3 pos: %ld",richtigpos);
+            
+            //  pos = [[FotoArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:richtigindex]];
+            NSString* komponistzuepochename;
+            
+            if (richtigpos < NSNotFound)
+            {
+               komponistzuepochename = [[tempEpocheArray objectAtIndex:richtigpos]objectForKey:@"komponist"];
+            }
+            else
+            {
+               komponistzuepochename = @"-";
+            }
+            
+            NSLog(@"nummer 3 richtigindex: %d richtigpos: %d name zu richtigindex: %@ ",richtigindex, richtigpos, komponistzuepochename);
             
             [ErgebnisDic setObject:[NSNumber numberWithInt:richtigindex] forKey:@"lsg"];
             [ErgebnisDic setObject:komponistzuepochename forKey:@"lsgtext"];
@@ -2089,26 +2324,27 @@ if (self)
             int soundindex=0;
             
             NSArray* viewarray = [[NummerItem view]subviews];
-            int k=0;
-            for (k=0;k<[viewarray count];k++)
+            
+            NSLog(@"nummer  3 viewarray vor");
+            for (int k=0;k<[viewarray count];k++)
             {
-               //NSLog(@"Aufgabe 3 k: %d tag: %ld %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]description]);
+               NSLog(@"nummer 3 k: %d tag: %ld %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
             }
             
-            //            NSLog(@"nummer 3  musikindex : %@",[musikindex description]);
+            NSLog(@"nummer 3  musikindex : %@",[musikindex description]);
             for (i=0;i<[MusikArray count];i++)
             {
-               //               NSLog(@"nummer 3 i: %d musikindex : %@ autor: %d ",i,[musikindex description],[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]);
+               NSLog(@"nummer 3 i: %d musikindex : %@ autor: %d ",i,[musikindex description],[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]);
                
-               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
-                   && [musikindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
+               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1
+                   && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
-                  //                  NSLog(@"3 soundindex: %d Musik da: name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
+                  NSLog(@"nummer 3 soundindex: %d Musik da: name: %@",soundindex,[[MusikArray objectAtIndex:i]objectForKey:@"name"]);
                   if ([[NummerItem view]viewWithTag:(1000+soundindex)]) // Play-Taste vorhanden
                   {
                      int ergebniscode =[[[MusikArray objectAtIndex:i]objectForKey:@"epoche"]intValue];
-                     //                     NSLog(@"nummer 3 taste: %d ergebniscode Musik: %d",soundindex, ergebniscode);
+                     NSLog(@"nummer 3 taste: %d ergebniscode Musik: %d",soundindex, ergebniscode);
                      [[[NummerItem view]viewWithTag:8000]setErgebniscode:ergebniscode inZeile:0 inKolonne:soundindex];
                      
                      
@@ -2122,18 +2358,26 @@ if (self)
                      soundindex++;
                      
                   }
-                  else 
+                  else
                   {
                      
-                     //                     NSLog(@"i: %d keine Taste",i); 
+                     //                     NSLog(@"i: %d keine Taste",i);
                   }
                   
                }
-               else 
+               else
                {
-                  //                  NSLog(@"i: %d index nicht da",i); 
+                  //                  NSLog(@"i: %d index nicht da",i);
                }
             }
+            
+            NSLog(@"nummer  3 viewarray nach");
+            for (int k=0;k<[viewarray count];k++)
+            {
+               NSLog(@"nummer 3 k: %d tag: %ld %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
+            
+            
             NSImage* kalenderbild = [NSImage imageNamed:@"kalender_hg.png"];
             /*
              NSRect imageFrame = [[[NummerItem view]viewWithTag:7000]frame];
@@ -2183,7 +2427,7 @@ if (self)
             int i=0;
             for (i=0;i<[FragenArray count];i++)
             {
-               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse 
+               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse
                    && [[[FragenArray objectAtIndex:i]objectForKey:@"nummer"]intValue] == nummer+1 )
                {
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
@@ -2193,18 +2437,27 @@ if (self)
             
             // In welcher Epoche lebte dieser Komponist?
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+            
+            
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
             
             
-            // Musik auswaehlen 
+            // Musik auswaehlen
             int soundindex=0;
             
             
             for (i=0;i<[MusikArray count];i++)
             {
-               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
+               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1
                    && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
@@ -2224,7 +2477,7 @@ if (self)
                      
                      soundindex++;
                      
-                  } 
+                  }
                   
                }
             }
@@ -2236,14 +2489,14 @@ if (self)
             int lsgepoche=-1;
             for (i=0;i<[FotoArray count];i++)
             {
-               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2 
+               if ([[[FotoArray objectAtIndex:i]objectForKey:@"art"]intValue] == 2
                    && [fotoindex containsIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
                   NSLog(@"4 Foto da fotobildindex: %d : name: %@ epoche: %d",fotobildindex,[[FotoArray objectAtIndex:i]objectForKey:@"name"], [[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
                   [fotoindex removeIndex:[[[FotoArray objectAtIndex:i]objectForKey:@"autor"]intValue] ];
                   
-                  // Epoche des Komponisten 
+                  // Epoche des Komponisten
                   [ErgebnisDic setObject:[[FotoArray objectAtIndex:i]objectForKey:@"epoche"] forKey:@"lsg"];
                   lsgepoche = [[[FotoArray objectAtIndex:i]objectForKey:@"epoche"]intValue];
                   //[ErgebnisDic setObject:[[FotoArray objectAtIndex:i]objectForKey:@"name"] forKey:@"lsgtext"];
@@ -2251,11 +2504,21 @@ if (self)
                   
                   //NSImage* bild = [[FotoArray objectAtIndex:i]objectForKey:@"bild"];
                   
-                  // Bild der Epoche  im View 5000+fotobildindex einsetzen. 
+                  // Bild der Epoche  im View 5000+fotobildindex einsetzen.
                   [[[NummerItem view]viewWithTag:(5000+fotobildindex)]setImage:[[FotoArray objectAtIndex:i]objectForKey:@"bild"]];
                   
                   // Name der Epoche in View 9000+fotobildindex einsetzen
-                  [[[NummerItem view]viewWithTag:(9000+fotobildindex)]setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
+                  
+                  NSAttributedString *attributedLegende = [[NSAttributedString alloc]
+                                                           initWithString: [[FotoArray objectAtIndex:i]objectForKey:@"name"] attributes: [NSDictionary
+                                                                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                                                          centerstyle, NSParagraphStyleAttributeName,
+                                                                                                                                          nil]];
+                  
+                  [[[NummerItem view]viewWithTag:(9000+fotobildindex)]setAttributedStringValue:attributedLegende];
+                  
+                  //[[[NummerItem view]viewWithTag:(9000+fotobildindex)]setStringValue:[[FotoArray objectAtIndex:i]objectForKey:@"name"]];
                   
                   
                   // Name der Epoche in Radio einsetzen
@@ -2280,7 +2543,7 @@ if (self)
             
             for (i=0;i<[EpochenArray count];i++)
             {
-               if ([[[EpochenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 4 
+               if ([[[EpochenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 4
                    && [epochenindex containsIndex:[[[EpochenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   // Ergebniscode der Epoche in Radio einsetzen
@@ -2320,7 +2583,7 @@ if (self)
             int i=0;
             for (i=0;i<[FragenArray count];i++)
             {
-               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse 
+               if ([[[FragenArray objectAtIndex:i]objectForKey:@"klasse"]intValue] == klasse
                    && [[[FragenArray objectAtIndex:i]objectForKey:@"nummer"]intValue] == nummer+1 )
                {
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
@@ -2330,13 +2593,21 @@ if (self)
             
             // Welches Stück wurde in dieser Epoche komponiert?
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            //[[[NummerItem view]viewWithTag:(klasse*1000)]setStringValue:tempFrage];
+            NSAttributedString *attributedFrage = [[NSAttributedString alloc]
+                                                   initWithString: tempFrage attributes: [NSDictionary
+                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
+                                                                                          nil]];
+            
+            [[[NummerItem view]viewWithTag:(klasse*1000)]setAttributedStringValue:attributedFrage];
+            
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
             
             
-            // Noten auswaehlen            
+            // Noten auswaehlen
             //NSMutableArray* tempNotenArray = [[NSMutableArray alloc]initWithCapacity:0];
             int notenbildindex=0;
             
@@ -2345,7 +2616,7 @@ if (self)
             
             for (i=0;i<[NotenArray count];i++)
             {
-               if ([[[NotenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 3 
+               if ([[[NotenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 3
                    && [notenindex containsIndex:[[[NotenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
@@ -2387,8 +2658,8 @@ if (self)
             //NSLog(@"setAuswahl i: %d  MusikArray: %@",i,[MusikArray description]);
             for (i=0;i<[MusikArray count];i++)
             {
-               //NSLog(@"MusikArray i: %d autor: %d",i,[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]); 
-               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1 
+               //NSLog(@"MusikArray i: %d autor: %d",i,[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]);
+               if ([[[MusikArray objectAtIndex:i]objectForKey:@"art"]intValue] == 1
                    && [musikindex containsIndex:[[[MusikArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   
@@ -2406,7 +2677,7 @@ if (self)
                      soundindex++;
                      
                      
-                  } 
+                  }
                   
                }
             }
@@ -2416,7 +2687,7 @@ if (self)
             int epocheergebnisindex=-1;
             for (i=0;i<[EpochenArray count];i++)
             {
-               if ([[[EpochenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 4 
+               if ([[[EpochenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 4
                    && [epochenindex containsIndex:[[[EpochenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
                   NSLog(@"5 Epoche da: name: %@ epoche: %d",[[EpochenArray objectAtIndex:i]objectForKey:@"name"],[[[EpochenArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
@@ -2432,7 +2703,21 @@ if (self)
                   //NSImage* bild = [[EpochenArray objectAtIndex:i]objectForKey:@"bild"];
                   [[[NummerItem view]viewWithTag:(6000+epochebildindex)]setImage:
                    [[EpochenArray objectAtIndex:i]objectForKey:@"bild"]];
-                  [[[NummerItem view]viewWithTag:(9000+epochebildindex)]setStringValue:[[EpochenArray objectAtIndex:i]objectForKey:@"name"]];
+                  
+                  NSAttributedString *attributedLegende = [[NSAttributedString alloc]
+                                                           initWithString: [[EpochenArray objectAtIndex:i]objectForKey:@"name"] attributes: [NSDictionary
+                                                                                                                                             dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                                                             [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                                                             centerstyle, NSParagraphStyleAttributeName,
+                                                                                                                                             nil]];
+                  
+                  [[[NummerItem view]viewWithTag:(9000+epochebildindex)]setAttributedStringValue:attributedLegende];
+                  
+                  
+                  
+                  
+                  //[[[NummerItem view]viewWithTag:(9000+epochebildindex)]setStringValue:[[EpochenArray objectAtIndex:i]objectForKey:@"name"]];
+                  
                   
                   epochebildindex++;
                   
@@ -2996,9 +3281,9 @@ if (self)
                            // Noten
                            if ([notenindex count]==0)
                            {
-                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:BACH];
                               //[notenindex addIndex:SCHUBERT];
-                              [notenindex addIndex:PAGANINI];
+                              //[notenindex addIndex:PAGANINI];
                               [notenindex addIndex:SCHUETZ];
                               
                            }
@@ -3006,9 +3291,9 @@ if (self)
                            // Musik
                            if ([musikindex count]==0)
                            {
-                              //[musikindex addIndex:BACH];
+                              [musikindex addIndex:BACH];
                               //[musikindex addIndex:SCHUBERT];
-                              [musikindex addIndex:PAGANINI];
+                              //[musikindex addIndex:PAGANINI];
                               [musikindex addIndex:SCHUETZ];
 
                               
@@ -3032,7 +3317,7 @@ if (self)
                            // Autoren waehlen
                            if ([fotoindex count]==0)
                            {
-                              [fotoindex addIndex:SCHUBERT];
+                              [fotoindex addIndex:HAYDN];
                               [fotoindex addIndex:BACH];
                               
                               // Defaults einsetzen
@@ -3043,7 +3328,7 @@ if (self)
                            if ([notenindex count]==0)
                            {
                               //[notenindex addIndex:BACH];
-                              [notenindex addIndex:SCHUBERT];
+                              [notenindex addIndex:HAYDN];
                                                             
                            }
                            
@@ -3051,7 +3336,7 @@ if (self)
                            if ([musikindex count]==0)
                            {
                               //[musikindex addIndex:BACH];
-                              [musikindex addIndex:SCHUBERT];
+                              [musikindex addIndex:HAYDN];
                                                             
                            }
                            
@@ -3065,13 +3350,13 @@ if (self)
                            
                         }break;
                            
-                        case 2:
+                        case 2: // Welches dieser Stücke ist früher komponiert worden?
                         {
                            // Autoren waehlen
                            if ([fotoindex count]==0)
                            {
-                              [fotoindex addIndex:MOZART];
-                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:HAYDN];
+                              [fotoindex addIndex:VIKTORIA];
                               // Defaults einsetzen
                               
                            }
@@ -3080,8 +3365,8 @@ if (self)
                            // Noten
                            if ([notenindex count]==0)
                            {
-                              [notenindex addIndex:BACH];
-                              [notenindex addIndex:MOZART];
+                              [notenindex addIndex:VIKTORIA];
+                              [notenindex addIndex:HAYDN];
                               // Defaults einsetzen
                               
                            }
@@ -3089,8 +3374,8 @@ if (self)
                            // Musik
                            if ([musikindex count]==0)
                            {
-                              [musikindex addIndex:BACH];
-                              [musikindex addIndex:MOZART];
+                              [musikindex addIndex:VIKTORIA];
+                              [musikindex addIndex:HAYDN];
                               // Defaults einsetzen
                               
                            }
@@ -3099,20 +3384,19 @@ if (self)
                            if ([epochenindex count]==0)
                            {
                               //[epochenindex addIndex:BAROCK];
-                              [epochenindex addIndex:KLASSIK];
-                              NSArray* ea = [self arrayVonIndexSet:epochenindex];
+                              [epochenindex addIndex:RENAISSANCE];
                               
                            }
                            
                         }break;
                            
-                        case 3:
+                        case 3: // 
                         {
                            // Autoren waehlen
                            if ([fotoindex count]==0)
                            {
                               [fotoindex addIndex:BACH];
-                              [fotoindex addIndex:PAGANINI];
+                              [fotoindex addIndex:VIKTORIA];
                               // Defaults einsetzen
                               
                            }
@@ -3121,7 +3405,7 @@ if (self)
                            if ([notenindex count]==0)
                            {
                               [notenindex addIndex:BACH];
-                              [notenindex addIndex:PAGANINI];
+                              [notenindex addIndex:VIKTORIA];
                               // Defaults einsetzen
                               
                            }
@@ -3130,7 +3414,7 @@ if (self)
                            if ([musikindex count]==0)
                            {
                               [musikindex addIndex:BACH];
-                              [musikindex addIndex:PAGANINI];
+                              [musikindex addIndex:VIKTORIA];
                               // Defaults einsetzen
                               
                            }
@@ -3138,8 +3422,8 @@ if (self)
                            // Epoche
                            if ([epochenindex count]==0)
                            {
-                              //[epochenindex addIndex:RENAISSANCE];
-                              [epochenindex addIndex:KLASSIK];
+                              [epochenindex addIndex:RENAISSANCE];
+                              //[epochenindex addIndex:KLASSIK];
                                
                            }
                            
@@ -3154,7 +3438,7 @@ if (self)
                            if ([fotoindex count]==0)
                            {
                               //[fotoindex addIndex:BACH];
-                              [fotoindex addIndex:PAGANINI];
+                              [fotoindex addIndex:HAYDN];
                               // Defaults einsetzen
                               
                            }
@@ -3163,7 +3447,7 @@ if (self)
                            if ([notenindex count]==0)
                            {
                               //[notenindex addIndex:BACH];
-                              [notenindex addIndex:PAGANINI];
+                              [notenindex addIndex:HAYDN];
                               // Defaults einsetzen
                               
                            }
@@ -3172,7 +3456,7 @@ if (self)
                            if ([musikindex count]==0)
                            {
                               // [musikindex addIndex:BACH];
-                              [musikindex addIndex:PAGANINI];
+                              [musikindex addIndex:HAYDN];
                               // Defaults einsetzen
                            }
                            
@@ -3180,7 +3464,7 @@ if (self)
                            if ([epochenindex count]==0)
                            {
                               [epochenindex addIndex:RENAISSANCE];
-                              [epochenindex addIndex:ROMANTIK];
+                              [epochenindex addIndex:KLASSIK];
                               
                            }
                            
@@ -3194,7 +3478,7 @@ if (self)
                            if ([fotoindex count]==0)
                            {
                               [fotoindex addIndex:BACH];
-                              [fotoindex addIndex:PAGANINI];
+                              [fotoindex addIndex:HAYDN];
                               // Defaults einsetzen
                               
                            }
@@ -3203,7 +3487,7 @@ if (self)
                            if ([notenindex count]==0)
                            {
                               [notenindex addIndex:BACH];
-                              [notenindex addIndex:PAGANINI];
+                              [notenindex addIndex:HAYDN];
                               // Defaults einsetzen
                               
                            }
@@ -3212,7 +3496,7 @@ if (self)
                            if ([musikindex count]==0)
                            {
                               [musikindex addIndex:BACH];
-                              [musikindex addIndex:PAGANINI];
+                              [musikindex addIndex:HAYDN];
                               // Defaults einsetzen
                                
                            }
@@ -3221,7 +3505,7 @@ if (self)
                            if ([epochenindex count]==0)
                            {
                               //[epochenindex addIndex:KLASSIK];
-                              [epochenindex addIndex:ROMANTIK];
+                              [epochenindex addIndex:KLASSIK];
                               
                            }
                            

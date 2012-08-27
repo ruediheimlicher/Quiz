@@ -100,11 +100,12 @@
 
 - (void)setTitel:(NSString*)titel inZeile:(int)zeile  inKolonne:(int)kolonne 
 {
+
    NSAttributedString *attributedString = [[NSAttributedString alloc]
                                            initWithString: titel attributes: [NSDictionary
                                                                                        dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
-                                                                              [NSFont fontWithName:@"Lucida Grande Bold" size:schriftgroesse],NSFontAttributeName,
-                                                                                       nil]];
+                                                                              [NSFont fontWithName:@"Lucida Grande Bold" size:radioschriftgroesse],NSFontAttributeName,
+                                                                                                                                                                     nil]];
 
     [[self cellAtRow:zeile column:kolonne] setAttributedTitle:attributedString];
     [[self superview] setNeedsDisplay:YES];

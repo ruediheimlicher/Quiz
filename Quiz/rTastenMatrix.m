@@ -16,7 +16,7 @@
    //NSLog(@"init TastenMatrix");
     if (self) 
     {
-       //NSLog(@"init TastenMatrix self ok schriftgroesse: %d",schriftgroesse);
+       //NSLog(@"init TastenMatrix self ok titelschriftgroesse: %d",titelschriftgroesse);
        //NSLog(@"size.height: %2.2f",[self frame].size.height);
        // Create a prototype cell
        NSButtonCell*   prototypeButtonCell = [[NSButtonCell alloc] init];

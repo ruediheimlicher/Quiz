@@ -12,6 +12,11 @@
 		BD0F190F15E940380066CC73 /* 003.012.001.001.Victoria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD0F190E15E940380066CC73 /* 003.012.001.001.Victoria.jpg */; };
 		BD0F191315E9405E0066CC73 /* 002.022.002.001.Zelenka.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD0F191215E9405E0066CC73 /* 002.022.002.001.Zelenka.jpg */; };
 		BD0F191715E942380066CC73 /* 003.022.002.001.Zelenka.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD0F191615E942380066CC73 /* 003.022.002.001.Zelenka.jpg */; };
+		BD21247015EB8EDA002BB962 /* 001.031.003.001.Gloria.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD21246F15EB8EDA002BB962 /* 001.031.003.001.Gloria.mp3 */; };
+		BD21247215EB8EE5002BB962 /* 001.041.004.001.StabatMater.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD21247115EB8EE5002BB962 /* 001.041.004.001.StabatMater.mp3 */; };
+		BD21247415EB8FD0002BB962 /* 003.021.002.001.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD21247315EB8FD0002BB962 /* 003.021.002.001.Bach.jpg */; };
+		BD21247615EB9016002BB962 /* 001.021.002.001.Kantate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD21247515EB9016002BB962 /* 001.021.002.001.Kantate.mp3 */; };
+		BD21247815EB91AC002BB962 /* 002.021.002.001.Joh.Seb.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD21247715EB91AC002BB962 /* 002.021.002.001.Joh.Seb.Bach.jpg */; };
 		BD229D1715D6584800F6C838 /* Kirche_288.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD229D1615D6584800F6C838 /* Kirche_288.jpg */; };
 		BD229D1B15D6A5DC00F6C838 /* rechtsicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD229D1A15D6A5DC00F6C838 /* rechtsicon.png */; };
 		BD229D1D15D6AB4500F6C838 /* homeicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD229D1C15D6AB4500F6C838 /* homeicon.png */; };
@@ -24,14 +29,14 @@
 		BD85FF1315DA9224002C2FB1 /* kalender_hg.psd in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF1215DA9224002C2FB1 /* kalender_hg.psd */; };
 		BD85FF1515DA923B002C2FB1 /* kalender.psd in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF1415DA923B002C2FB1 /* kalender.psd */; };
 		BD85FF1715DA9366002C2FB1 /* kalender_hg.png in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF1615DA9366002C2FB1 /* kalender_hg.png */; };
-		BD85FF1D15DAA3D2002C2FB1 /* 001.006.001.001.Magnifikat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF1C15DAA3D2002C2FB1 /* 001.006.001.001.Magnifikat.mp3 */; };
+		BD85FF1D15DAA3D2002C2FB1 /* 001.016.001.001.Magnifikat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF1C15DAA3D2002C2FB1 /* 001.016.001.001.Magnifikat.mp3 */; };
 		BD85FF2215DAA3EC002C2FB1 /* 003.005.001.001.Purcell.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF1F15DAA3EC002C2FB1 /* 003.005.001.001.Purcell.jpg */; };
 		BD85FF2315DAA3EC002C2FB1 /* 003.007.005.001.Britten.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2015DAA3EC002C2FB1 /* 003.007.005.001.Britten.jpg */; };
 		BD85FF2415DAA3EC002C2FB1 /* 003.008.001.001.Charpentier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2115DAA3EC002C2FB1 /* 003.008.001.001.Charpentier.jpg */; };
 		BD85FF2915DAA400002C2FB1 /* 002.005.001.001.H.Purcell.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2515DAA400002C2FB1 /* 002.005.001.001.H.Purcell.jpg */; };
 		BD85FF2B15DAA400002C2FB1 /* 002.007.005.001.B.Britten.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2715DAA400002C2FB1 /* 002.007.005.001.B.Britten.jpg */; };
 		BD85FF2C15DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2815DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg */; };
-		BD85FF2E15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2D15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg */; };
+		BD85FF2E15DAA4CE002C2FB1 /* 003.016.001.001.Schütz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD85FF2D15DAA4CE002C2FB1 /* 003.016.001.001.Schütz.jpg */; };
 		BD932A2C15D5059B0057449D /* fragen.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD932A2B15D5059B0057449D /* fragen.txt */; };
 		BD95115315E957AA0066C3D3 /* 001.022.002.001.Missa.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD95115215E957AA0066C3D3 /* 001.022.002.001.Missa.mp3 */; };
 		BD95115515E9584C0066C3D3 /* 001.012.001.001.Languores.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD95115415E9584C0066C3D3 /* 001.012.001.001.Languores.mp3 */; };
@@ -40,17 +45,11 @@
 		BD95116015E9619C0066C3D3 /* 003.033.003.001.Haydn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BD95115F15E9619C0066C3D3 /* 003.033.003.001.Haydn.jpg */; };
 		BDAD56C215E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAD56C115E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg */; };
 		BDAF25B015DD45B600FC1305 /* 004.004.004.001.Romantik.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAF25AF15DD45B600FC1305 /* 004.004.004.001.Romantik.jpg */; };
-		BDAF25B215DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAF25B115DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg */; };
+		BDAF25B215DD476900FC1305 /* 002.016.001.001.H.Schütz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDAF25B115DD476900FC1305 /* 002.016.001.001.H.Schütz.jpg */; };
 		BDAF25C815DF81EC00FC1305 /* rTastenMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAF25C715DF81EC00FC1305 /* rTastenMatrix.m */; };
 		BDB54FCB15CEDB05000EAC22 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB54FCA15CEDB05000EAC22 /* QTKit.framework */; };
-		BDB54FDB15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */; };
-		BDB54FDC15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */; };
-		BDB54FDD15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */; };
-		BDB54FDE15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */; };
-		BDB54FE515CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */; };
-		BDB54FE615CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */; };
-		BDB54FE715CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */; };
-		BDB54FE815CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */; };
+		BDB54FE715CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg */; };
+		BDB54FE815CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE315CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg */; };
 		BDB54FE915CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */; };
 		BDB54FEA15CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */; };
 		BDB54FED15CEE917000EAC22 /* Eingang.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FEB15CEE917000EAC22 /* Eingang.jpg */; };
@@ -59,8 +58,7 @@
 		BDB54FF015CEE917000EAC22 /* Kirche.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FEC15CEE917000EAC22 /* Kirche.jpg */; };
 		BDB54FF515CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */; };
 		BDB54FF615CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */; };
-		BDB5502815D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */; };
-		BDB5502915D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502315D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg */; };
+		BDB5502915D02639000EAC22 /* 002.031.003.001.W.A.Mozart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502315D02639000EAC22 /* 002.031.003.001.W.A.Mozart.jpg */; };
 		BDB5502A15D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */; };
 		BDB64D9A15E002F60006F57F /* rSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB64D9815E002F60006F57F /* rSettingsWindowController.m */; };
 		BDB64D9B15E002F60006F57F /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDB64D9915E002F60006F57F /* Settings.xib */; };
@@ -114,6 +112,11 @@
 		BD0F190E15E940380066CC73 /* 003.012.001.001.Victoria.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 003.012.001.001.Victoria.jpg; path = "../../Musik Othmar/Quiz/1 Renaissance/Viktoria/003.012.001.001.Victoria.jpg"; sourceTree = "<group>"; };
 		BD0F191215E9405E0066CC73 /* 002.022.002.001.Zelenka.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 002.022.002.001.Zelenka.jpg; path = "../../Musik Othmar/Quiz/2 Barock/Zelenka/002.022.002.001.Zelenka.jpg"; sourceTree = "<group>"; };
 		BD0F191615E942380066CC73 /* 003.022.002.001.Zelenka.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 003.022.002.001.Zelenka.jpg; path = "../../Musik Othmar/Quiz/2 Barock/Zelenka/003.022.002.001.Zelenka.jpg"; sourceTree = "<group>"; };
+		BD21246F15EB8EDA002BB962 /* 001.031.003.001.Gloria.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.031.003.001.Gloria.mp3; sourceTree = "<group>"; };
+		BD21247115EB8EE5002BB962 /* 001.041.004.001.StabatMater.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.041.004.001.StabatMater.mp3; sourceTree = "<group>"; };
+		BD21247315EB8FD0002BB962 /* 003.021.002.001.Bach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.021.002.001.Bach.jpg; sourceTree = "<group>"; };
+		BD21247515EB9016002BB962 /* 001.021.002.001.Kantate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.021.002.001.Kantate.mp3; sourceTree = "<group>"; };
+		BD21247715EB91AC002BB962 /* 002.021.002.001.Joh.Seb.Bach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.021.002.001.Joh.Seb.Bach.jpg; sourceTree = "<group>"; };
 		BD229D1615D6584800F6C838 /* Kirche_288.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kirche_288.jpg; sourceTree = "<group>"; };
 		BD229D1A15D6A5DC00F6C838 /* rechtsicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rechtsicon.png; path = "../../../../../Downloads/ Safari/2012/green_globe_right_arrow_559-1/rechtsicon.png"; sourceTree = "<group>"; };
 		BD229D1C15D6AB4500F6C838 /* homeicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeicon.png; sourceTree = "<group>"; };
@@ -126,14 +129,14 @@
 		BD85FF1215DA9224002C2FB1 /* kalender_hg.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = kalender_hg.psd; sourceTree = "<group>"; };
 		BD85FF1415DA923B002C2FB1 /* kalender.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = kalender.psd; sourceTree = "<group>"; };
 		BD85FF1615DA9366002C2FB1 /* kalender_hg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kalender_hg.png; sourceTree = "<group>"; };
-		BD85FF1C15DAA3D2002C2FB1 /* 001.006.001.001.Magnifikat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.006.001.001.Magnifikat.mp3; sourceTree = "<group>"; };
+		BD85FF1C15DAA3D2002C2FB1 /* 001.016.001.001.Magnifikat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.016.001.001.Magnifikat.mp3; sourceTree = "<group>"; };
 		BD85FF1F15DAA3EC002C2FB1 /* 003.005.001.001.Purcell.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.005.001.001.Purcell.jpg; sourceTree = "<group>"; };
 		BD85FF2015DAA3EC002C2FB1 /* 003.007.005.001.Britten.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.007.005.001.Britten.jpg; sourceTree = "<group>"; };
 		BD85FF2115DAA3EC002C2FB1 /* 003.008.001.001.Charpentier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.008.001.001.Charpentier.jpg; sourceTree = "<group>"; };
 		BD85FF2515DAA400002C2FB1 /* 002.005.001.001.H.Purcell.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.005.001.001.H.Purcell.jpg; sourceTree = "<group>"; };
 		BD85FF2715DAA400002C2FB1 /* 002.007.005.001.B.Britten.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.007.005.001.B.Britten.jpg; sourceTree = "<group>"; };
 		BD85FF2815DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.008.002.001.M.A.Charpentier.jpg; sourceTree = "<group>"; };
-		BD85FF2D15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "003.006.001.001.Schütz.jpg"; sourceTree = "<group>"; };
+		BD85FF2D15DAA4CE002C2FB1 /* 003.016.001.001.Schütz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "003.016.001.001.Schütz.jpg"; sourceTree = "<group>"; };
 		BD932A2B15D5059B0057449D /* fragen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fragen.txt; sourceTree = "<group>"; };
 		BD95115215E957AA0066C3D3 /* 001.022.002.001.Missa.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.022.002.001.Missa.mp3; sourceTree = "<group>"; };
 		BD95115415E9584C0066C3D3 /* 001.012.001.001.Languores.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.012.001.001.Languores.mp3; sourceTree = "<group>"; };
@@ -142,20 +145,16 @@
 		BD95115F15E9619C0066C3D3 /* 003.033.003.001.Haydn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.033.003.001.Haydn.jpg; sourceTree = "<group>"; };
 		BDAD56C115E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.011.001.001.G.Machaut.jpg; sourceTree = "<group>"; };
 		BDAF25AF15DD45B600FC1305 /* 004.004.004.001.Romantik.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 004.004.004.001.Romantik.jpg; sourceTree = "<group>"; };
-		BDAF25B115DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "002.006.001.001.H.Schütz.jpg"; sourceTree = "<group>"; };
+		BDAF25B115DD476900FC1305 /* 002.016.001.001.H.Schütz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "002.016.001.001.H.Schütz.jpg"; sourceTree = "<group>"; };
 		BDAF25C615DF81EC00FC1305 /* rTastenMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rTastenMatrix.h; sourceTree = "<group>"; };
 		BDAF25C715DF81EC00FC1305 /* rTastenMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rTastenMatrix.m; sourceTree = "<group>"; };
 		BDB54FCA15CEDB05000EAC22 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
-		BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.001.002.001.Courante.m4a; sourceTree = "<group>"; };
-		BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.021.003.001.Allegro.m4a; sourceTree = "<group>"; };
-		BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.001.002.001.Bach.jpg; sourceTree = "<group>"; };
-		BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.021.003.001.Mozart.jpg; sourceTree = "<group>"; };
+		BDB54FE315CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.031.003.001.Mozart.jpg; sourceTree = "<group>"; };
 		BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 003.003.004.001.Paganini.jpg; sourceTree = "<group>"; };
 		BDB54FEB15CEE917000EAC22 /* Eingang.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Eingang.jpg; sourceTree = "<group>"; };
 		BDB54FEC15CEE917000EAC22 /* Kirche.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kirche.jpg; sourceTree = "<group>"; };
 		BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 001.003.004.001.Capricio.mp3; sourceTree = "<group>"; };
-		BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.001.002.001.Joh.Seb.Bach.jpg; sourceTree = "<group>"; };
-		BDB5502315D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.021.003.001.W.A.Mozart.jpg; sourceTree = "<group>"; };
+		BDB5502315D02639000EAC22 /* 002.031.003.001.W.A.Mozart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.031.003.001.W.A.Mozart.jpg; sourceTree = "<group>"; };
 		BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 002.003.004.001.N.Paganini.jpg; sourceTree = "<group>"; };
 		BDB64D9715E002F60006F57F /* rSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rSettingsWindowController.h; sourceTree = "<group>"; };
 		BDB64D9815E002F60006F57F /* rSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rSettingsWindowController.m; sourceTree = "<group>"; };
@@ -277,11 +276,12 @@
 			children = (
 				BDEB8A3815E7EBA100BC8213 /* 001.011.001.001.Nostre_Dame.mp3 */,
 				BD95115415E9584C0066C3D3 /* 001.012.001.001.Languores.mp3 */,
-				BD85FF1C15DAA3D2002C2FB1 /* 001.006.001.001.Magnifikat.mp3 */,
-				BDB54FD815CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a */,
+				BD85FF1C15DAA3D2002C2FB1 /* 001.016.001.001.Magnifikat.mp3 */,
+				BD21247515EB9016002BB962 /* 001.021.002.001.Kantate.mp3 */,
 				BD95115215E957AA0066C3D3 /* 001.022.002.001.Missa.mp3 */,
+				BD21246F15EB8EDA002BB962 /* 001.031.003.001.Gloria.mp3 */,
 				BD95115A15E961820066C3D3 /* 001.033.003.001.Sanctus.mp3 */,
-				BDB54FD915CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a */,
+				BD21247115EB8EE5002BB962 /* 001.041.004.001.StabatMater.mp3 */,
 				BDB54FF415CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 */,
 				BDE9B8B215D7F3D2006CED5C /* 001.004.004.001.Sonata.mp3 */,
 			);
@@ -294,12 +294,12 @@
 				BDEB8A3A15E7EBBF00BC8213 /* 003.011.001.001.Machaut.jpg */,
 				BD0F190E15E940380066CC73 /* 003.012.001.001.Victoria.jpg */,
 				BD85FF1F15DAA3EC002C2FB1 /* 003.005.001.001.Purcell.jpg */,
-				BD85FF2D15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg */,
+				BD85FF2D15DAA4CE002C2FB1 /* 003.016.001.001.Schütz.jpg */,
 				BD85FF2115DAA3EC002C2FB1 /* 003.008.001.001.Charpentier.jpg */,
-				BDB54FE215CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg */,
+				BD21247315EB8FD0002BB962 /* 003.021.002.001.Bach.jpg */,
 				BD0F191615E942380066CC73 /* 003.022.002.001.Zelenka.jpg */,
 				BD95115F15E9619C0066C3D3 /* 003.033.003.001.Haydn.jpg */,
-				BDB54FE315CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg */,
+				BDB54FE315CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg */,
 				BDB54FE415CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg */,
 				BDE9B8B615D7F4AC006CED5C /* 003.004.004.001.Schubert.jpg */,
 				BD85FF2015DAA3EC002C2FB1 /* 003.007.005.001.Britten.jpg */,
@@ -313,12 +313,12 @@
 				BDAD56C115E7EFBD0032C5C0 /* 002.011.001.001.G.Machaut.jpg */,
 				BD0F190C15E9402F0066CC73 /* 002.012.001.001.T.Victoria.jpg */,
 				BD85FF2515DAA400002C2FB1 /* 002.005.001.001.H.Purcell.jpg */,
-				BDAF25B115DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg */,
+				BDAF25B115DD476900FC1305 /* 002.016.001.001.H.Schütz.jpg */,
 				BD85FF2815DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg */,
-				BDB5502215D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg */,
+				BD21247715EB91AC002BB962 /* 002.021.002.001.Joh.Seb.Bach.jpg */,
 				BD0F191215E9405E0066CC73 /* 002.022.002.001.Zelenka.jpg */,
+				BDB5502315D02639000EAC22 /* 002.031.003.001.W.A.Mozart.jpg */,
 				BD95115D15E9618C0066C3D3 /* 002.033.003.001.M.Haydn.jpg */,
-				BDB5502315D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg */,
 				BDB5502415D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg */,
 				BDE9B8B415D7F3DE006CED5C /* 002.004.004.001.F.Schubert.jpg */,
 				BD85FF2715DAA400002C2FB1 /* 002.007.005.001.B.Britten.jpg */,
@@ -513,16 +513,12 @@
 				BDC3B0F015CECFE6000B8B8E /* InfoPlist.strings in Resources */,
 				BDC3B0F615CECFE6000B8B8E /* Credits.rtf in Resources */,
 				BDC3B0FC15CECFE7000B8B8E /* MainMenu.xib in Resources */,
-				BDB54FDB15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */,
-				BDB54FDD15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */,
-				BDB54FE515CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */,
-				BDB54FE715CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */,
+				BDB54FE715CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg in Resources */,
 				BDB54FE915CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */,
 				BDB54FED15CEE917000EAC22 /* Eingang.jpg in Resources */,
 				BDB54FEF15CEE917000EAC22 /* Kirche.jpg in Resources */,
 				BDB54FF515CEF01A000EAC22 /* 001.003.004.001.Capricio.mp3 in Resources */,
-				BDB5502815D02639000EAC22 /* 002.001.002.001.Joh.Seb.Bach.jpg in Resources */,
-				BDB5502915D02639000EAC22 /* 002.021.003.001.W.A.Mozart.jpg in Resources */,
+				BDB5502915D02639000EAC22 /* 002.031.003.001.W.A.Mozart.jpg in Resources */,
 				BDB5502A15D02639000EAC22 /* 002.003.004.001.N.Paganini.jpg in Resources */,
 				BD932A2C15D5059B0057449D /* fragen.txt in Resources */,
 				BD229D1715D6584800F6C838 /* Kirche_288.jpg in Resources */,
@@ -547,16 +543,16 @@
 				BDE9B8CD15D979FD006CED5C /* Settings.plist in Resources */,
 				BD85FF1115DA8C40002C2FB1 /* kalender.gif in Resources */,
 				BD85FF1715DA9366002C2FB1 /* kalender_hg.png in Resources */,
-				BD85FF1D15DAA3D2002C2FB1 /* 001.006.001.001.Magnifikat.mp3 in Resources */,
+				BD85FF1D15DAA3D2002C2FB1 /* 001.016.001.001.Magnifikat.mp3 in Resources */,
 				BD85FF2215DAA3EC002C2FB1 /* 003.005.001.001.Purcell.jpg in Resources */,
 				BD85FF2315DAA3EC002C2FB1 /* 003.007.005.001.Britten.jpg in Resources */,
 				BD85FF2415DAA3EC002C2FB1 /* 003.008.001.001.Charpentier.jpg in Resources */,
 				BD85FF2915DAA400002C2FB1 /* 002.005.001.001.H.Purcell.jpg in Resources */,
 				BD85FF2B15DAA400002C2FB1 /* 002.007.005.001.B.Britten.jpg in Resources */,
 				BD85FF2C15DAA400002C2FB1 /* 002.008.002.001.M.A.Charpentier.jpg in Resources */,
-				BD85FF2E15DAA4CE002C2FB1 /* 003.006.001.001.Schütz.jpg in Resources */,
+				BD85FF2E15DAA4CE002C2FB1 /* 003.016.001.001.Schütz.jpg in Resources */,
 				BDAF25B015DD45B600FC1305 /* 004.004.004.001.Romantik.jpg in Resources */,
-				BDAF25B215DD476900FC1305 /* 002.006.001.001.H.Schütz.jpg in Resources */,
+				BDAF25B215DD476900FC1305 /* 002.016.001.001.H.Schütz.jpg in Resources */,
 				BD81E48A15DFAFB3002DA77C /* choricon.icns in Resources */,
 				BDB64D9B15E002F60006F57F /* Settings.xib in Resources */,
 				BDB64D9D15E004570006F57F /* Ergebnis.xib in Resources */,
@@ -576,6 +572,11 @@
 				BD95115B15E961820066C3D3 /* 001.033.003.001.Sanctus.mp3 in Resources */,
 				BD95115E15E9618C0066C3D3 /* 002.033.003.001.M.Haydn.jpg in Resources */,
 				BD95116015E9619C0066C3D3 /* 003.033.003.001.Haydn.jpg in Resources */,
+				BD21247015EB8EDA002BB962 /* 001.031.003.001.Gloria.mp3 in Resources */,
+				BD21247215EB8EE5002BB962 /* 001.041.004.001.StabatMater.mp3 in Resources */,
+				BD21247415EB8FD0002BB962 /* 003.021.002.001.Bach.jpg in Resources */,
+				BD21247615EB9016002BB962 /* 001.021.002.001.Kantate.mp3 in Resources */,
+				BD21247815EB91AC002BB962 /* 002.021.002.001.Joh.Seb.Bach.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,10 +585,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDC3B11015CECFE7000B8B8E /* InfoPlist.strings in Resources */,
-				BDB54FDC15CEDEAD000EAC22 /* 001.001.002.001.Courante.m4a in Resources */,
-				BDB54FDE15CEDEAD000EAC22 /* 001.021.003.001.Allegro.m4a in Resources */,
-				BDB54FE615CEDEBA000EAC22 /* 003.001.002.001.Bach.jpg in Resources */,
-				BDB54FE815CEDEBA000EAC22 /* 003.021.003.001.Mozart.jpg in Resources */,
+				BDB54FE815CEDEBA000EAC22 /* 003.031.003.001.Mozart.jpg in Resources */,
 				BDB54FEA15CEDEBA000EAC22 /* 003.003.004.001.Paganini.jpg in Resources */,
 				BDB54FEE15CEE917000EAC22 /* Eingang.jpg in Resources */,
 				BDB54FF015CEE917000EAC22 /* Kirche.jpg in Resources */,
