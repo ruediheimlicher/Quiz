@@ -12,18 +12,33 @@
 #import "rSettingsWindowController.h"
 #import "rErgebnisWindowController.h"
 
-#define BACH 1
-#define MOZART 2
-#define PAGANINI 3
-#define SCHUBERT 4
-#define PURCELL 5
-#define SCHUETZ 6
-#define BRITTEN 7
+#define BACH         1
+#define MOZART       2
+#define PAGANINI     3
+#define SCHUBERT     4
+#define PURCELL      5
+#define SCHUETZ      6
+#define BRITTEN      7
+#define MACHAUT      11
+#define VIKTORIA     12
+#define HAYDN        33
+#define RHEINBERGER  41
+
+#define ZELENKA      22
+
+#define RENAISSANCE  1
+#define BAROCK       2
+#define KLASSIK      3
+#define ROMANTIK     4
+#define MODERNE      5
+
 
 #define MUSIK 1
 #define FOTO 2
 #define NOTEN 3
 #define EPOCHEN 4
+
+
 
 inline extern int max(a, b) { return a > b ? a : b; }
 inline extern int min(a, b) { return a < b ? a : b; }
@@ -124,9 +139,10 @@ inline extern int min(a, b) { return a < b ? a : b; }
 - (int)readPList;
 - (IBAction)terminate:(id)sender;
 
-- (int)maxVonArray:(NSArray*)intarray;
-- (int)minVonArray:(NSArray*)intarray;
+- (long)maxVonArray:(NSArray*)intarray;
+- (long)minVonArray:(NSArray*)intarray;
 
 - (IBAction)resetDefaults:(id)sender;
-
+- (IBAction)writeData:(id)sender;
+- (IBAction)resetData:(id)sender;
 @end

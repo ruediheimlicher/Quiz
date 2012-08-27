@@ -89,7 +89,7 @@
 
 - (void)updateDaten
 {
-   //NSLog(@"*\n\n*updateDaten");
+   NSLog(@"*\n\n*updateDaten");
    //NSLog(@"updateDaten IndexArray  %@",[IndexArray description]);
    int nummerindex=0;
    
@@ -202,12 +202,13 @@
 
 - (void)setDaten:(NSMutableDictionary*)datendic
 {
+   NSLog(@"setDaten start");
    DatenDic = (NSMutableDictionary*)datendic;
    //NSLog(@"setDaten Datendic: %@",[[DatenDic objectForKey:@"klassenarray"] description]);
-   NSLog(@"***\nsetDaten Datendic: %@",[DatenDic description]);
+  // NSLog(@"***\nsetDaten Datendic: %@",[DatenDic description]);
    if ([DatenDic objectForKey:@"klasse"])
    {
-      //[Klassefeld setStringValue:[DatenDic objectForKey:@"klasse"]];
+     // [Klassefeld setStringValue:[DatenDic objectForKey:@"klasse"]];
       self.klasseWert = [[DatenDic objectForKey:@"klasse"]intValue];
    }
    if ([DatenDic objectForKey:@"nummer"])
@@ -216,6 +217,17 @@
       self.nummerWert = [[DatenDic objectForKey:@"nummer"]intValue];
       
    }
+
+   
+   NSLog(@"Settings setDaten klasse: %@",[[[DatenDic objectForKey:@"klassenarray"]valueForKey:@"klasse"] description]);
+   
+   NSLog(@"Settings setDaten frage: %@",[[[DatenDic objectForKey:@"klassenarray"]valueForKey:@"frage"] description]);
+   
+   NSLog(@"Settings setDaten musikindex: %@",[[[DatenDic objectForKey:@"klassenarray"]valueForKey:@"musikindex"] description]);
+   NSLog(@"Settings setDaten fotoindex: %@",[[[DatenDic objectForKey:@"klassenarray"]valueForKey:@"fotoindex"] description]);
+   NSLog(@"Settings setDaten notenindex: %@",[[[DatenDic objectForKey:@"klassenarray"]valueForKey:@"notenindex"] description]);
+   NSLog(@"Settings setDaten epochenindex: %@",[[[DatenDic objectForKey:@"klassenarray"]valueForKey:@"epochenindex"] description]);
+
    /*
    if ([DatenDic objectForKey:@"plist"])
    {
@@ -251,7 +263,21 @@
    //NSLog(@"***");
    //NSLog(@"Settings setDaten %@",[IndexArray valueForKey:@"frage"]);
    //NSLog(@"***");
-   NSArray*    FragenArray = [IndexArray valueForKey:@"frage"];
+   
+   NSMutableArray*    FragenArray = [[NSMutableArray alloc]initWithCapacity:0];
+   //NSLog(@"setDaten FragenArray raw Data: %@",[[DatenDic objectForKey:@"fragenarray"] description]);
+   
+   for (int i=0;i<[[DatenDic objectForKey:@"fragenarray"] count];i++)
+   {
+      //NSLog(@"i: %d self.klasseWert: %d klasse: %d Data: %@",i,self.klasseWert,[[[[DatenDic objectForKey:@"fragenarray"] objectAtIndex:i]objectForKey:@"klasse"]intValue],[[[DatenDic objectForKey:@"fragenarray"] objectAtIndex:i]objectForKey:@"frage"] );
+      if ([[[[DatenDic objectForKey:@"fragenarray"] objectAtIndex:i]objectForKey:@"klasse"]intValue] == self.klasseWert)
+      {
+         [FragenArray addObject:[[[DatenDic objectForKey:@"fragenarray"]objectAtIndex:i]objectForKey:@"frage"]];
+      }
+   }
+   //NSLog(@"setDaten FragenArray filter klasse: %d: FragenArray: %@",self.klasseWert,[FragenArray description]);
+
+   //NSArray*    FragenArray = [IndexArray valueForKey:@"frage"];
    //NSLog(@"setDaten FragenArray %@",[FragenArray description]);
    //      NSLog(@"FragenArray autor%@",[[FragenArray valueForKey:@"autor"] description]);
 
@@ -289,6 +315,18 @@
       
       //NSString* frage = [[FragenArray objectAtIndex:k]objectForKey:@"frage"];
       //NSString* frage = [FragenArray objectAtIndex:k];
+      
+      if ([FragenArray objectAtIndex:k])
+      {
+         if ([[FragenArray objectAtIndex:k]length])
+         {
+         [tempIndexDic setObject:[FragenArray objectAtIndex:k] forKey:@"frage"];
+         }
+         else
+         {
+            [tempIndexDic setObject:@"-" forKey:@"frage"];
+         }
+      }
       
       //NSLog(@"***\nfrage: %@",frage);
       // Musik
@@ -374,7 +412,7 @@
    }
       
       int i=0;
-      //Popups laden
+      //Popups in TableView laden
       for (i=0;i<3; i++) 
       {
          NSString* musikkey = [NSString stringWithFormat:@"m%d",i];
@@ -450,6 +488,12 @@
 
 - (IBAction)reportClose:(id)sender
 {
+   NSLog(@"Settings reportClose frage: %@",[[IndexArray valueForKey:@"frage"] description]);
+   NSLog(@"Settings reportClose musikindex: %@",[[IndexArray valueForKey:@"musikindex"] description]);
+   NSLog(@"Settings reportClose fotoindex: %@",[[IndexArray valueForKey:@"fotoindex"] description]);
+   NSLog(@"Settings reportClose notenindex: %@",[[IndexArray valueForKey:@"notenindex"] description]);
+   NSLog(@"Settings reportClose epochenindex: %@",[[IndexArray valueForKey:@"epochenindex"] description]);
+
  //  NSLog(@"reportClose IndexArray Musik m0: %@",[[IndexArray valueForKey:@"m0"]description]);
  //  NSLog(@"reportClose IndexArray Noten n0: %@",[[IndexArray valueForKey:@"n0"]description]);
  //  NSLog(@"reportClose IndexArray Fotos f0: %@",[[IndexArray valueForKey:@"f0"]description]);
@@ -460,6 +504,15 @@
    // Daten aktualisieren
    [self updateDaten];
    //NSLog(@"reportClose IndexArray nach up: %@",[IndexArray description]);
+   
+   NSLog(@"reportClose IndexArray nach up");
+   NSLog(@"Settings reportClose frage: %@",[[IndexArray valueForKey:@"frage"] description]);
+   NSLog(@"Settings reportClose musikindex: %@",[[IndexArray valueForKey:@"musikindex"] description]);
+   NSLog(@"Settings reportClose fotoindex: %@",[[IndexArray valueForKey:@"fotoindex"] description]);
+   NSLog(@"Settings reportClose notenindex: %@",[[IndexArray valueForKey:@"notenindex"] description]);
+   NSLog(@"Settings reportClose epochenindex: %@",[[IndexArray valueForKey:@"epochenindex"] description]);
+  
+   
 	NSNotificationCenter * nc;
 	nc=[NSNotificationCenter defaultCenter];
    NSMutableDictionary* tempInfoDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -503,7 +556,8 @@
          if ([IndexArray objectAtIndex:rowIndex] ) //&& [[IndexArray objectAtIndex:rowIndex]count])        
          {
             //NSLog(@"ok");
-            //return [[IndexArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
+            return [[IndexArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
+            
             if ([[aTableColumn identifier] isEqualToString:@"frage"])
             {
                return [[IndexArray objectAtIndex:rowIndex]objectForKey:@"frage"];
@@ -551,7 +605,7 @@
               row:(long)rowIndex
 {
    //return;
-   //NSLog(@"setObjectValueForTableColumn ident: %@ row: %ld objectValue: %d",[aTableColumn identifier],rowIndex,[anObject intValue]);
+   NSLog(@"setObjectValueForTableColumn ident: %@ row: %ld objectValue: %d",[aTableColumn identifier],rowIndex,[anObject intValue]);
    
    NSMutableDictionary* einDic;
    if (rowIndex<[IndexArray count])

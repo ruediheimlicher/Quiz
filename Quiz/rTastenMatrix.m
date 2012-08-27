@@ -13,11 +13,11 @@
 - (id)initWithFrame:(NSRect)frame// mitKolonnen:(int)kolonnen mitZeilen:(int)zeilen
 {
    self = [super initWithFrame:frame];
-   NSLog(@"init TastenMatrix");
+   //NSLog(@"init TastenMatrix");
     if (self) 
     {
-       NSLog(@"init TastenMatrix self ok schriftgroesse: %d",schriftgroesse);
-       NSLog(@"size.height: %2.2f",[self frame].size.height);
+       //NSLog(@"init TastenMatrix self ok schriftgroesse: %d",schriftgroesse);
+       //NSLog(@"size.height: %2.2f",[self frame].size.height);
        // Create a prototype cell
        NSButtonCell*   prototypeButtonCell = [[NSButtonCell alloc] init];
        
@@ -57,7 +57,7 @@
        //[self sizeToCells];
        [self  setAutosizesCells:YES];
        [[self superview] setNeedsDisplay:YES];
-       
+       //nach readPList
        // Set cell titles
        [[self cellAtRow:0 column:0] setTitle:@"+"];
        //[[self cellAtRow:0 column:1] setTitle:@""];
@@ -74,7 +74,7 @@
 {
    int kolonnen = [self numberOfColumns];
    //[self setCellSize:NSMakeSize([self frame].size.width, 50)];
-   NSLog(@"setZeilen size.height: %2.2f",[self frame].size.height);
+   //NSLog(@"setZeilen size.height: %2.2f",[self frame].size.height);
    [self setCellSize:NSMakeSize([self frame].size.width, ([self frame].size.height-6)/zeilen)];
    [self renewRows:zeilen columns:kolonnen];
    [self sizeToCells];
