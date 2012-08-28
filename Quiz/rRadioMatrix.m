@@ -51,7 +51,11 @@
        //[[self cellAtRow:0 column:1] setTitle:@""];
        //[[self cellAtRow:0 column:2] setTitle:@""];
        //[[self cellAtRow:0 column:3] setTitle:@"weiss nicht"];
+       
        //[[self cellAtRow:4 column:4] setTitle:@"Five"];
+       
+       [[self cellAtRow:0 column:3] setIdentifier:@"-1"];
+       
        [self setTag:8000];
        
        float schriftrot = 0.0/255;
@@ -122,6 +126,7 @@
 - (void)setErgebniscode:(int)code  inZeile:(int)zeile inKolonne:(int)kolonne
 {
    //NSLog(@"+++  Radiomatrix setErgebniscode: %d kolonne: %d",code,kolonne);
+   
    [[self cellAtRow:zeile column:kolonne]setTag: code];
    
 }

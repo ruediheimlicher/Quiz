@@ -98,26 +98,7 @@
     //  NSLog(@"IndexArray  %@",[[[IndexArray objectAtIndex:nummerindex ]objectForKey:@"musikindex"]description]);
       //NSLog(@"updateDaten IndexArray index: %d Data: %@",nummerindex,[[IndexArray objectAtIndex:nummerindex ] description]);
       
-      /*
-      int m0 = [[[IndexArray objectAtIndex:nummerindex ]objectForKey:@"m0"]intValue];
-      if (m0>=0)
-      {
-         NSLog(@"nummerindex: %d m0: %d Musikautor: %d",nummerindex,m0, [[[[DatenDic objectForKey:@"musikarray"] objectAtIndex:m0]objectForKey:@"autor"]intValue]);
-      }
-      int m1 = [[[IndexArray objectAtIndex:nummerindex ]objectForKey:@"m1"]intValue];
-      if (m1>=0)
-      {
-      NSLog(@"nummerindex: %d m1: %d Musikautor: %d",nummerindex,m1, [[[[DatenDic objectForKey:@"musikarray"] objectAtIndex:m1]objectForKey:@"autor"]intValue]);
-      }
-      int m2 = [[[IndexArray objectAtIndex:nummerindex ]objectForKey:@"m2"]intValue];
-      if (m2>=0)
-      {
-      NSLog(@"nummerindex: %d m2: %d Musikautor: %d",nummerindex,m2, [[[[DatenDic objectForKey:@"musikarray"] objectAtIndex:m2]objectForKey:@"autor"]intValue]);
-      }
-      NSLog(@"nummerindex: %d m0: %d m1: %d m2: %d",nummerindex,m0,m1,m2);
-      NSLog(@"**"); 
-       */
-      // set fuer Update
+       // set fuer Update
       
       // Musik
       NSMutableIndexSet* tempMusikSet = [NSMutableIndexSet indexSet];

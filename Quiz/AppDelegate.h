@@ -121,7 +121,7 @@ inline extern int min(a, b) { return a < b ? a : b; }
 - (IBAction)saveAction:(id)sender;
 - (IBAction)reportKlassewahl:(id)sender;
 - (IBAction)reportPlaytaste:(id)sender;
-- (IBAction)reportNeutaste:(id)sender;
+- (IBAction)reportSettingfenster:(id)sender;
 - (IBAction)reportNexttaste:(id)sender;
 - (IBAction)reportPrevtaste:(id)sender;
 - (IBAction)reportFirsttaste:(id)sender;
@@ -145,4 +145,5 @@ inline extern int min(a, b) { return a < b ? a : b; }
 - (IBAction)resetDefaults:(id)sender;
 - (IBAction)writeData:(id)sender;
 - (IBAction)resetData:(id)sender;
+- (IBAction)resetErgebnisse:(id)sender;
 @end

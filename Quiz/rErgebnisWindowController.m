@@ -123,7 +123,7 @@
 {
    DatenDic = (NSMutableDictionary*)datendic;
    //NSLog(@"setDaten Datendic: %@",[[DatenDic objectForKey:@"masterergebnisarray"] description]);
-   NSLog(@"setDaten Datendic: %@",[DatenDic description]);
+   //NSLog(@"setDaten Datendic: %@",[DatenDic description]);
    
    if ([DatenDic objectForKey:@"klasse"])
    {
@@ -173,8 +173,7 @@
       return;
    }
    
-   NSLog(@" **  MasterErgebnisArray vor: %@",[MasterErgebnisArray description]);
-   
+   //NSLog(@" **  MasterErgebnisArray vor: %@",[MasterErgebnisArray description]);
    
    // FragenArray
    //NSLog(@"***");
@@ -182,13 +181,17 @@
    //NSLog(@"***");
    
    int gesamt=0;
-   int k=0;
    if ([MasterErgebnisArray count])
    {
-      int i=0;
-      for (i=0;i<[MasterErgebnisArray count]; i++) 
+      for (int i=0;i<[MasterErgebnisArray count]; i++)
       {
-         gesamt += [[[MasterErgebnisArray objectAtIndex:i]objectForKey:@"richtig"]intValue];
+         int richtig = [[[MasterErgebnisArray objectAtIndex:i]objectForKey:@"richtig"]intValue];
+         //NSLog(@"Settings setDaten i: %d richtig: %d",i,richtig);
+         if (richtig > 0)
+         {
+            //NSLog(@"Settings setDaten i: %d richtig zaehlt",i);
+            gesamt += richtig;
+         }
       }
    [Gesamtergebnisfeld setIntValue:gesamt];
    }
@@ -318,33 +321,54 @@
             if ([[aTableColumn identifier]isEqual:@"richtig"])
             {
                //NSLog(@"objectValueForTableColumn rowIndex: %ld ident: %@ richtig: %d",rowIndex,[aTableColumn identifier],[[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"richtig"]intValue]);
-               if ([[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"richtig"]intValue])
+               if ([[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"richtig"]intValue]>0)
                {
                   //NSLog(@"ok");
                   return [NSImage imageNamed:@"checkicon.png"];
-                }
-               else 
-               {
-                  //NSLog(@"not ok");
-                  NSSize s = [[[aTableView tableColumnWithIdentifier:@"richtig"]dataCell]cellSize];
-                  s.height = s.height*0.6;
-                  s.width = s.height;
-                  NSImage* del=[NSImage imageNamed:@"deleteicon.png"];
-                  [del setSize:s];
-                  if ([[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"wahl"])
-                  {
-                     return [NSImage imageNamed:@"deleteicon.png"];
-                  }
-               return NULL;
                }
+               else
+               {
+                  
+                  //return [NSImage imageNamed:@"deleteicon.png"];
+                  
+                  if ([[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"wahl"]) // schon gewaehlt
+                  {
+                     long kol= [aTableView numberOfColumns]-1;
+                     
+                     
+                     if ([[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"wahlpos"]intValue] == kol)
+                     {
+                        return [NSImage imageNamed:NULL]; // Bild loeschen
+                     } // if wahlpos
+                     
+                     if ([[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"richtig"]intValue]==0) // falsch gewaehlt
+                     {
+                        return [NSImage imageNamed:@"deleteicon.png"];
+                     }
+                     
+                     int wahl = [[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"wahl"]intValue];
+                     if (wahl >= 0 && wahl < 10)
+                     {
+                        
+                        return [NSImage imageNamed:@"deleteicon.png"];
+                     }
+                     else
+                     {
+                        return [NSImage imageNamed:NULL]; // Bild loeschen
+                     }
+                     
+                  }
+                  
+                  return [NSImage imageNamed:NULL];
+               }
+               
+            }
+            else // andere Kolonnen
+            {
+               return [[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
+            }
             
          }
-         else 
-         {
-            return [[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
-         }
-         
-      }
          return NULL;
       }
       
