@@ -451,7 +451,7 @@ if (self)
    
    NSString* identifierstring = [sender identifier];
    int ident = [identifierstring intValue];
-   NSLog(@"reportPlaytaste state: %ld  ident: %d tag: %ld", [sender state],ident,[sender tag]);
+   //NSLog(@"reportPlaytaste state: %ld  ident: %d tag: %ld", [sender state],ident,[sender tag]);
    int pos=-1;
    NSImage* pauseicon = [NSImage imageNamed:@"pauseicon.png"];
    if ([sender state])
@@ -463,7 +463,7 @@ if (self)
    {
       if ((i+1000)==ident)
       {
-         NSLog(@"ident passt i: %d ident: %d state: %ld",i,ident,[sender state]);
+         //NSLog(@"ident passt i: %d ident: %d state: %ld",i,ident,[sender state]);
          pos = i;
          if ([sender state])
          {
@@ -473,7 +473,7 @@ if (self)
             //[[[sender superview] viewWithTag:i+1000]setImage:pauseicon];
             
             //NSLog(@"i: %d MusikArray tag %@",i,[[MusikArray objectAtIndex:[sender tag]-1000]description]);
-            NSLog(@"i: %d MusikArray ident %@",i,[[MusikArray objectAtIndex:ident-1000]description]);
+            //NSLog(@"i: %d MusikArray ident %@",i,[[MusikArray objectAtIndex:ident-1000]description]);
             
             //   QTMovie* tempSound = [[MusikArray objectAtIndex:[sender tag]-1000]objectForKey:@"sound"];
             QTMovie* tempSound = [[MusikArray objectAtIndex:ident-1000]objectForKey:@"sound"];
@@ -768,7 +768,7 @@ if (self)
             {
                [ErgebnisDic setObject:@"links" forKey:@"lsgtext"];
                long lsgpos = [[MusikArray valueForKey:@"autor"]indexOfObject:[[tempAutorArray valueForKey:@"autor"]objectAtIndex:0]];
-               NSLog(@"links lsgpos: %ld", lsgpos);
+               //NSLog(@"links lsgpos: %ld", lsgpos);
                if (lsgpos < NSNotFound)
                {               
                   [ErgebnisDic setObject:[[tempAutorArray valueForKey:@"autor"]objectAtIndex:0] forKey:@"lsg"];
@@ -779,7 +779,7 @@ if (self)
                }
             }
 
-            NSLog(@"nummer 0 ErgebnisDic %@", [ErgebnisDic description]);
+            //NSLog(@"nummer 0 ErgebnisDic %@", [ErgebnisDic description]);
 
             
             // Welches Stück hat dieser Komponist geschrieben?
@@ -1621,7 +1621,7 @@ if (self)
                      [[[NummerItem view]viewWithTag:(5000+notenbildindex)]setImage:
                       [[NotenArray objectAtIndex:i]objectForKey:@"bild"]];
                      
-                     NSLog(@"5 Noten da notenbildindex: %d : name: %@ epoche: %d",notenbildindex,[[NotenArray objectAtIndex:i]objectForKey:@"name"], [[[NotenArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
+                     //NSLog(@"5 Noten da notenbildindex: %d : name: %@ epoche: %d",notenbildindex,[[NotenArray objectAtIndex:i]objectForKey:@"name"], [[[NotenArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
                      
                      // Ergebniscode der Epoche in Radio einsetzen
                      int ergebniscode =[[[NotenArray objectAtIndex:i]objectForKey:@"epoche"]intValue];
@@ -1637,7 +1637,7 @@ if (self)
                }
                
             }
-            NSLog(@"nummer 5 tempEpocheArray: %@",[tempEpocheArray description]);
+            //NSLog(@"nummer 5 tempEpocheArray: %@",[tempEpocheArray description]);
             
             // Musik auswaehlen
             int soundindex=0;
@@ -1677,7 +1677,7 @@ if (self)
                if ([[[EpochenArray objectAtIndex:i]objectForKey:@"art"]intValue] == 4
                    && [epochenindex containsIndex:[[[EpochenArray objectAtIndex:i]objectForKey:@"autor"]intValue]] )
                {
-                  NSLog(@"5 Epoche da: name: %@ epoche: %d",[[EpochenArray objectAtIndex:i]objectForKey:@"name"],[[[EpochenArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
+                  //NSLog(@"5 Epoche da: name: %@ epoche: %d",[[EpochenArray objectAtIndex:i]objectForKey:@"name"],[[[EpochenArray objectAtIndex:i]objectForKey:@"epoche"]intValue]);
                   
                   [epochenindex removeIndex:[[[EpochenArray objectAtIndex:i]objectForKey:@"autor"]intValue] ];
                   
@@ -1717,7 +1717,7 @@ if (self)
             
             // position der Epoche im tempEpocheArray fuer epocheergebnisindex
             long pos = [[tempEpocheArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:epocheergebnisindex]];
-            NSLog(@"nummer 5 position der Epoche im tempEpocheArray: %d",pos);
+            //NSLog(@"nummer 5 position der Epoche im tempEpocheArray: %d",pos);
             
             if (pos) // pos des min ist an zweiter position
             {
@@ -1735,7 +1735,7 @@ if (self)
 
             }
             
-            NSLog(@"nummer 5 ErgebnisDic %@", [ErgebnisDic description]);
+            //NSLog(@"nummer 5 ErgebnisDic %@", [ErgebnisDic description]);
 
             
          }break; // 5
@@ -2124,7 +2124,7 @@ if (self)
          //NSLog(@"\n\n    reportRadiotaste MasterErgebnisArray zeile: %d kolonne: %d ErgebnisDic: %@",zeile, kolonne, [[MasterErgebnisArray objectAtIndex:nummer]description]);
          //position des Dic fuer tabview nummer im  MasterErgebnisArray an Index klasse
          int nummerpos = [[MasterErgebnisArray valueForKey:@"nummer"]indexOfObject:[NSNumber numberWithInt:nummer]];
-         NSLog(@"MasterErgebnisArray nummerpos: %d",nummerpos);
+         //NSLog(@"MasterErgebnisArray nummerpos: %d",nummerpos);
          
          
          int lsg = [[[MasterErgebnisArray objectAtIndex:nummerpos]objectForKey:@"lsg"]intValue];
@@ -2134,7 +2134,7 @@ if (self)
          
          if (lsg == ergebniscode)
          {
-            NSLog(@"ergebniscode: %d ist richtig",ergebniscode);
+            //NSLog(@"ergebniscode: %d ist richtig",ergebniscode);
             [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:[NSNumber numberWithInt:1] forKey:@"richtig"];
          
          }
@@ -2142,14 +2142,14 @@ if (self)
          {
             if (ergebniscode >= 8000) // weiss nicht
             {
-               NSLog(@"ergebniscode: %d ist weiss nicht",ergebniscode);
+               //NSLog(@"ergebniscode: %d ist weiss nicht",ergebniscode);
                [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:[NSNumber numberWithInt:-1] forKey:@"richtig"];
                ergebniscode = -1;
             }
             else
             {
                [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:[NSNumber numberWithInt:0] forKey:@"richtig"];
-               NSLog(@"ergebniscode: %d ist falsch",ergebniscode);
+               //NSLog(@"ergebniscode: %d ist falsch",ergebniscode);
               
             }
          }
@@ -2164,12 +2164,12 @@ if (self)
             case 0:
             {
                // ergebniscode ist code des Autors
-               NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
+               //NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
                long wahlpos = [[FotoArray valueForKey:@"autor"]indexOfObject:[NSNumber numberWithInt:ergebniscode]];
             if (wahlpos < NSNotFound)
             {
                NSString* wahlautorname = [[FotoArray objectAtIndex:wahlpos]objectForKey:@"name"];
-               NSLog(@"wahlautorname: %@",wahlautorname);
+               //NSLog(@"wahlautorname: %@",wahlautorname);
                [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:wahlautorname forKey:@"wahltext"];
             }
                else
@@ -2182,12 +2182,12 @@ if (self)
             case 1:
             {
                // ergebniscode ist code des Autors
-               NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
+               //NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
                long wahlpos = [[FotoArray valueForKey:@"autor"]indexOfObject:[NSNumber numberWithInt:ergebniscode]];
                if (wahlpos < NSNotFound)
                {
                   NSString* wahlautorname = [[FotoArray objectAtIndex:wahlpos]objectForKey:@"name"];
-                  NSLog(@"nummer 1 wahlautorname: %@",wahlautorname);
+                  //NSLog(@"nummer 1 wahlautorname: %@",wahlautorname);
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:wahlautorname forKey:@"wahltext"];
                }
                else
@@ -2200,13 +2200,13 @@ if (self)
             case 2:
             {
                // ergebniscode ist code der Epoche
-               NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
+               //NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
                long wahlpos = [[EpochenArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:ergebniscode]];
                if (wahlpos < NSNotFound)
                {
-                  NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
+                  //NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
                   NSString* wahlepochename = [[EpochenArray objectAtIndex:wahlpos]objectForKey:@"name"];
-                  NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
+                  //NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:wahlepochename forKey:@"wahltext"];
                }
                else
@@ -2217,13 +2217,13 @@ if (self)
             
             case 3:// ergebniscode ist code der epoche
             {
-               NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
+               //NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
                long wahlpos = [[EpochenArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:ergebniscode]];
                if (wahlpos < NSNotFound)
                {
-                  NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
+                  //NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
                   NSString* wahlepochename = [[EpochenArray objectAtIndex:wahlpos]objectForKey:@"name"];
-                  NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
+                  //NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:wahlepochename forKey:@"wahltext"];
                }
                else
@@ -2235,13 +2235,13 @@ if (self)
                
             case 4:// ergebniscode ist code der epoche
             {
-               NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
+               //NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
                long wahlpos = [[EpochenArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:ergebniscode]];
                if (wahlpos < NSNotFound)
                {
-                  NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
+                  //NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
                   NSString* wahlepochename = [[EpochenArray objectAtIndex:wahlpos]objectForKey:@"name"];
-                  NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
+                  //NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:wahlepochename forKey:@"wahltext"];
                }
                else
@@ -2253,14 +2253,14 @@ if (self)
                
             case 5:// ergebniscode ist code der epoche
             {
-               NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
+               //NSLog(@"nummer: %ld wahl: %d",nummer,[[NSNumber numberWithInt:ergebniscode]intValue]);
                long wahlpos = [[EpochenArray valueForKey:@"epoche"]indexOfObject:[NSNumber numberWithInt:ergebniscode]];
                if (wahlpos < NSNotFound)
                {
-                  NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
+                  //NSLog(@"EpochenArray an index %ld: %@",wahlpos,[[EpochenArray objectAtIndex:wahlpos]description])  ;
                   NSString* wahlepochename = [[EpochenArray objectAtIndex:wahlpos]objectForKey:@"name"];
-                  NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
-                  NSLog(@"MasterErgebnisArray an index %ld: %@",nummerpos,[[MasterErgebnisArray objectAtIndex:nummerpos]description])  ;
+                  //NSLog(@"nummer 1 wahlepochename: %@",wahlepochename);
+                  //NSLog(@"MasterErgebnisArray an index %ld: %@",nummerpos,[[MasterErgebnisArray objectAtIndex:nummerpos]description])  ;
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:wahlepochename forKey:@"wahltext"];
                   
                }
@@ -2283,7 +2283,7 @@ if (self)
          //[[MasterErgebnisArray objectAtIndex:nummerpos]setObject:[NSNumber numberWithInt:(lsg == ergebniscode)] forKey:@"richtig"];
          
          
-         NSLog(@"MasterErgebnisArray pos: %d  nach Taste: %@",nummerpos,[[MasterErgebnisArray objectAtIndex:nummerpos] description]);
+         //NSLog(@"MasterErgebnisArray pos: %d  nach Taste: %@",nummerpos,[[MasterErgebnisArray objectAtIndex:nummerpos] description]);
          [MasterErgebnistabelle reloadData];
          
       }break;
