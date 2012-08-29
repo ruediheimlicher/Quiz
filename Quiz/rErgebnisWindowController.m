@@ -400,17 +400,14 @@
    if (rowIndex<[MasterErgebnisArray count])
 	{
 		einDic=[MasterErgebnisArray objectAtIndex:rowIndex];
-      int index = [anObject intValue];
       NSString* ident = [aTableColumn identifier];
 		[einDic setObject:anObject forKey:ident];
-      NSArray* keyArray = [einDic allKeys];
+     // NSArray* keyArray = [einDic allKeys];
 
       [einDic setObject:anObject forKey:[aTableColumn identifier]];
       
-      
       [aTableView reloadData];
 	}
-   
    
 }
 
