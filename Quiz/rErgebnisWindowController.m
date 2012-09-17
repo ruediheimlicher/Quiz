@@ -123,7 +123,7 @@
 {
    DatenDic = (NSMutableDictionary*)datendic;
    //NSLog(@"setDaten Datendic: %@",[[DatenDic objectForKey:@"masterergebnisarray"] description]);
-   //NSLog(@"setDaten Datendic: %@",[DatenDic description]);
+   NSLog(@"setDaten Datendic: %@",[DatenDic description]);
    
    if ([DatenDic objectForKey:@"klasse"])
    {

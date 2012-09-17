@@ -23,6 +23,10 @@
 #define VIKTORIA     12
 #define HAYDN        33
 #define RHEINBERGER  41
+#define ISERLOHN     51
+#define RUTTER       53
+#define HUBER        44
+
 
 #define ZELENKA      22
 

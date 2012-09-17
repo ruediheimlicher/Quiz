@@ -422,7 +422,7 @@
    
    
    //NSLog(@"IndexArray nach: %@",[IndexArray description]);          
-   
+   /*
    if ([DatenDic objectForKey:@"musikarray"])
    {
       [[[[self window]contentView]viewWithTag:1000]removeAllItems];
@@ -454,6 +454,7 @@
       [[[[self window]contentView]viewWithTag:5000]removeAllItems];
       [[[[self window]contentView]viewWithTag:5000]addItemsWithTitles:[[DatenDic objectForKey:@"autorarray"]valueForKey:@"name"]];
    }
+    */
    [IndexTabelle reloadData];
    
    [[self window]makeFirstResponder: NULL];
