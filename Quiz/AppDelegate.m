@@ -43,11 +43,13 @@ if (self)
 
 - (void)setTag:(NSInteger)tag
 {
+   //NSLog(@"rTabview setTag: %ld",tag);
    [self setTag:tag];
 }
 
 - (NSInteger)tag
 {
+   //NSLog(@"rTabview tag: %ld",[self tag]);
    return [self tag];
 }
 
@@ -63,7 +65,7 @@ if (self)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-   // Insert code here to initialize your application
+      // Insert code here to initialize your application
    float schriftrot = 82;
    float schriftgruen = 95;
    float schriftblau = 224;
@@ -215,11 +217,21 @@ if (self)
     [sound play];
     */
    
-    for(i=0;i<[KlasseTab numberOfTabViewItems];i++)
+   /*
+    for(i=1;i<[KlasseTab numberOfTabViewItems];i++)
     {
+       
+       NSArray* viewarray = [[[KlasseTab tabViewItemAtIndex:i] view]subviews];
+       //NSLog(@"KlasseTab index: %d viewarray vor: %@",i,[viewarray description]);
+       
+       for (int k=0;k<[viewarray count];k++)
+       {
+          //NSLog(@"k: %d  ident: %@",k,[[viewarray objectAtIndex:k]identifier]);
+       }
+
       // [MasterErgebnisArray addObject:[[NSMutableArray alloc]initWithCapacity:0]];
     }
-   
+   */
    
    for(i=0;i<[tempFileArray count];i++)
    {
@@ -269,14 +281,14 @@ if (self)
             NSString* tempFragenString=[NSString stringWithContentsOfFile:tempFragenPfad encoding: NSUTF8StringEncoding error:NULL];
             ;
             
-            //NSLog(@"  tempFragenString : \n%@",tempFragenString);
+            NSLog(@"  tempFragenString : \n%@",tempFragenString);
             NSArray* tempFragenArray = [tempFragenString componentsSeparatedByString:@"\n"];
-            //NSLog(@"  tempFragenArray : \n%@",tempFragenArray);
+            NSLog(@"  tempFragenArray : \n%@",tempFragenArray);
             int k=0;
             for (k=0;k<[tempFragenArray count];k++)
             {
                NSArray* tempZeilenArray = [[tempFragenArray objectAtIndex:k] componentsSeparatedByString:@"\t"];
-               //NSLog(@"  tempZeilenArray : \n%@ count: %lu",[tempZeilenArray description], [tempZeilenArray count]);
+               //NSLog(@"k: %d  tempZeilenArray : \n%@ count: %lu",k,[tempZeilenArray description], [tempZeilenArray count]);
                if ([tempZeilenArray count] == 3) // Fragezeile komplett
                {
                   NSNumber* klassenumber = [NSNumber numberWithInt:[[tempZeilenArray objectAtIndex:0]intValue]];
@@ -412,7 +424,6 @@ if (self)
    
    //NSLog(@"AuswahlArray: %@",[AuswahlArray description]);
    //NSLog(@"MusiktitelArray: %@",[MusiktitelArray description]);
-   //NSLog(@"App FragenArray name: %@",[FragenArray valueForKey:@"name"]);
    
    //  [Auswahltabelle setDelegate:self];
    //  [Auswahltabelle setDataSource:self];
@@ -447,11 +458,11 @@ if (self)
    {
       [[player movie]stop];
    }
-   //NSLog(@"reportPlaytaste subviews: %ld tag: %ld array: %@ ",[[[sender superview]subviews]count],[sender tag],[[[sender superview]subviews]description]);
+   NSLog(@"reportPlaytaste subviews: %ld tag: %ld array: %@ ",[[[sender superview]subviews]count],[sender tag],[[[sender superview]subviews]description]);
    
    NSString* identifierstring = [sender identifier];
    int ident = [identifierstring intValue];
-   //NSLog(@"reportPlaytaste state: %ld  ident: %d tag: %ld", [sender state],ident,[sender tag]);
+   NSLog(@"reportPlaytaste state: %ld  ident: %d tag: %ld", [sender state],ident,[sender tag]);
    int pos=-1;
    NSImage* pauseicon = [NSImage imageNamed:@"pauseicon.png"];
    if ([sender state])
@@ -463,11 +474,12 @@ if (self)
    {
       if ((i+1000)==ident)
       {
-         //NSLog(@"ident passt i: %d ident: %d state: %ld",i,ident,[sender state]);
+         NSLog(@"ident passt i: %d ident: %d state: %ld",i,ident,[sender state]);
          pos = i;
-         if ([sender state])
+         
+        if ([sender state])
          {
-            //NSLog(@"taste state 1 play i: %d",i );
+            NSLog(@"taste state 1 play i: %d description: %@",i ,[sender description]);
             NSImage* pauseicon = [NSImage imageNamed:@"pauseicon.png"];
             [sender setImage:pauseicon];
             //[[[sender superview] viewWithTag:i+1000]setImage:pauseicon];
@@ -482,20 +494,25 @@ if (self)
             
             [[player movie] play];
          }
-         else 
+         
+         else
          {
-            //NSLog(@"taste stop i: %d",i );
+            NSLog(@"taste stop i: %d description: %@",i ,[sender description]);
             NSImage* playicon = [NSImage imageNamed:@"playicon.png"];
             [sender setImage:playicon];
             
          }
          
       }
+      else
+      {
+         NSLog(@"taste err i: %d",i );
+      }
    }// for i
    
    //NSLog(@"taste pos: %d",pos );
    
-   for (int i=0;i<5;i++)
+   for (int i=0;i<10;i++)
    {
       if ([[sender superview] viewWithTag:i+1000]&& i != [sender tag]-1000)
       {
@@ -504,6 +521,7 @@ if (self)
          //[[[sender superview] viewWithTag:i+1000]setTitle:@">"];
          NSImage* playicon = [NSImage imageNamed:@"playicon.png"];
          [[[sender superview] viewWithTag:i+1000]setImage:playicon];
+      
       }
    }// for i
    
@@ -523,26 +541,41 @@ if (self)
    NSTabViewItem* KlasseItem = [KlasseTab selectedTabViewItem];
    int klassewahl = [Klassewahl  selectedRow];
    int klasse = [KlasseTab  indexOfTabViewItem:KlasseItem];
-   
+    NSLog(@"setAuswahlMitVorgabe klasse: %d",klasse);
    int nummer=0;
    if (klasse)
    {
-      
+      NSTabViewItem* KlasseItem = [KlasseTab tabViewItemAtIndex:klasse];
+      NSArray* viewarray = [[KlasseItem view]subviews];
+//      NSLog(@"setAuswahl KlasseTab klasse: %d viewarray: %@",klasse,[viewarray description]);
+      for (int k=0;k<[viewarray count];k++)
+      {
+         NSString* tempIdentString = [[NSNumber numberWithInt:klasse*100]stringValue];
+//         NSLog(@"k: %d  ident: %@",k,[[viewarray objectAtIndex:k]identifier]);
+         if ([[[viewarray objectAtIndex:k]identifier]isEqualTo:tempIdentString])
+         {
+//            NSLog(@"NummerItem da");
+//            NummerTab = [viewarray objectAtIndex:k];
+//            [NummerTab setDelegate:self];
+         }
+      }
+
+     // NSTabViewItem* NummerItem; = [[KlasseTab tabViewItemAtIndex:klasse]viewWithIdentifier:]
       NSTabViewItem* NummerItem = [NummerTab selectedTabViewItem];
-      //NSLog(@"ident: %@",[NummerTab  identifier]);
+//      NSLog(@"ident: %@ tag: %d",[NummerTab  identifier],[NummerTab  tag]);
       nummer = [NummerTab  indexOfTabViewItem:NummerItem];
       
       NSMutableIndexSet* fotoindex = [NSMutableIndexSet indexSet];
       
       [fotoindex addIndexes:[[[[PList objectForKey:@"klassenarray"]objectAtIndex:klasse]objectAtIndex:nummer]objectForKey:@"fotoindex"]];
-      //NSLog(@"fotoindex: %@",[fotoindex  description]);
+      NSLog(@"fotoindex: %@",[fotoindex  description]);
       
       NSMutableIndexSet* notenindex = [NSMutableIndexSet indexSet];
       [notenindex addIndexes:[[[[PList objectForKey:@"klassenarray"]objectAtIndex:klasse]objectAtIndex:nummer]objectForKey:@"notenindex"]];
       
       NSMutableIndexSet* musikindex = [NSMutableIndexSet indexSet];
       [musikindex addIndexes:[[[[PList objectForKey:@"klassenarray"]objectAtIndex:klasse]objectAtIndex:nummer]objectForKey:@"musikindex"]];
-      //NSLog(@"musikindex: %@",[musikindex  description]);
+      NSLog(@"musikindex: %@",[musikindex  description]);
       
       NSMutableIndexSet* epochenindex = [NSMutableIndexSet indexSet];
       [epochenindex addIndexes:[[[[PList objectForKey:@"klassenarray"]objectAtIndex:klasse]objectAtIndex:nummer]objectForKey:@"epochenindex"]];
@@ -566,7 +599,7 @@ if (self)
          ErgebnisDic = [[NSMutableDictionary alloc]initWithCapacity:0];
          
       }
-      //NSLog(@"checknummer: %d ErgebnisDic: %@",checknummer,[ErgebnisDic description]);
+      NSLog(@"checknummer: %d ErgebnisDic: %@",checknummer,[ErgebnisDic description]);
       
       int ergebnisindex=-1;
       [ErgebnisDic setObject:[NSNumber numberWithInt:nummer]forKey:@"nummer"];
@@ -577,16 +610,22 @@ if (self)
       {
          case 0:
          {
-            //NSArray* viewarray = [[NummerItem view]subviews];
-            //NSLog(@"nummer 0 viewarray: %@",[viewarray description]);
             
+            NSArray* viewarray = [[NummerItem view]subviews];
+            //NSLog(@"nummer 0 viewarray vor: %@",[viewarray description]);
+            
+            for (int k=0;k<[viewarray count];k++)
+            {
+               //NSLog(@"k: %d tag: %ld ident: %@",k,[[viewarray objectAtIndex:k]tag],[[viewarray objectAtIndex:k]identifier]);
+            }
+
             [[[NummerItem view]viewWithTag:8000] setKolonnen:3];
             [[[NummerItem view]viewWithTag:8000] setTitel:@"weiss nicht" inZeile:0 inKolonne:2];
             [[[NummerItem view]viewWithTag:8000] setStatus:1 inZeile:0 inKolonne:vorgabe];
             [[[NummerItem view]viewWithTag:8000] setAction:@selector(reportRadiotaste:)];
             [[[NummerItem view]viewWithTag:8000] setNeedsDisplay:YES];
             
-            //NSLog(@"setAuswahl Klassewahl: %d Klassetab: %d nummer: %d",klassewahl,klasse,nummer);
+            NSLog(@"setAuswahl Klassewahl: %d klasse: %d nummer: %d",klassewahl,klasse,nummer);
             
             
             NSString* tempFrage;
@@ -599,7 +638,7 @@ if (self)
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
                }
             }
-            //NSLog(@"tempFrage: %@",tempFrage);
+            NSLog(@"tempFrage: %@",tempFrage);
             
             NSAttributedString *attributedFrage = [[NSAttributedString alloc]
                                                    initWithString: tempFrage attributes: [NSDictionary
@@ -607,7 +646,8 @@ if (self)
                                                                                           [NSFont fontWithName:@"Lucida Grande Bold" size:titelschriftgroesse],NSFontAttributeName,
                                                                                           nil]];
             
-            [[[NummerItem view]viewWithTag:(klasse*1000)+nummer]setAttributedStringValue:attributedFrage];
+            [[[NummerItem view]viewWithTag:(2000)+nummer]setAttributedStringValue:attributedFrage];
+            //[[[NummerItem view]viewWithTag:(2000)+nummer]setStringValue:@"***"];
             
             // Frage sichern
             [ErgebnisDic setObject:tempFrage forKey:@"frage"];
@@ -791,7 +831,7 @@ if (self)
             
          case 1:
          {
-            //NSLog(@"nummer 1 start");
+            NSLog(@"nummer 1 start");
             // Wer hat dieses Stück komponiert?
             // autor von Foto muss gleich sein wie von Musik
             NSArray* viewarray = [[NummerItem view]subviews];
@@ -809,6 +849,7 @@ if (self)
             [[[NummerItem view]viewWithTag:8000] setAction:@selector(reportRadiotaste:)];
             
             // Frage lesen
+            //NSLog(@"FragenArray: %@",[FragenArray description]);
             NSString* tempFrage;
             int i=0;
             for (i=0;i<[FragenArray count];i++)
@@ -819,7 +860,7 @@ if (self)
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
                }
             }
-            //NSLog(@"tempFrage: %@",tempFrage);
+            NSLog(@"tempFrage: %@",tempFrage);
             
             NSAttributedString *attributedFrage = [[NSAttributedString alloc]
                                                    initWithString: tempFrage attributes: [NSDictionary
@@ -1755,6 +1796,17 @@ if (self)
          case 1: // standard
          {
             NSLog(@"standard nummer: %d",nummer);
+            int ergebnispos = [[MasterErgebnisArray valueForKey:@"code"]indexOfObject:[ErgebnisDic objectForKey:@"code"]];
+            //NSLog(@"Master ErgebnisDic: %@ ergebnispos: %d",[ErgebnisDic description],ergebnispos);
+            if (ergebnispos >=0)
+            {
+               [MasterErgebnisArray replaceObjectAtIndex:ergebnispos withObject:ErgebnisDic];
+            }
+            else
+            {
+               [MasterErgebnisArray addObject:ErgebnisDic];
+            }
+
          }break;
             
          case 2: // master
@@ -1898,10 +1950,32 @@ if (self)
 
 - (IBAction)reportKlassewahl:(id)sender
 {
-   //NSLog(@"reportKlassewahl Klasse: %ld",[sender selectedRow]);
+   NSLog(@"reportKlassewahl Klasse: %ld",[sender selectedRow]+1);
+   
+   
    [KlasseTab selectTabViewItemAtIndex:[sender selectedRow]+1];
-   //[[[[KlasseTab selectedTabViewItem] view]viewWithTag:3000]selectTabViewItemAtIndex:0];
+   int klasse = [sender selectedRow]+1;
+   NSArray* viewarray = [[[KlasseTab selectedTabViewItem] view]subviews];
+   
+   NSLog(@"reportKlassewahl KlasseTab klasse: %d viewarray: %@",klasse,[viewarray description]);
+   for (int k=0;k<[viewarray count];k++)
+   {
+      NSString* tempIdentString = [[NSNumber numberWithInt:klasse*100]stringValue];
+      //NSLog(@"k: %d  ident: %@",k,[[viewarray objectAtIndex:k]identifier]);
+      if ([[[viewarray objectAtIndex:k]identifier]isEqualTo:tempIdentString])
+      {
+         //NSLog(@"NummerItem da ident: %@",[[viewarray objectAtIndex:k]identifier]);
+         NummerTab = [viewarray objectAtIndex:k];
+         [NummerTab setDelegate:self];
+      }
+   }
+
+   
+   
+   
    [NummerTab selectTabViewItemAtIndex:0];
+   
+   [self setAuswahlMitVorgabe:2];
    
    NSAttributedString *attributedKlasse = [[NSAttributedString alloc]
                                           initWithString: [NSString stringWithFormat:@"Level: %ld",[sender selectedRow]+1] attributes: [NSDictionary
@@ -1918,7 +1992,7 @@ if (self)
                                                                                                                                          nil]];
   [Nummerfeld setAttributedStringValue:attributedNummer];
 
-
+   NSLog(@"reportKlassewahl end");
    
    //   [self setAuswahl];
 }
@@ -1950,24 +2024,29 @@ if (self)
    [Prevtaste setEnabled:YES];
    // eventuell Button zuruecksetzen
    NSArray* viewarray = [[[NummerTab selectedTabViewItem]view ]subviews];
-  // NSLog(@"reportNexttaste viewarray: %@",[viewarray description]);
-   int k=0;
+  //NSLog(@"reportNexttaste viewarray: %@",[viewarray description]);
+   
+   
+   
+  /*
+   // tag-Bereich der Playtasten
    NSRange tabrange = NSMakeRange(1000, 10);
    NSIndexSet* tabindex = [NSIndexSet indexSetWithIndexesInRange:tabrange];
-   for (k=0;k<[viewarray count];k++)
+   for (int k=0;k<[viewarray count];k++)
    {
-      //NSLog(@"k: %d tag: %ld",k,[[viewarray objectAtIndex:k]tag]);
+      NSLog(@"k: %d tag: %ld",k,[[viewarray objectAtIndex:k]tag]);
       if ([tabindex containsIndex:[[viewarray objectAtIndex:k]tag]] )
       {
          int temptag=[[viewarray objectAtIndex:k]tag];
          [[[[NummerTab selectedTabViewItem]view]viewWithTag:temptag]setState:0];
-         
+         NSLog(@"Playtaste da");
          NSImage* playicon = [NSImage imageNamed:@"playicon.png"];
          [[[[NummerTab selectedTabViewItem]view ]viewWithTag:temptag]setImage:playicon];
       
       }
       [[[NummerTab selectedTabViewItem]view ]setNeedsDisplay:YES];
    }
+   */
    
    [NummerTab selectNextTabViewItem:NULL];
    
@@ -2334,7 +2413,7 @@ if (self)
 
 - (int)readData
 {
-   //NSLog(@"readData start");
+   NSLog(@"readData start");
    
    NSMutableArray* ResourceKlassenArray = [[NSMutableArray alloc]initWithCapacity:0];
    NSString* ResourcenPfad=[[[NSBundle mainBundle]bundlePath]stringByAppendingPathComponent:@"Contents/Resources"];
@@ -2394,7 +2473,9 @@ if (self)
          
          NSMutableDictionary* tempResourceNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
          NSMutableArray* tempResourceNummerArray = [[NSMutableArray alloc]initWithCapacity:0];
-         for (nummerindex=0; nummerindex<[NummerTab numberOfTabViewItems]; nummerindex++)
+         
+         //for (nummerindex=0; nummerindex<[NummerTab numberOfTabViewItems]; nummerindex++)
+         for (nummerindex=0; nummerindex<6; nummerindex++)
          {
             //NSLog(@"nummerindex: %d ResourceKlassenArray: %@",nummerindex,[ResourceKlassenArray description]);
             if (ResourceKlassenArray &&[ResourceKlassenArray count] )
@@ -2415,6 +2496,304 @@ if (self)
             
             switch (klassenindex)
             {
+                  case 1:
+                  {
+                     NSMutableIndexSet* epochenindex = [NSMutableIndexSet indexSet];
+                     NSMutableIndexSet* notenindex = [NSMutableIndexSet indexSet];
+                     NSMutableIndexSet* fotoindex = [NSMutableIndexSet indexSet];
+                     NSMutableIndexSet* musikindex = [NSMutableIndexSet indexSet];
+                     
+                     if ([tempResourceNummerDic objectForKey:@"epochenindex"])
+                     {
+                        [epochenindex addIndexes:[tempResourceNummerDic objectForKey:@"epochenindex"]];
+                     }
+                     if ([tempResourceNummerDic objectForKey:@"notenindex"])
+                     {
+                        [notenindex addIndexes:[tempResourceNummerDic objectForKey:@"notenindex"]];
+                     }
+                     if ([tempResourceNummerDic objectForKey:@"fotoindex"])
+                     {
+                        [fotoindex addIndexes:[tempResourceNummerDic objectForKey:@"fotoindex"]];
+                     }
+                     
+                     if ([tempResourceNummerDic objectForKey:@"musikindex"])
+                     {
+                        [musikindex addIndexes:[tempResourceNummerDic objectForKey:@"musikindex"]];
+                     }
+                     
+                     switch (nummerindex)
+                     {
+                        case 0:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              //[fotoindex addIndex:PAGANINI];
+                              //[fotoindex addIndex:BACH];
+                              [fotoindex addIndex:SCHUETZ];
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              //[notenindex addIndex:SCHUBERT];
+                              //[notenindex addIndex:PAGANINI];
+                              [notenindex addIndex:SCHUETZ];
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              //[musikindex addIndex:SCHUBERT];
+                              //[musikindex addIndex:PAGANINI];
+                              [musikindex addIndex:SCHUETZ];
+                              
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:ROMANTIK];
+                              [epochenindex addIndex:BAROCK];
+                              
+                           }
+                           else
+                           {
+                              //NSLog(@"epochenindex schon da: %@",[epochenindex description]);
+                           }
+                        }break;
+                           
+                        case 1:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:HAYDN];
+                              [fotoindex addIndex:BACH];
+                              
+                              // Defaults einsetzen
+                           }
+                           
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:HAYDN];
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              //[musikindex addIndex:BACH];
+                              [musikindex addIndex:HAYDN];
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:BAROCK];
+                              //[epochenindex addIndex:KLASSIK];
+                              
+                           }
+                           
+                        }break;
+                           
+                        case 2: // Welches dieser Stücke ist früher komponiert worden?
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:HAYDN];
+                              [fotoindex addIndex:VIKTORIA];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:VIKTORIA];
+                              [notenindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:VIKTORIA];
+                              [musikindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:BAROCK];
+                              [epochenindex addIndex:RENAISSANCE];
+                              
+                           }
+                           
+                        }break;
+                           
+                        case 3: //
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:VIKTORIA];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:VIKTORIA];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:VIKTORIA];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:RENAISSANCE];
+                              //[epochenindex addIndex:KLASSIK];
+                              
+                           }
+                           
+                           
+                           
+                        }break;
+                           
+                           
+                        case 4:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              //[fotoindex addIndex:BACH];
+                              [fotoindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              //[notenindex addIndex:BACH];
+                              [notenindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              // [musikindex addIndex:BACH];
+                              [musikindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              [epochenindex addIndex:RENAISSANCE];
+                              [epochenindex addIndex:KLASSIK];
+                              
+                           }
+                           
+                           
+                           
+                        }break;
+                           
+                        case 5:
+                        {
+                           // Autoren waehlen
+                           if ([fotoindex count]==0)
+                           {
+                              [fotoindex addIndex:BACH];
+                              [fotoindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Noten
+                           if ([notenindex count]==0)
+                           {
+                              [notenindex addIndex:BACH];
+                              [notenindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Musik
+                           if ([musikindex count]==0)
+                           {
+                              [musikindex addIndex:BACH];
+                              [musikindex addIndex:HAYDN];
+                              // Defaults einsetzen
+                              
+                           }
+                           
+                           // Epoche
+                           if ([epochenindex count]==0)
+                           {
+                              //[epochenindex addIndex:KLASSIK];
+                              [epochenindex addIndex:KLASSIK];
+                              
+                           }
+                           
+                           
+                        }break;
+                           
+                     }// switch nummerindex
+                     
+                     //NSLog(@"nummerindex: %ld fotoindex fix: %@",nummerindex,[fotoindex description]);
+                     
+                     //Dic fuer 'nummer'
+                     //                 NSMutableDictionary* tempNummerDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                     
+                     //        [tempNummerDic setObject:[FragenArray objectAtIndex:nummerindex] forKey:@"frage1"];
+                     //NSLog(@"[FragenArray objectAtIndex:nummerindex objectForKey:frage: %@",[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]);
+                     [tempNummerDic setObject:[[FragenArray objectAtIndex:nummerindex]objectForKey:@"frage"]forKey:@"frage"];
+                     
+                     [tempNummerDic setObject:[NSNumber numberWithInt:nummerindex] forKey:@"nummer"];
+                     [tempNummerDic setObject:[NSNumber numberWithInt:klassenindex] forKey:@"klasse"];
+                     [tempNummerDic setObject:fotoindex forKey:@"fotoindex"];
+                     [tempNummerDic setObject:notenindex forKey:@"notenindex"];
+                     [tempNummerDic setObject:musikindex forKey:@"musikindex"];
+                     [tempNummerDic setObject:epochenindex forKey:@"epochenindex"];
+                     //NSLog(@"\n*** nummerindex: %d tempNummerDic: %@\n*\n*",nummerindex,[tempNummerDic description]);
+                     [tempNummerArray addObject:tempNummerDic];
+                     
+                     
+                     //NSLog(@"nummer: %d tempNummerArray: %@",nummerindex,[tempNummerArray description]);
+                     
+                  }break; // case 2
+                     
+                     
                case 2:
                {
                   NSMutableIndexSet* epochenindex = [NSMutableIndexSet indexSet];
@@ -2712,6 +3091,7 @@ if (self)
                   
                }break; // case 2
                   
+            
             }// switch klassenindex
             
          } // for nummerindex
@@ -2723,7 +3103,7 @@ if (self)
       } // for klassenindex
       
       
-      //NSLog(@"*** tempKlassenArray komplett: %@\n*\n*",[tempKlassenArray description]);
+      NSLog(@"*** tempKlassenArray komplett: %@\n*\n*",[tempKlassenArray description]);
       
       
       
@@ -3526,7 +3906,31 @@ if (self)
 
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
-//   NSLog(@"didSelectTabViewItem: %ld",[tabView indexOfTabViewItem:tabViewItem ]);
+   NSLog(@"didSelectTabViewItem: %ld",[tabView indexOfTabViewItem:tabViewItem ]);
+   
+   // eventuell Button zuruecksetzen
+   NSArray* viewarray = [[tabViewItem view] subviews];
+   //NSLog(@"didSelectTabViewItem viewarray: %@",[viewarray description]);
+
+   // tag-Bereich der Playtasten
+   NSRange tabrange = NSMakeRange(1000, 10);
+   NSIndexSet* tabindex = [NSIndexSet indexSetWithIndexesInRange:tabrange];
+   for (int k=0;k<[viewarray count];k++)
+   {
+      //NSLog(@"didSelectTabViewItem k: %d tag: %ld",k,[[viewarray objectAtIndex:k]tag]);
+      if ([tabindex containsIndex:[[viewarray objectAtIndex:k]tag]] )
+      {
+         int temptag=[[viewarray objectAtIndex:k]tag];
+   //      [[[tabViewItem view] viewWithTag:temptag]setState:0];
+         NSLog(@"didSelectTabViewItem Playtaste da state: %ld",[[[tabViewItem view] viewWithTag:temptag]state]);
+         NSImage* playicon = [NSImage imageNamed:@"playicon.png"];
+         [[[tabViewItem view] viewWithTag:temptag]setImage:playicon];
+      }
+      
+   }
+
+   
+   
    long aktuellenummer = [tabView indexOfTabViewItem:tabViewItem ];
    long aktuellercode = ([KlasseTab indexOfTabViewItem:[KlasseTab selectedTabViewItem]])*100 + aktuellenummer;
 
@@ -3534,23 +3938,23 @@ if (self)
    //NSLog(@"didSelectTabViewItem item: %ld: ergebnispos: %ld",[tabView indexOfTabViewItem:tabViewItem] ,ergebnispos);
    if (ergebnispos < NSNotFound)
    {
-      NSLog(@"didSelectTabViewItem: %ld ErgebnisDic: %@",[tabView indexOfTabViewItem:tabViewItem ],[MasterErgebnisArray objectAtIndex:ergebnispos]);
+      //NSLog(@"didSelectTabViewItem: %ld ErgebnisDic: %@",[tabView indexOfTabViewItem:tabViewItem ],[MasterErgebnisArray objectAtIndex:ergebnispos]);
       
       int wahl = -1;
       if ([[MasterErgebnisArray objectAtIndex:ergebnispos]objectForKey:@"wahl"])
       {
          wahl = [[[MasterErgebnisArray objectAtIndex:ergebnispos]objectForKey:@"wahl"]intValue];
       }
-      NSLog(@"didSelectTabViewItem: %d",wahl);
+      //NSLog(@"didSelectTabViewItem: %d",wahl);
       if (wahl >= 0 && wahl < 8000)
       {
          int wahlpos = [[[MasterErgebnisArray objectAtIndex:ergebnispos]objectForKey:@"wahlpos"]intValue];
-         NSLog(@"didSelectTabViewItem: wahl: %d wahlpos: %d",wahl, wahlpos);
+         //NSLog(@"didSelectTabViewItem: wahl: %d wahlpos: %d",wahl, wahlpos);
          [self setAuswahlMitVorgabe:wahlpos];
       }
       else // wurde mit resetErgebnisse geloescht
       {
-         NSLog(@"didSelectTabViewItem: vorgabe 2");
+         //NSLog(@"didSelectTabViewItem: vorgabe 2");
          [self setAuswahlMitVorgabe:2];
       }
    }
