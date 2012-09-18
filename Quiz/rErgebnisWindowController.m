@@ -28,7 +28,7 @@
    {
       //NSLog(@"settings init ok: Fenster: %@",[window title]);
       // Initialization code here.
-      
+      [[self window]setBackgroundColor:[NSColor greenColor]];
       DatenDic = [[NSMutableDictionary alloc]initWithCapacity:0];
       return self;
    }
@@ -123,7 +123,9 @@
 {
    DatenDic = (NSMutableDictionary*)datendic;
    //NSLog(@"setDaten Datendic: %@",[[DatenDic objectForKey:@"masterergebnisarray"] description]);
-   NSLog(@"setDaten Datendic: %@",[DatenDic description]);
+   //NSLog(@"setDaten Datendic: %@",[DatenDic description]);
+   
+   [[self window]setBackgroundColor:[NSColor colorWithCalibratedRed:0.4 green:0.9 blue:0.4 alpha:1.0]];
    
    if ([DatenDic objectForKey:@"klasse"])
    {

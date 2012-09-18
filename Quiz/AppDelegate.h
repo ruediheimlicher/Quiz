@@ -63,8 +63,10 @@ inline extern int min(a, b) { return a < b ? a : b; }
    IBOutlet id player;
    IBOutlet rRadioMatrix* Klassewahl;
    IBOutlet rTastenMatrix* KlasseTastenwahl;
-   IBOutlet rTabView * KlasseTab;
-   IBOutlet rTabView *  NummerTab;
+  // IBOutlet rTabView * KlasseTab;
+   IBOutlet NSTabView * KlasseTab;
+   //IBOutlet rTabView *  NummerTab;
+   IBOutlet NSTabView *  NummerTab;
    IBOutlet id Playtaste0;
    IBOutlet id Playtaste1;
    IBOutlet id Playtaste2;
@@ -112,6 +114,16 @@ inline extern int min(a, b) { return a < b ? a : b; }
     IBOutlet id KontrollFeldA;
    IBOutlet id KontrollFeldB;
    
+   NSRect      Auswahlradiorect;
+   NSRect      Fragefeldrect;
+   NSRect      grossesBildrect;
+   NSRect      Bild0rect;
+   NSRect      Bild1rect;
+   NSRect      Bild2rect;
+   NSRect      Taste0rect;
+   NSRect      Taste1rect;
+   NSRect      Taste2rect;
+   NSRect      Legenderect;
 }
 
 @property (assign) IBOutlet NSWindow *window;

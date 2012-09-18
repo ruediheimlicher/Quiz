@@ -50,7 +50,7 @@ if (self)
 - (NSInteger)tag
 {
    //NSLog(@"rTabview tag: %ld",[self tag]);
-   return [self tag];
+   return -1;
 }
 
 @end
@@ -65,6 +65,21 @@ if (self)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+   Fragefeldrect = NSMakeRect(20, 344, 816, 70);
+   Auswahlradiorect = NSMakeRect(110, 275, 716, 57);
+   
+   grossesBildrect = NSMakeRect(840, 77, 310, 330);
+   Bild0rect = NSMakeRect(17, 10, 240, 240);
+   Bild1rect = NSMakeRect(272, 10, 240, 240);
+   Bild2rect = NSMakeRect(840, 77, 307, 328);
+   Taste0rect = NSMakeRect(107, 23, 60, 60);
+   Taste1rect = NSMakeRect(362, 23, 60, 60);
+   Taste2rect = NSMakeRect(963, 110, 80, 80);
+   Legenderect = NSMakeRect(840, 0, 307, 70);
+
+   
+   
+   
       // Insert code here to initialize your application
    float schriftrot = 82;
    float schriftgruen = 95;
@@ -75,7 +90,7 @@ if (self)
    Schriftfarbe = [NSColor whiteColor];
    
    titelschriftgroesse = 28;
-   legendeschriftgroesse = 24;
+   legendeschriftgroesse = 28;
    radioschriftgroesse = 20;
    
    NSImage* myImage = [NSImage imageNamed: @"choricon"];
@@ -136,6 +151,147 @@ if (self)
    // Release the image.
    //[backgroundImage release];
    
+   
+   
+   for(int i=1;i<[KlasseTab numberOfTabViewItems];i++)
+   {
+      
+      NSArray* viewarray = [[[KlasseTab tabViewItemAtIndex:i] view]subviews];
+      //NSLog(@"KlasseTab index: %d viewarray vor: %@",i,[viewarray description]);
+      int nummertabindex = -1;
+      for (int k=0;k<[viewarray count];k++)
+      {
+         //NSLog(@"k: %d  ident: %@",k,[[viewarray objectAtIndex:k]identifier]);
+         if ([[[viewarray  objectAtIndex:k]identifier]intValue] == 100*i)
+         {
+            //NSLog(@"\n\nk: %d  View mit ident da: %@",k,[[viewarray  objectAtIndex:k]description]);
+            nummertabindex = k;
+         }
+      }
+      if (nummertabindex >=0) // Nummertab vorhanden
+      {
+         
+         //NSLog(@"KlasseTab  %d nummertabindex: %d ident: %@ NummerTab: %@",i,nummertabindex,[[viewarray  objectAtIndex:nummertabindex]identifier],[[viewarray  objectAtIndex:nummertabindex]description]);
+         
+         // Nummertab der Klasse
+         rTabView* tempNummertab = [viewarray  objectAtIndex:nummertabindex];
+         //NSLog(@"tempNummertab anz: %ld",[tempNummertab numberOfTabViewItems ]);
+         
+         for(int t=0;t<[tempNummertab numberOfTabViewItems ];t++)
+         {
+            
+            NSRect r = [[[tempNummertab tabViewItemAtIndex:t]view]frame];
+            //NSLog(@"tab %d View x: %2.2f y: %2.2f w: %2.2f h: %2.2f",t,r.origin.x, r.origin.y,r.size.width,r.size.height);
+            
+            
+            NSArray* tempviewarray = [[[tempNummertab tabViewItemAtIndex:t]view] subviews];
+            //NSLog(@"KlasseTab tempviewarray: %@",[tempviewarray description]);
+            //for (int n=0;n<[tempviewarray count];n++)
+            {
+               //NSLog(@"View tag: %ld",[[tempviewarray objectAtIndex:n]tag]);
+            }
+            if ([[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:2000])
+            {
+               //NSLog(@"item: %ld Fragefeld da",t);
+               //NSRect r = [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:2000]frame];
+               //NSLog(@"vor x: %2.2f y: %2.2f w: %2.2f h: %2.2f",r.origin.x, r.origin.y,r.size.width,r.size.height);
+               [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:2000]setFrame:Fragefeldrect];
+               //r = [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:2000]frame];
+               //NSLog(@"nach x: %2.2f y: %2.2f w: %2.2f h: %2.2f",r.origin.x, r.origin.y,r.size.width,r.size.height);
+               
+            }
+            
+            if ([[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:8000])
+            {
+               [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:8000]setFrame:Auswahlradiorect];
+            }
+            
+            // Bildlegende
+            if ([[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:9000])
+            {
+               [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:9000]setFrame:Legenderect];
+            }
+            
+            
+            switch(t)
+            {
+               case 0:
+               {
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1000]setFrame:Taste0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1001]setFrame:Taste1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5000]setFrame:Bild0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5001]setFrame:Bild1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6000]setFrame:Bild2rect];
+                  
+                  
+               }break;
+                  
+               case  1:
+               {
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1000]setFrame:Taste2rect];
+                  //[[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1001]setFrame:Taste1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6000]setFrame:Bild0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6001]setFrame:Bild1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5000]setFrame:Bild2rect];
+                  
+               }break;
+                  
+               case  2:
+               {
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1000]setFrame:Taste0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1001]setFrame:Taste1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5000]setFrame:Bild0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5001]setFrame:Bild1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:7000]setFrame:Bild2rect];
+                  
+               }break;
+                  
+               case  3:
+               {
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1000]setFrame:Taste0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1001]setFrame:Taste1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6000]setFrame:Bild0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6001]setFrame:Bild1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:7000]setFrame:Bild2rect];
+                  
+               }break;
+                  
+               case  4:
+               {
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1000]setFrame:Taste2rect];
+                  //[[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1001]setFrame:Taste1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6000]setFrame:Bild0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6001]setFrame:Bild1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5000]setFrame:Bild2rect];
+                  
+               }break;
+                  
+               case  5:
+               {
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1000]setFrame:Taste0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:1001]setFrame:Taste1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5000]setFrame:Bild0rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:5001]setFrame:Bild1rect];
+                  [[[[tempNummertab tabViewItemAtIndex:t]view]viewWithTag:6000]setFrame:Bild2rect];
+                  
+               }break;
+                  
+                  
+            }// switch
+            
+            
+            
+            
+            [[[tempNummertab tabViewItemAtIndex:t]view]setNeedsDisplay:YES];
+         }
+         
+         //
+         
+         
+      }
+      
+   }
+   
    NSImage *AuswahlImage = [NSImage imageNamed:@"Kirche_288.jpg"]; 
    //  [[KlasseTab view]setImage:AuswahlImage];
    
@@ -187,7 +343,8 @@ if (self)
    [NummerTab setDelegate:self];
    
    [Prevtaste setEnabled:NO];
-   
+   [Nexttaste setEnabled:NO];
+
    //NSLog(@"bundlePath: %@",[[NSBundle mainBundle]bundlePath]);
    NSString* ResourcenPfad=[[[NSBundle mainBundle]bundlePath]stringByAppendingPathComponent:@"Contents/Resources"];
    NSFileManager *Filemanager=[NSFileManager defaultManager];
@@ -200,7 +357,7 @@ if (self)
    
    NSArray* tempFileArray=[Filemanager contentsOfDirectoryAtPath:ResourcenPfad error:NULL];
    ;
-   NSLog(@"\n  tempFileArray roh: \n%@",[tempFileArray description]);
+   //NSLog(@"\n  tempFileArray roh: \n%@",[tempFileArray description]);
    int i=0;
    
    /*
@@ -217,21 +374,8 @@ if (self)
     [sound play];
     */
    
-   /*
-    for(i=1;i<[KlasseTab numberOfTabViewItems];i++)
-    {
-       
-       NSArray* viewarray = [[[KlasseTab tabViewItemAtIndex:i] view]subviews];
-       //NSLog(@"KlasseTab index: %d viewarray vor: %@",i,[viewarray description]);
-       
-       for (int k=0;k<[viewarray count];k++)
-       {
-          //NSLog(@"k: %d  ident: %@",k,[[viewarray objectAtIndex:k]identifier]);
-       }
-
-      // [MasterErgebnisArray addObject:[[NSMutableArray alloc]initWithCapacity:0]];
-    }
-   */
+ 
+  
    
    for(i=0;i<[tempFileArray count];i++)
    {
@@ -281,9 +425,9 @@ if (self)
             NSString* tempFragenString=[NSString stringWithContentsOfFile:tempFragenPfad encoding: NSUTF8StringEncoding error:NULL];
             ;
             
-            NSLog(@"  tempFragenString : \n%@",tempFragenString);
+            //NSLog(@"  tempFragenString : \n%@",tempFragenString);
             NSArray* tempFragenArray = [tempFragenString componentsSeparatedByString:@"\n"];
-            NSLog(@"  tempFragenArray : \n%@",tempFragenArray);
+            //NSLog(@"  tempFragenArray : \n%@",tempFragenArray);
             int k=0;
             for (k=0;k<[tempFragenArray count];k++)
             {
@@ -438,6 +582,8 @@ if (self)
    //  [AuswahlRadio setNeedsDisplay:YES];
    [KlasseTab selectTabViewItemAtIndex:0];
    
+   
+   
    //NSLog(@"vor readData");
    [self readData];
    //NSLog(@"nach readData");
@@ -535,11 +681,11 @@ if (self)
    [centerstyle setAlignment:NSCenterTextAlignment];
    
    int erfolg=0;
-   NSLog(@"\n\n**   setAuswahlMitVorgabe: %d  *\n",vorgabe);
+   //NSLog(@"\n\n**   setAuswahlMitVorgabe: %d  *\n",vorgabe);
    NSTabViewItem* KlasseItem = [KlasseTab selectedTabViewItem];
    int klassewahl = [Klassewahl  selectedRow];
    int klasse = [KlasseTab  indexOfTabViewItem:KlasseItem];
-    NSLog(@"setAuswahlMitVorgabe klasse: %d",klasse);
+    //NSLog(@"setAuswahlMitVorgabe klasse: %d",klasse);
    int nummer=0;
    if (klasse)
    {
@@ -623,7 +769,7 @@ if (self)
             [[[NummerItem view]viewWithTag:8000] setAction:@selector(reportRadiotaste:)];
             [[[NummerItem view]viewWithTag:8000] setNeedsDisplay:YES];
             
-            NSLog(@"setAuswahl Klassewahl: %d klasse: %d nummer: %d",klassewahl,klasse,nummer);
+            //NSLog(@"setAuswahl Klassewahl: %d klasse: %d nummer: %d",klassewahl,klasse,nummer);
             
             
             NSString* tempFrage;
@@ -636,7 +782,7 @@ if (self)
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
                }
             }
-            NSLog(@"tempFrage: %@",tempFrage);
+            //NSLog(@"tempFrage: %@",tempFrage);
             
             NSAttributedString *attributedFrage = [[NSAttributedString alloc]
                                                    initWithString: tempFrage attributes: [NSDictionary
@@ -791,7 +937,7 @@ if (self)
             {
                [ErgebnisDic setObject:@"rechts" forKey:@"lsgtext"];
                long lsgpos = [[MusikArray valueForKey:@"autor"]indexOfObject:[[tempAutorArray valueForKey:@"autor"]lastObject]];
-               NSLog(@"rechts lsgpos: %ld", lsgpos);
+               //NSLog(@"rechts lsgpos: %ld", lsgpos);
                if (lsgpos < NSNotFound)
                {
                   [ErgebnisDic setObject:[[tempAutorArray valueForKey:@"autor"]lastObject] forKey:@"lsg"];
@@ -829,7 +975,7 @@ if (self)
             
          case 1:
          {
-            NSLog(@"nummer 1 start");
+            //NSLog(@"nummer 1 start");
             // Wer hat dieses Stück komponiert?
             // autor von Foto muss gleich sein wie von Musik
             NSArray* viewarray = [[NummerItem view]subviews];
@@ -858,7 +1004,7 @@ if (self)
                   tempFrage = [[FragenArray objectAtIndex:i]objectForKey:@"frage"];
                }
             }
-            NSLog(@"tempFrage: %@",tempFrage);
+            //NSLog(@"tempFrage: %@",tempFrage);
             
             NSAttributedString *attributedFrage = [[NSAttributedString alloc]
                                                    initWithString: tempFrage attributes: [NSDictionary
@@ -1796,7 +1942,7 @@ if (self)
             
          case 1: // standard
          {
-            NSLog(@"standard nummer: %d",nummer);
+            //NSLog(@"standard nummer: %d",nummer);
             int ergebnispos = [[MasterErgebnisArray valueForKey:@"code"]indexOfObject:[ErgebnisDic objectForKey:@"code"]];
             //NSLog(@"Master ErgebnisDic: %@ ergebnispos: %d",[ErgebnisDic description],ergebnispos);
             if (ergebnispos >=0)
@@ -1963,7 +2109,7 @@ if (self)
    for (int k=0;k<[viewarray count];k++)
    {
       NSString* tempIdentString = [[NSNumber numberWithInt:klasse*100]stringValue];
-      //NSLog(@"k: %d  ident: %@",k,[[viewarray objectAtIndex:k]identifier]);
+      //NSLog(@"k: %d  ident: %@ tag: %ld",k,[[viewarray objectAtIndex:k]identifier],[[viewarray objectAtIndex:k]tag]);
       if ([[[viewarray objectAtIndex:k]identifier]isEqualTo:tempIdentString])
       {
          //NSLog(@"NummerItem da ident: %@",[[viewarray objectAtIndex:k]identifier]);
@@ -1985,16 +2131,28 @@ if (self)
                                                                                  [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
                                                                                  nil]];
    
-   [Klassefeld setAttributedStringValue:attributedKlasse];
-   
+   //[Klassefeld setAttributedStringValue:attributedKlasse];
+   if ([[[KlasseTab selectedTabViewItem]view] viewWithTag:9100])
+        {
+           //NSLog(@"KlasseTab da");
+   [[[[KlasseTab selectedTabViewItem]view] viewWithTag:9100]setAttributedStringValue:attributedKlasse];
+        }
    NSAttributedString *attributedNummer = [[NSAttributedString alloc]
                                            initWithString: [NSString stringWithFormat:@"Nummer: %d",1] attributes: [NSDictionary
                                                                                                                                          dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
                                                                                                                                          [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
                                                                                                                                          nil]];
-  [Nummerfeld setAttributedStringValue:attributedNummer];
+  //[Nummerfeld setAttributedStringValue:attributedNummer];
 
-   NSLog(@"reportKlassewahl end");
+   if ([[[KlasseTab selectedTabViewItem]view] viewWithTag:9101])
+   {
+      //NSLog(@"KlasseTab da");
+      [[[[KlasseTab selectedTabViewItem]view] viewWithTag:9101]setAttributedStringValue:attributedNummer];
+   }
+
+   [Nexttaste setEnabled:YES];
+   
+   //NSLog(@"reportKlassewahl end");
    
    //   [self setAuswahl];
 }
@@ -2011,7 +2169,10 @@ if (self)
       [[player movie]stop];
       
    }
-    if([NummerTab indexOfTabViewItem:[NummerTab selectedTabViewItem]]==[NummerTab numberOfTabViewItems]-2)
+   
+   [[Ergebnis window]orderOut:NULL];
+   
+   if([NummerTab indexOfTabViewItem:[NummerTab selectedTabViewItem]]==[NummerTab numberOfTabViewItems]-2)
          {
             [Nexttaste setEnabled:NO];
          }
@@ -2055,7 +2216,12 @@ if (self)
                                                                                                                     dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
                                                                                                                     [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
                                                                                                                     nil]];
-   [Nummerfeld setAttributedStringValue:attributedNummer];
+   //[Nummerfeld setAttributedStringValue:attributedNummer];
+   if ([[[KlasseTab selectedTabViewItem]view] viewWithTag:9101])
+   {
+      //NSLog(@"KlasseTab da");
+      [[[[KlasseTab selectedTabViewItem]view] viewWithTag:9101]setAttributedStringValue:attributedNummer];
+   }
 
    
 //   [self setAuswahl];
@@ -2076,6 +2242,8 @@ if (self)
       [Prevtaste setEnabled:YES];
    }
    [Nexttaste setEnabled:YES];
+   
+   [[Ergebnis window]orderOut:NULL];
 
    // eventuell Button zuruecksetzen
    NSArray* viewarray = [[[NummerTab selectedTabViewItem]view ]subviews];
@@ -2107,7 +2275,12 @@ if (self)
                                                                                                                                     dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
                                                                                                                                     [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
                                                                                                                                     nil]];
-   [Nummerfeld setAttributedStringValue:attributedNummer];
+   //[Nummerfeld setAttributedStringValue:attributedNummer];
+   if ([[[KlasseTab selectedTabViewItem]view] viewWithTag:9101])
+   {
+      //NSLog(@"KlasseTab da");
+      [[[[KlasseTab selectedTabViewItem]view] viewWithTag:9101]setAttributedStringValue:attributedNummer];
+   }
 
 //   [self setAuswahl];
 }
@@ -2141,6 +2314,18 @@ if (self)
    }
 
       [NummerTab selectTabViewItemAtIndex:0];
+   
+   // Nummer zuruecksetzen
+      NSAttributedString *attributedNummer = [[NSAttributedString alloc]
+                                           initWithString: [NSString stringWithFormat:@"Nummer: %d",1] attributes: [NSDictionary
+                                                                                                                                                                                    dictionaryWithObjectsAndKeys: Schriftfarbe, NSForegroundColorAttributeName,
+                                                                                                                                                                                    [NSFont fontWithName:@"Lucida Grande Bold" size:legendeschriftgroesse],NSFontAttributeName,
+                                                                                                                                                                                    nil]];
+   if ([[[KlasseTab selectedTabViewItem]view] viewWithTag:9101])
+   {
+      //NSLog(@"KlasseTab da");
+      [[[[KlasseTab selectedTabViewItem]view] viewWithTag:9101]setAttributedStringValue:attributedNummer];
+   }
 
 }
 
@@ -2150,6 +2335,8 @@ if (self)
    {
       [[player movie]stop];
    }
+   
+   [[Ergebnis window]orderOut:NULL];
    
    // eventuell Button zuruecksetzen
    NSArray* viewarray = [[[NummerTab selectedTabViewItem]view ]subviews];
@@ -2175,7 +2362,7 @@ if (self)
 
    [KlasseTab selectTabViewItemAtIndex:0];
    [NummerTab selectTabViewItemAtIndex:0];
-   [Nexttaste setEnabled:YES];
+   [Nexttaste setEnabled:NO];
    [Prevtaste setEnabled:NO];
 }
 - (IBAction)reportRadiotaste:(id)sender;
@@ -2584,7 +2771,7 @@ if (self)
 
 - (int)readData
 {
-   NSLog(@"readData start");
+   //NSLog(@"readData start");
    
    NSMutableArray* ResourceKlassenArray = [[NSMutableArray alloc]initWithCapacity:0];
    NSString* ResourcenPfad=[[[NSBundle mainBundle]bundlePath]stringByAppendingPathComponent:@"Contents/Resources"];
@@ -2601,7 +2788,7 @@ if (self)
       NSMutableDictionary* settingsdataDic=[[NSMutableDictionary alloc]initWithCapacity:0];
       settingsdataDic = [unarchiver decodeObjectForKey: @"plist"];
       [unarchiver finishDecoding];
-      NSLog(@"readData settingsdataDic da");
+      //NSLog(@"readData settingsdataDic da");
       //NSLog(@"readData settingsdataDic: %@",[settingsdataDic description]);
       if ([settingsdataDic objectForKey:@"klassenarray"])
       {
@@ -2618,7 +2805,7 @@ if (self)
       }
       else
       {
-         NSLog(@"quizsettings leer");
+         //NSLog(@"quizsettings leer");
       }
    } // settings
    else
@@ -3255,7 +3442,7 @@ if (self)
       } // for klassenindex
       
       
-      NSLog(@"*** tempKlassenArray komplett: %@\n*\n*",[tempKlassenArray description]);
+      //NSLog(@"*** tempKlassenArray komplett: %@\n*\n*",[tempKlassenArray description]);
       
       
       
