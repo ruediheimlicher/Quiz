@@ -151,7 +151,7 @@ inline extern int min(float a, float b) { return a < b ? a : b; }
 
 - (IBAction)reportRadiotaste:(id)sender;
 - (IBAction)reportErgebnisfenster:(id)sender;
-
+-(void)ErgebnisArrayReset;
 - (int)setAuswahl;
 - (int)setAuswahlMitVorgabe:(int)vorgabe;
 

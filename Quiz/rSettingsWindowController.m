@@ -186,7 +186,7 @@
    NSLog(@"setDaten start");
    DatenDic = (NSMutableDictionary*)datendic;
    //NSLog(@"setDaten Datendic: %@",[[DatenDic objectForKey:@"klassenarray"] description]);
-  // NSLog(@"***\nsetDaten Datendic: %@",[DatenDic description]);
+  NSLog(@"***\nsetDaten Datendic: %@",[DatenDic description]);
    if ([DatenDic objectForKey:@"klasse"])
    {
      // [Klassefeld setStringValue:[DatenDic objectForKey:@"klasse"]];

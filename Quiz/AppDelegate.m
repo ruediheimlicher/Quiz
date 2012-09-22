@@ -2055,7 +2055,8 @@ if (self)
    
    long klasse = [KlasseTab indexOfTabViewItem:[KlasseTab selectedTabViewItem]];
    
-   //NSLog(@"reportErgebnisfenster MasterErgebnisArray: %@",[MasterErgebnisArray description]);
+   
+   NSLog(@"reportErgebnisfenster MasterErgebnisArray: %@",[MasterErgebnisArray description]);
    NSDictionary* tempDatenDic = [NSDictionary dictionaryWithObjectsAndKeys:MasterErgebnisArray,@"masterergebnisarray",
                                  [NSNumber numberWithInt:klasse], @"klasse",nil ];
    [Ergebnis setDaten:tempDatenDic];
@@ -2412,13 +2413,15 @@ if (self)
       [[[NummerTab selectedTabViewItem]view ]setNeedsDisplay:YES];
    }
 
-
+   [self ErgebnisArrayReset];
+   [Ergebnis clear];
    [KlasseTab selectTabViewItemAtIndex:0];
    [NummerTab selectTabViewItemAtIndex:0];
    [Nexttaste setEnabled:NO];
    [Prevtaste setEnabled:NO];
    [Ergebnistaste setEnabled:NO];
    [Firsttaste setEnabled:NO];
+   
 }
 - (IBAction)reportRadiotaste:(id)sender;
 {
@@ -2431,12 +2434,13 @@ if (self)
          int zeile =[sender selectedRow];
          int kolonne = [sender selectedColumn];
          int ergebniscode = [sender ergebniscodeInZeile:zeile inKolonne:kolonne];
-         int benutzerwahl = [[[MasterErgebnisArray objectAtIndex:nummer]objectForKey:@"wahl"]intValue];
+         //int benutzerwahl = [[[MasterErgebnisArray objectAtIndex:nummer]objectForKey:@"wahl"]intValue];
          //NSLog(@"reportRadiotaste nummer: %d kolonne: %d ergebniscode: %d benutzerwahl: %d",nummer,kolonne,ergebniscode,benutzerwahl);
          //NSLog(@"MasterErgebnisArray  %@", [MasterErgebnisArray description]);
          //   if ([MasterErgebnisArray objectAtIndex:kolonne])
          
          //NSLog(@"\n\n    reportRadiotaste MasterErgebnisArray zeile: %d kolonne: %d ErgebnisDic: %@",zeile, kolonne, [[MasterErgebnisArray objectAtIndex:nummer]description]);
+        
          //position des Dic fuer tabview nummer im  MasterErgebnisArray an Index klasse
          int nummerpos = [[MasterErgebnisArray valueForKey:@"nummer"]indexOfObject:[NSNumber numberWithInt:nummer]];
          //NSLog(@"MasterErgebnisArray nummerpos: %d",nummerpos);
@@ -2490,7 +2494,7 @@ if (self)
                }
                else
                {
-                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"" forKey:@"wahltext"];
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
                }
                
@@ -2793,6 +2797,30 @@ if (self)
       }break;
  
    }
+}
+
+-(void)ErgebnisArrayReset
+{
+   for(int i=0;i<[MasterErgebnisArray count];i++)
+   {
+      [[MasterErgebnisArray objectAtIndex:i]removeObjectForKey:@"richtig"];
+      [[MasterErgebnisArray objectAtIndex:i]removeObjectForKey:@"wahl"];
+      [[MasterErgebnisArray objectAtIndex:i]removeObjectForKey:@"wahlpos"];
+      [[MasterErgebnisArray objectAtIndex:i]removeObjectForKey:@"wahltext"];
+      
+   }
+
+}
+- (IBAction)reportClear:(id)sender
+{
+   NSLog(@"reportClear MasterErgebnisArray  %@", [MasterErgebnisArray description]);
+   [self ErgebnisArrayReset];
+   NSLog(@"reportClear MasterErgebnisArray nach clear  %@", [MasterErgebnisArray description]);
+   NSDictionary* tempDatenDic = [NSDictionary dictionaryWithObjectsAndKeys:MasterErgebnisArray,@"masterergebnisarray",
+                                 [NSNumber numberWithInt:1], @"klasse",nil ];
+   [Ergebnis setDaten:tempDatenDic];
+   [Ergebnis clear];
+
 }
 
 - (IBAction)reportNeutaste:(id)sender
