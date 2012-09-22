@@ -118,6 +118,14 @@
 }
 
 
+- (void)clear
+{
+   [MasterErgebnisArray removeAllObjects];
+   [MasterErgebnistabelle reloadData];
+   [[self window]orderOut:NULL];
+}
+
+
 
 - (void)setDaten:(NSMutableDictionary*)datendic
 {
@@ -367,7 +375,14 @@
             }
             else // andere Kolonnen
             {
-               return [[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
+               
+                if ([[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"richtig"]) // schon gewaehlt
+                {
+                   //NSLog(@"richtig: %d wert: %@",[[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:@"richtig"]intValue],[[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]]);
+                   return [[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
+                
+                }
+               return NULL;
             }
             
          }

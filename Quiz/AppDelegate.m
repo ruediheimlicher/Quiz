@@ -492,7 +492,7 @@ if (self)
             }
             
             [tempQTMovie setAttribute:[NSNumber numberWithBool:YES] forKey:QTMovieOpenForPlaybackAttribute];
-            [tempQTMovie setAttribute:[NSNumber numberWithBool:YES] forKey: @"QTMovieLoopsAttribute"];
+            [tempQTMovie setAttribute:[NSNumber numberWithBool:YES] forKey:QTMovieLoopsAttribute];
             
             [tempDataDic setObject:tempQTMovie forKey:@"sound"];
             
@@ -636,6 +636,12 @@ if (self)
             
             [player setMovie: tempSound]; 
             
+            QTTime aktuelleZeit = [[player movie]currentTime];
+            if (aktuelleZeit.timeValue > ([[player movie]duration].timeValue*0.8))
+            {
+               [player gotoBeginning:NULL];
+            }
+
             [[player movie] play];
          }
          
@@ -1362,7 +1368,7 @@ if (self)
             
          case 3:
          {
-            NSLog(@"setauswahl nummer 3");
+            //NSLog(@"setauswahl nummer 3");
             // Welcher dieser Komponisten lebte näher zu unserer Zeit?
             /*
              NSArray* viewarray = [[NummerItem view]subviews];
@@ -1486,7 +1492,7 @@ if (self)
                epochename = @"*";
             }
             
-            NSLog(@"nummer 3 richtigindex: %d richtigpos: %d epochename: name zu richtigindex: %@ ",richtigindex, richtigpos, epochename,komponistzuepochename);
+            //NSLog(@"nummer 3 richtigindex: %d richtigpos: %d epochename: name zu richtigindex: %@ ",richtigindex, richtigpos, epochename,komponistzuepochename);
             
             [ErgebnisDic setObject:[NSNumber numberWithInt:richtigindex] forKey:@"lsg"];
             [ErgebnisDic setObject:komponistzuepochename forKey:@"lsgtext"];
@@ -2046,13 +2052,14 @@ if (self)
 		Ergebnis=[[rErgebnisWindowController alloc]initWithWindowNibName:@"Ergebnis"];
 	}
 	[Ergebnis showWindow:self];
+   
    long klasse = [KlasseTab indexOfTabViewItem:[KlasseTab selectedTabViewItem]];
    
    //NSLog(@"reportErgebnisfenster MasterErgebnisArray: %@",[MasterErgebnisArray description]);
    NSDictionary* tempDatenDic = [NSDictionary dictionaryWithObjectsAndKeys:MasterErgebnisArray,@"masterergebnisarray",
                                  [NSNumber numberWithInt:klasse], @"klasse",nil ];
    [Ergebnis setDaten:tempDatenDic];
-   
+   [Neutaste setEnabled:YES];
 }
 
 - (IBAction)resetErgebnisse:(id)sender
@@ -2151,6 +2158,11 @@ if (self)
    }
 
    [Nexttaste setEnabled:YES];
+   [Ergebnistaste setEnabled:NO];
+   
+   [Ergebnis clear];
+   [[Ergebnis window]orderOut:NULL];
+
    
    //NSLog(@"reportKlassewahl end");
    
@@ -2175,10 +2187,13 @@ if (self)
    if([NummerTab indexOfTabViewItem:[NummerTab selectedTabViewItem]]==[NummerTab numberOfTabViewItems]-2)
          {
             [Nexttaste setEnabled:NO];
+            [Ergebnistaste setEnabled:YES];
          }
-    else 
+    else
     {
        [Nexttaste setEnabled:YES];
+       [Ergebnistaste setEnabled:NO];
+       [Firsttaste setEnabled:YES];
     }
    [Prevtaste setEnabled:YES];
    // eventuell Button zuruecksetzen
@@ -2236,14 +2251,18 @@ if (self)
    if([NummerTab indexOfTabViewItem:[NummerTab selectedTabViewItem]]==1)
    {
       [Prevtaste setEnabled:NO];
+      [Ergebnistaste setEnabled:YES];
+      [Neutaste setEnabled:YES];
    }
-   else 
+   else
    {
       [Prevtaste setEnabled:YES];
+      [Ergebnistaste setEnabled:NO];
+      [Neutaste setEnabled:NO];
    }
    [Nexttaste setEnabled:YES];
    
-   [[Ergebnis window]orderOut:NULL];
+   //[[Ergebnis window]orderOut:NULL];
 
    // eventuell Button zuruecksetzen
    NSArray* viewarray = [[[NummerTab selectedTabViewItem]view ]subviews];
@@ -2292,6 +2311,11 @@ if (self)
       [[player movie]stop];
    }
    
+   [Ergebnistaste setEnabled:NO];
+   [Prevtaste setEnabled:NO];
+   [Nexttaste setEnabled:YES];
+   [[Ergebnis window]orderOut:NULL];
+   
    // eventuell Button zuruecksetzen
    NSArray* viewarray = [[[NummerTab selectedTabViewItem]view ]subviews];
    // NSLog(@"reportNexttaste viewarray: %@",[viewarray description]);
@@ -2335,8 +2359,37 @@ if (self)
    {
       [[player movie]stop];
    }
+   NSLog(@"reportHometaste");
+   NSString *question = NSLocalizedString(@"Beim Springen nach Home werden alle Ergebnisse werden gestrichen", @"Alle Ergebnisse werden gelöscht.");
+   NSString *info = NSLocalizedString(@"Trotzdem nach Home gehen?", @"Trotzdem Home.");
+   NSString *homeButton = NSLocalizedString(@"Ja", @"Ja");
+   NSString *firstButton = NSLocalizedString(@"Zum Anfang", @"Nein");
+   NSString *cancelButton = NSLocalizedString(@"Abbrechen", @"Nein");
+   NSAlert *alert = [[NSAlert alloc] init];
+   [alert setMessageText:question];
+   [alert setInformativeText:info];
    
-   [[Ergebnis window]orderOut:NULL];
+   [alert addButtonWithTitle:firstButton];
+   [alert addButtonWithTitle:cancelButton];
+   [alert addButtonWithTitle:homeButton];
+   
+   NSInteger answer = [alert runModal];
+   NSLog(@"answer: %ld",answer);
+   
+   if (answer == 1000)
+   {
+      NSLog(@"1000 %ld",answer);
+      [self reportFirsttaste:NULL];
+      return;
+   }
+  
+   if (answer == 1001)
+   {
+      NSLog(@"1001 %ld",answer);
+      return;
+   }
+
+   //[[Ergebnis window]orderOut:NULL];
    
    // eventuell Button zuruecksetzen
    NSArray* viewarray = [[[NummerTab selectedTabViewItem]view ]subviews];
@@ -2364,6 +2417,8 @@ if (self)
    [NummerTab selectTabViewItemAtIndex:0];
    [Nexttaste setEnabled:NO];
    [Prevtaste setEnabled:NO];
+   [Ergebnistaste setEnabled:NO];
+   [Firsttaste setEnabled:NO];
 }
 - (IBAction)reportRadiotaste:(id)sender;
 {
@@ -2402,7 +2457,7 @@ if (self)
          {
             if (ergebniscode >= 8000) // weiss nicht
             {
-               //NSLog(@"ergebniscode: %d ist weiss nicht",ergebniscode);
+               NSLog(@"ergebniscode: %d ist weiss nicht",ergebniscode);
                [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:[NSNumber numberWithInt:-1] forKey:@"richtig"];
                ergebniscode = -1;
             }
@@ -2419,6 +2474,7 @@ if (self)
          [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:[NSNumber numberWithInt:ergebniscode] forKey:@"wahl"];
          
          // text fuer wahl einfuegen
+         NSNumber* weissnichtnumber = [NSNumber numberWithInt:-1];
          switch (nummer)
          {
             case 0:
@@ -2435,6 +2491,7 @@ if (self)
                else
                {
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
                }
                
             }   break;
@@ -2453,6 +2510,8 @@ if (self)
                else
                {
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
+
                }
                
             }   break;
@@ -2472,6 +2531,8 @@ if (self)
                else
                {
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
+
                }
             }break;
                
@@ -2489,6 +2550,8 @@ if (self)
                else
                {
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
+
                }
                
             }break;
@@ -2507,6 +2570,8 @@ if (self)
                else
                {
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
+
                }
                
             }break;
@@ -2527,6 +2592,8 @@ if (self)
                else
                {
                   [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:@"*" forKey:@"wahltext"];
+                  [[MasterErgebnisArray objectAtIndex:nummerpos]setObject:weissnichtnumber forKey:@"richtig"];
+
                }
                
             }break;
@@ -2726,6 +2793,16 @@ if (self)
       }break;
  
    }
+}
+
+- (IBAction)reportNeutaste:(id)sender
+{
+   [MasterErgebnisArray removeAllObjects];
+   [Ergebnis clear];
+   [Neutaste setEnabled:NO];
+   [Ergebnistaste setEnabled:NO];
+   [self reportHometaste:NULL];
+   
 }
 
 - (NSArray*)arrayVonIndexSet:(NSIndexSet*)indexset
@@ -3036,7 +3113,7 @@ if (self)
                            // Autoren waehlen
                            if ([fotoindex count]==0)
                            {
-                              [fotoindex addIndex:RUTTER];
+                              [fotoindex addIndex:HUBER];
                               // Defaults einsetzen
                               
                            }
@@ -3044,7 +3121,7 @@ if (self)
                            // Noten
                            if ([notenindex count]==0)
                            {
-                              [notenindex addIndex:RUTTER];
+                              [notenindex addIndex:HUBER];
                               // Defaults einsetzen
                               
                            }
@@ -3052,7 +3129,7 @@ if (self)
                            // Musik
                            if ([musikindex count]==0)
                            {
-                              [musikindex addIndex:RUTTER];
+                              [musikindex addIndex:HUBER];
                               // Defaults einsetzen
                            }
                            
@@ -3060,7 +3137,7 @@ if (self)
                            if ([epochenindex count]==0)
                            {
                               [epochenindex addIndex:RENAISSANCE];
-                              [epochenindex addIndex:MODERNE];
+                              [epochenindex addIndex:ROMANTIK];
                               
                            }
                            
@@ -4345,6 +4422,7 @@ if (self)
    {
       if (rowIndex < [MasterErgebnisArray count] )
       {
+         
          return [[MasterErgebnisArray objectAtIndex:rowIndex]objectForKey:[aTableColumn identifier]];
       }
       
@@ -4527,7 +4605,8 @@ return NULL;
 
         // Customize this code block to include application-specific recovery steps.              
         BOOL result = [sender presentError:error];
-        if (result) {
+        if (result)
+        {
             return NSTerminateCancel;
         }
 

@@ -42,6 +42,6 @@
 - (NSDictionary*)datendic;
 - (void)updateDaten;
 - (IBAction)reportKlassestepper:(id)sender;
-
+- (void)clear;
 
 @end

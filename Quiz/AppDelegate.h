@@ -44,8 +44,8 @@
 
 
 
-inline extern int max(a, b) { return a > b ? a : b; }
-inline extern int min(a, b) { return a < b ? a : b; }
+inline extern int max(float a, float b) { return a > b ? a : b; }
+inline extern int min(float a, float b) { return a < b ? a : b; }
 
 @interface rTabView: NSTabView
 {
@@ -72,7 +72,10 @@ inline extern int min(a, b) { return a < b ? a : b; }
    IBOutlet id Playtaste2;
    IBOutlet id Prevtaste;
    IBOutlet id Nexttaste;
+   IBOutlet id Firsttaste;
    IBOutlet id Neutaste;
+   IBOutlet id Hometaste;
+   IBOutlet id Ergebnistaste;
    IBOutlet id Bild0;
    IBOutlet id Bild1;
    IBOutlet id Bild2;
@@ -144,6 +147,7 @@ inline extern int min(a, b) { return a < b ? a : b; }
 - (IBAction)reportHometaste:(id)sender;
 - (IBAction)reportFirsttaste:(id)sender;
 - (IBAction)reportStoptaste:(id)sender;
+- (IBAction)reportNeutaste:(id)sender;
 
 - (IBAction)reportRadiotaste:(id)sender;
 - (IBAction)reportErgebnisfenster:(id)sender;
